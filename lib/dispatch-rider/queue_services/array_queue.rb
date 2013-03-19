@@ -1,32 +1,25 @@
 module DispatchRider
   module QueueServices
-    class ArrayQueue
-
-      def initialize(options = {})
-        assign_storage
-      end
-
+    class ArrayQueue < Base
       def push(item)
         @queue.push(item)
+        item
       end
 
       def pop(&block)
         message = @queue.shift
         block.call(message) if message
-      end
-
-      def empty?
-        @queue.empty?
+        message
       end
 
       def size
         @queue.size
       end
 
-      private
+      protected
 
-      def assign_storage
-        @queue = []
+      def assign_storage(attrs)
+        []
       end
     end
   end
