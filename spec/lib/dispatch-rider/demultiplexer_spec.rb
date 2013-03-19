@@ -31,14 +31,14 @@ describe DispatchRider::Demultiplexer, :nodb => true do
       end
 
       it "should be sending the message to the dispatcher" do
-        demultiplexer.better_receive(:dispatch_message).with(queued_message)
+        demultiplexer.should_receive(:dispatch_message).with(queued_message)
         demultiplexer_thread.run
       end
     end
 
     context "when the queue is empty" do
       it "should not be sending any message to the dispatcher" do
-        demultiplexer.better_receive(:dispatch_message).exactly(0).times
+        demultiplexer.should_receive(:dispatch_message).exactly(0).times
         demultiplexer_thread.run
       end
     end
@@ -66,7 +66,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
 
   describe "#dispatch_message" do
     it "should call dispatcher to dispatch the message" do
-      DispatchRider::Dispatcher.better_receive(:dispatch).with(queued_message)
+      DispatchRider::Dispatcher.should_receive(:dispatch).with(queued_message)
       demultiplexer.send(:dispatch_message, queued_message)
     end
   end

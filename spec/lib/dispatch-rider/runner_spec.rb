@@ -1,15 +1,17 @@
 require "spec_helper"
 
-describe DispatchRider::Runner, :nodb => true do
-
-  it "should create a DispatchRider::Demultiplexer" do
-    DispatchRider::Demultiplexer.better_receive(:new).and_return(mock(DispatchRider::Demultiplexer, :start => true, :stop => true))
-    DispatchRider::Runner.run
+describe DispatchRider::Runner do
+  before :each do
+    @demultiplexer = OpenStruct.new(:start => true, :stop => true)
+    DispatchRider::Demultiplexer.stub!(:new).and_return(@demultiplexer)
   end
 
-  it "should start demultiplexing" do
-    DispatchRider::Demultiplexer.any_instance.better_receive(:start)
-    DispatchRider::Runner.run
+  subject do
+    DispatchRider::Runner.new(DispatchRider::QueueServices::ArrayQueue.new)
   end
 
+  it "should start the demultiplexer" do
+    @demultiplexer.should_receive(:start)
+    subject.run
+  end
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe DispatchRider::QueueServices::ArrayQueue, :nodb => true do
-
+describe DispatchRider::QueueServices::ArrayQueue do
   let( :queue_content ){ subject.instance_variable_get("@queue") }
 
   let( :item ){ DispatchRider::Message.new("subject" => "do", "body" => { "what" => "exactly" } ) }
@@ -9,15 +8,7 @@ describe DispatchRider::QueueServices::ArrayQueue, :nodb => true do
   describe "#push" do
     it "should push item to the queue" do
       subject.push item
-
       queue_content.should include item
-    end
-  end
-
-  describe "init" do
-    it "should call assign_storage at init" do
-      # this is a mess to test, will just test via artifact
-      subject.instance_variable_get("@queue").should == []
     end
   end
 
@@ -27,7 +18,6 @@ describe DispatchRider::QueueServices::ArrayQueue, :nodb => true do
 
       it "should pop item to the queue" do
         popped_item = subject.pop
-
         popped_item.should be_nil
         queue_content.should be_empty
       end
@@ -72,5 +62,4 @@ describe DispatchRider::QueueServices::ArrayQueue, :nodb => true do
       example{ subject.should_not be_empty }
     end
   end
-
 end

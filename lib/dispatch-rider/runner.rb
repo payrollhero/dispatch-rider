@@ -1,21 +1,16 @@
 module DispatchRider
   class Runner
-    def self.run
+    def initialize(queue)
+      @demultiplexer = DispatchRider::Demultiplexer.new(queue)
+    end
+
+    def run
       interuption_count = 0
-      demultiplexer = DispatchRider::Demultiplexer.new(Rails.application.dispatch_queue)
       Signal.trap("INT") do
         interuption_count += 1
-        if interuption_count < 2
-          puts "Stopping demultiplexer... Interupt again to forcefully terminate."
-          demultiplexer.stop
-        else
-          puts "Forced termination!!!"
-          exit
-        end
+        interuption_count < 2 ? @demultiplexer.stop : exit(0)
       end
-      puts "Running demultiplexer..."
-      demultiplexer.start # blocked till stopped
-      puts "Stopped demultiplexer..."
+      @demultiplexer.start
     end
   end
 end
