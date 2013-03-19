@@ -4,6 +4,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rubygems'
 require 'rspec'
 require 'ostruct'
+require 'aws'
 
 RSpec.configure do |config|
   config.mock_with :rspec
