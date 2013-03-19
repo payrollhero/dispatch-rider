@@ -1,15 +1,11 @@
 require 'spec_helper'
 
 describe DispatchRider::Demultiplexer, :nodb => true do
-
   let(:queue) do
     DispatchRider::QueueServices::ArrayQueue.new
   end
-
-  let(:queued_message){ DispatchRider::Message.new(:subject => "do_something") }
-
+  let(:queued_message){ DispatchRider::Message.new(:subject => "do_something", :body => "some_text") }
   let(:demultiplexer) { DispatchRider::Demultiplexer.new(queue) }
-
   let(:demultiplexer_thread) do
     demultiplexer
     thread = Thread.new do
@@ -46,22 +42,13 @@ describe DispatchRider::Demultiplexer, :nodb => true do
   end
 
   describe ".stop" do
-
     it "should stop the demultiplexer" do
       demultiplexer_thread.run
-
       demultiplexer_thread.should be_alive # looper should be looping
-
       demultiplexer_thread[:demultiplexer].stop
-
-      # wait for the thread to die
-      Timeout.timeout(5) do
-        demultiplexer_thread.join
-      end
-
+      demultiplexer_thread.join
       demultiplexer_thread.should_not be_alive # looper should close the loop
     end
-
   end
 
   describe "#dispatch_message" do
@@ -70,5 +57,4 @@ describe DispatchRider::Demultiplexer, :nodb => true do
       demultiplexer.send(:dispatch_message, queued_message)
     end
   end
-
 end
