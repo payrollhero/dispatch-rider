@@ -22,7 +22,7 @@ module DispatchRider
     end
 
     def dispatch_message(message)
-      _log("Dispatching message")
+      _log("Dispatching message : #{message.to_s}")
       Dispatcher.dispatch(message)
     end
 

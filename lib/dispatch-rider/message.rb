@@ -25,5 +25,9 @@ module DispatchRider
     def ==(other)
       attributes == other.attributes
     end
+
+    def to_s
+      "The body of the message \"#{subject.to_s}\" is #{body.inspect}"
+    end
   end
 end
