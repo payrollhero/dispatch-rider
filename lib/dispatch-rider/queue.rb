@@ -20,8 +20,5 @@ module DispatchRider
   end
 end
 
-require "dispatch-rider/queue_services/array_queue"
-require "dispatch-rider/queue_services/aws_sqs"
-
 DispatchRider::Queue.register_service(:array, DispatchRider::QueueServices::ArrayQueue)
 DispatchRider::Queue.register_service(:aws_sqs, DispatchRider::QueueServices::AwsSqs)

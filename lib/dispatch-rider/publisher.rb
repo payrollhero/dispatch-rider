@@ -1,11 +1,13 @@
 module DispatchRider
   class Publisher
+    attr_reader :queue
+
     def initialize(queue)
       @queue = queue
     end
 
     def publish(attrs)
-      @queue.push construct_message(attrs)
+      queue.push construct_message(attrs)
     end
 
     private

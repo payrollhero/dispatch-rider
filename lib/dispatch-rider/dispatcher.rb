@@ -1,20 +1,35 @@
 module DispatchRider
-  module Dispatcher
-    @handlers = {}
+  class Dispatcher
+    attr_reader :handlers
 
-    class << self
-      def register(handler)
-        @handlers[handler.to_sym] = handler.to_s.camelize.constantize
-      end
+    def initialize
+      @handlers = {}
+    end
 
-      def unregister(handler)
-        @handlers.delete(handler.to_sym)
+    def register(handler)
+      handlers[handler.to_sym] = begin
+        handler.to_s.camelize.constantize
+      rescue NameError
+        raise HandlerNotFound.new(handler)
       end
+      self
+    end
 
-      def dispatch(message)
-        handler = @handlers[message.subject.to_sym]
-        handler && handler.process(message.body)
+    def unregister(handler)
+      handlers.delete(handler.to_sym)
+      self
+    end
+
+    def fetch(handler)
+      begin
+        handlers.fetch(handler.to_sym)
+      rescue IndexError
+        raise HandlerNotRegistered.new(handler)
       end
+    end
+
+    def dispatch(message)
+      fetch(message.subject).process(message.body)
     end
   end
 end
