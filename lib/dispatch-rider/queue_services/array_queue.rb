@@ -1,25 +1,24 @@
 module DispatchRider
   module QueueServices
     class ArrayQueue < Base
-      def push(item)
-        @queue.push(item)
-        item
+      def assign_storage(attrs)
+        []
       end
 
-      def pop(&block)
-        message = @queue.shift
-        block.call(message) if message
-        message
+      def enqueue(item)
+        queue.push(item)
+      end
+
+      def get_head
+        queue.first
+      end
+
+      def dequeue
+        queue.shift
       end
 
       def size
-        @queue.size
-      end
-
-      protected
-
-      def assign_storage(attrs)
-        []
+        queue.size
       end
     end
   end

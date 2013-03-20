@@ -27,7 +27,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
       end
 
       it "should be sending the message to the dispatcher" do
-        demultiplexer.should_receive(:dispatch_message).with(queued_message)
+        demultiplexer.should_receive(:dispatch_message).with(queued_message).at_least(:once)
         demultiplexer_thread.run
       end
     end
