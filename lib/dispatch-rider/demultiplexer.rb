@@ -1,7 +1,10 @@
 module DispatchRider
   class Demultiplexer
-    def initialize(queue)
+    attr_reader :queue, :dispatcher
+
+    def initialize(queue, dispatcher)
       @queue = queue
+      @dispatcher = dispatcher
     end
 
     def start
@@ -9,7 +12,7 @@ module DispatchRider
       @continue = true
       loop do
         break unless @continue
-        @queue.pop do |message|
+        queue.pop do |message|
           dispatch_message(message)
         end
       end
@@ -23,7 +26,7 @@ module DispatchRider
 
     def dispatch_message(message)
       _log("Dispatching message : #{message.to_s}")
-      Dispatcher.dispatch(message)
+      dispatcher.dispatch(message)
     end
 
     private

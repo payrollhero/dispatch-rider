@@ -1,52 +1,75 @@
 require 'spec_helper'
 
 describe DispatchRider::Dispatcher, :nodb => true do
-
   module HandleSomething
     class << self
       def process(params)
-        # throw something so we know the dispatcher made this handler process the message
         throw :something if params[:do_throw_something]
       end
     end
   end
 
-  before do
-    dispatcher_handlers.clear
-  end
-
-  subject do
-    DispatchRider::Dispatcher
-  end
-
-  let(:dispatcher_handlers) { subject.instance_variable_get("@handlers") }
-
-  let(:handle_something_message){ DispatchRider::Message.new(:subject => "handle_something", :body => { :do_throw_something => true }) }
-
-  describe ".register" do
-    it "should register handler" do
-      expect { described_class.register :handle_something }.to change(dispatcher_handlers, :count).by(1)
-
-      dispatcher_handlers[:handle_something].should be HandleSomething
+  describe "#initialize" do
+    it "should assign an empty handlers container" do
+      subject.handlers.should be_empty
     end
   end
 
-  describe ".unregister" do
-    before { described_class.register :handle_something }
+  describe "#register" do
+    context "when the handler exists" do
+      it "should insert the handler in the handlers container" do
+        subject.register('handle_something')
+        subject.handlers[:handle_something].should eq(HandleSomething)
+      end
+    end
 
-    it "should unregister handler" do
-      expect { described_class.unregister :handle_something }.to change(dispatcher_handlers, :count).by(-1)
-
-      dispatcher_handlers[:handle_something].should be_nil
+    context "when the handler does not exist" do
+      it "should raise an exception" do
+        expect { subject.register('foo') }.to raise_exception(DispatchRider::HandlerNotFound)
+      end
     end
   end
 
-  describe ".dispatch" do
-    before { described_class.register :handle_something }
+  describe "#unregister" do
+    before :each do
+      subject.register('handle_something')
+    end
 
-    it "should dispatch item to registered handler" do
-      expect{ described_class.dispatch(handle_something_message) }.to throw_symbol( :something )
+    it "should remove the handler from the handlers container" do
+      subject.unregister(:handle_something)
+      subject.handlers.should be_empty
     end
   end
 
+  describe "#fetch" do
+    context "when a handler is registered" do
+      before :each do
+        subject.register('handle_something')
+      end
+
+      it "should return the handler" do
+        subject.fetch(:handle_something).should eq(HandleSomething)
+      end
+    end
+
+    context "when a handler is not registered" do
+      it "should raise an exception" do
+        expect { subject.fetch(:foo) }.to raise_exception(DispatchRider::HandlerNotRegistered)
+      end
+    end
+  end
+
+  describe "#dispatch" do
+    let(:message){ DispatchRider::Message.new(:subject => "handle_something", :body => { :do_throw_something => true }) }
+
+    context "when the handler provided in the message is present" do
+      before :each do
+        subject.register('handle_something')
+      end
+
+      it "should process the message" do
+        expect { subject.dispatch(message) }.to throw_symbol(:something)
+      end
+    end
+  end
 end
