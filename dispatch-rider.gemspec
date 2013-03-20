@@ -26,5 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "gemfury"
   spec.add_development_dependency "json"
   spec.add_development_dependency "rspec"
+  spec.add_development_dependency "ruby-debug"
   spec.add_development_dependency "aws-sdk"
 end

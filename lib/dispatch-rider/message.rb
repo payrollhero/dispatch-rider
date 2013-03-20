@@ -21,5 +21,9 @@ module DispatchRider
     def to_json
       attributes.to_json
     end
+
+    def ==(other)
+      attributes == other.attributes
+    end
   end
 end

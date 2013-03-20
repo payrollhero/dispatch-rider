@@ -13,10 +13,7 @@ module DispatchRider
 
       def dispatch(message)
         handler = @handlers[message.subject.to_sym]
-
-        # if this dispatcher don't know which handler to invoke
-        # then ignore it and let others try to dispatch it
-        handler.process(message.body) if handler
+        handler && handler.process(message.body)
       end
     end
   end
