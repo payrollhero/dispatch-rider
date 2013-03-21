@@ -2,12 +2,12 @@ module DispatchRider
   class Runner
     attr_reader :queue_service_registrar, :dispatcher, :demultiplexer, :publisher
 
-    def initialize(options = {})
+    def initialize
       @queue_service_registrar = QueueServiceRegistrar.new
       @dispatcher = Dispatcher.new
     end
 
-    def register_queue(name, options)
+    def register_queue(name, options = {})
       queue_service_registrar.register(name, options)
     end
 
@@ -17,8 +17,8 @@ module DispatchRider
 
     def prepare(queue_name)
       queue = queue_service_registrar.fetch(queue_name)
-      @demultiplexer = Demultiplexer.new(queue, dispatcher)
       @publisher = Publisher.new(queue)
+      @demultiplexer = Demultiplexer.new(queue, dispatcher)
     end
 
     def run
