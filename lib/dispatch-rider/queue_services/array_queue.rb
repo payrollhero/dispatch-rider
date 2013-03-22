@@ -13,8 +13,8 @@ module DispatchRider
         queue.first
       end
 
-      def dequeue
-        queue.shift
+      def dequeue(item)
+        queue.delete(item)
       end
 
       def size

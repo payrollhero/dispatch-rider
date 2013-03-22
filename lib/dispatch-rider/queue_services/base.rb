@@ -23,11 +23,13 @@ module DispatchRider
       end
 
       def pop(&block)
-        message = get_head
-        if message
-          message = deserialize(message)
-          block.call(message) && dequeue
+        item = get_head
+
+        if item
+          message = deserialize(item)
+          block.call(message) && dequeue(item)
         end
+
         message
       end
 
