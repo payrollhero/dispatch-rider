@@ -13,7 +13,7 @@ module DispatchRider
 
     def setup_publisher(queue_name)
       queue = queue_service_registrar.fetch(queue_name)
-      @publisher = Publisher.new(queue)
+      @publisher ||= Publisher.new(queue)
       self
     end
 
@@ -30,7 +30,7 @@ module DispatchRider
 
     def setup_demultiplexer(queue_name)
       queue = queue_service_registrar.fetch(queue_name)
-      @demultiplexer = Demultiplexer.new(queue, dispatcher)
+      @demultiplexer ||= Demultiplexer.new(queue, dispatcher)
       self
     end
 
