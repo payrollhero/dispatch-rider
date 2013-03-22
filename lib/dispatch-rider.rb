@@ -15,4 +15,5 @@ require "dispatch-rider/queue_service_registrar"
 require "dispatch-rider/queue_services"
 require "dispatch-rider/dispatcher"
 require "dispatch-rider/demultiplexer"
-require "dispatch-rider/runner"
+require "dispatch-rider/reactor"
+require "dispatch-rider/railtie" if defined?(Rails)

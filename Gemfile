@@ -1,4 +1,17 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in dispatch-rider.gemspec
 gemspec
+
+gem "rails"
+
+group :development do
+  gem "gemfury"
+end
+
+group :development, :test do
+  gem "rspec"
+end
+
+group :test do
+  gem "aws-sdk"
+end
