@@ -7,7 +7,7 @@ describe DispatchRider::QueueServices::AwsSqs do
     AWS::SQS::Client.any_instance.stub(:get_queue_url).and_return(response)
   end
 
-  subject do
+  subject(:queue_service) do
     DispatchRider::QueueServices::AwsSqs.new(:name => "normal_priority")
   end
 
@@ -36,7 +36,7 @@ describe DispatchRider::QueueServices::AwsSqs do
     end
   end
 
-  describe "#get_head" do
+  describe "#dequeue" do
     context "when the sqs queue has items in it" do
       let(:response_attributes) {{
         "SenderId" => "123456789012",
@@ -60,7 +60,7 @@ describe DispatchRider::QueueServices::AwsSqs do
       end
 
       it "should return the first item in the queue" do
-        received_message = subject.get_head
+        received_message = subject.dequeue
 
         result = JSON.parse(received_message.body)
         result['subject'].should eq('foo')
@@ -74,17 +74,16 @@ describe DispatchRider::QueueServices::AwsSqs do
       end
 
       it "should return nil" do
-        subject.get_head.should be_nil
+        subject.dequeue.should be_nil
       end
     end
   end
 
-  describe "#dequeue" do
-    let(:item_in_queue){ Class.new }
+  describe "#delete_item" do
+    let(:item_in_queue){ Object.new }
     it "should delete the first message from the queue" do
       item_in_queue.should_receive(:delete)
-
-      subject.dequeue(item_in_queue)
+      subject.delete_item(item_in_queue)
     end
   end
 
@@ -94,4 +93,33 @@ describe DispatchRider::QueueServices::AwsSqs do
       subject.size
     end
   end
+
+  describe "after consuming item" do
+    let(:queue_item){ OpenStruct.new(:body => {'subject' => "some_subject", 'body' => "somebody"}.to_json ) }
+
+    def queue_service_consume_item
+      queue_service.consume_item(queue_item){|message| consumption_success_status}
+    end
+
+    context "when consumption is successful" do
+      let(:consumption_success_status){ true }
+
+      it "should delete item" do
+        queue_service.should_receive(:delete_item)
+
+        queue_service_consume_item
+      end
+    end
+
+    context "when consumption is not successful" do
+      let(:consumption_success_status){ false }
+
+      it "should not delete item" do
+        queue_service.should_not_receive(:delete_item)
+
+        queue_service_consume_item
+      end
+    end
+  end
+
 end

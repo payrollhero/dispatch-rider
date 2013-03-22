@@ -17,8 +17,8 @@ describe DispatchRider::Reactor do
 
   describe "#register_queue" do
     it "should register a queue service with the queue service registrar" do
-      subject.register_queue(:array_queue)
-      subject.queue_service_registrar.fetch(:array_queue).should be_empty
+      subject.register_queue(:regular_queue)
+      subject.queue_service_registrar.fetch(:regular_queue).should be_empty
     end
   end
 
@@ -39,12 +39,12 @@ describe DispatchRider::Reactor do
   describe "#setup_demultiplexer" do
     context "when a queue is registered" do
       before :each do
-        subject.register_queue(:array_queue)
+        subject.register_queue(:regular_queue)
       end
 
       it "should assign a demultiplexer" do
         subject.register_handler(:foo_bar)
-        subject.setup_demultiplexer(:array_queue)
+        subject.setup_demultiplexer(:regular_queue)
         subject.demultiplexer.queue.should be_empty
         subject.demultiplexer.dispatcher.handlers.should eq({:foo_bar => FooBar})
       end
@@ -53,12 +53,12 @@ describe DispatchRider::Reactor do
 
   describe "#setup_publisher" do
     before :each do
-      subject.register_queue(:array_queue)
+      subject.register_queue(:regular_queue)
     end
 
     context "when a queue is registered" do
       it "should assign a publisher" do
-        subject.setup_publisher(:array_queue)
+        subject.setup_publisher(:regular_queue)
         subject.publisher.queue.should be_empty
       end
     end
@@ -66,10 +66,10 @@ describe DispatchRider::Reactor do
 
   describe "#process" do
     before :each do
-      subject.register_queue(:array_queue)
-      subject.setup_publisher(:array_queue)
+      subject.register_queue(:regular_queue)
+      subject.setup_publisher(:regular_queue)
       subject.register_handler(:foo_bar)
-      subject.setup_demultiplexer(:array_queue)
+      subject.setup_demultiplexer(:regular_queue)
     end
 
     it "should be able to start the demultiplexer and process messages" do

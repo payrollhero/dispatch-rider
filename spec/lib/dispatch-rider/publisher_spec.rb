@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe DispatchRider::Publisher, :nodb => true do
-  let(:queue) { DispatchRider::QueueServices::ArrayQueue.new }
+  let(:queue) { DispatchRider::QueueServices::RegularQueue.new }
 
   subject do
     DispatchRider::Publisher.new(queue)
