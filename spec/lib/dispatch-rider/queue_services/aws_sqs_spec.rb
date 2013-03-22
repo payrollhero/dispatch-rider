@@ -59,8 +59,10 @@ describe DispatchRider::QueueServices::AwsSqs do
         AWS::SQS::Client.any_instance.stub(:receive_message).and_return(response)
       end
 
-      it "should return the first message in the queue" do
-        result = JSON.parse(subject.get_head)
+      it "should return the first item in the queue" do
+        received_message = subject.get_head
+
+        result = JSON.parse(received_message.body)
         result['subject'].should eq('foo')
         result['body'].should eq({'bar' => 'baz'})
       end
@@ -78,11 +80,11 @@ describe DispatchRider::QueueServices::AwsSqs do
   end
 
   describe "#dequeue" do
+    let(:item_in_queue){ Class.new }
     it "should delete the first message from the queue" do
-      obj = OpenStruct.new(:delete => nil)
-      subject.queue.should_receive(:receive_message).and_return(obj)
-      obj.should_receive(:delete)
-      subject.dequeue
+      item_in_queue.should_receive(:delete)
+
+      subject.dequeue(item_in_queue)
     end
   end
 

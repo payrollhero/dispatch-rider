@@ -29,12 +29,14 @@ describe DispatchRider::QueueServices::ArrayQueue do
   end
 
   describe "#dequeue" do
+    let(:item_in_queue){ {'subject' => 'foo', 'body' => 'bar'}.to_json }
+
     before :each do
-      subject.enqueue({'subject' => 'foo', 'body' => 'bar'}.to_json)
+      subject.enqueue(item_in_queue)
     end
 
-    it "should remove the first item from the queue" do
-      subject.dequeue
+    it "should remove the item from the queue" do
+      subject.dequeue(item_in_queue)
       subject.queue.should be_empty
     end
   end

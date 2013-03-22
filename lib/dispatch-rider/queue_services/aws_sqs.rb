@@ -16,16 +16,19 @@ module DispatchRider
       end
 
       def get_head
-        message = queue.receive_message || OpenStruct.new(:body => nil)
-        message.body
+        queue.receive_message
       end
 
-      def dequeue
-        queue.receive_message.delete
+      def dequeue(item)
+        item.delete
       end
 
       def size
         queue.approximate_number_of_messages
+      end
+
+      def deserialize(item)
+        super(item.body)
       end
     end
   end
