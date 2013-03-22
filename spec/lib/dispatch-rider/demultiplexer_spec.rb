@@ -15,7 +15,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
   end
 
   let(:queue) do
-    DispatchRider::QueueServices::ArrayQueue.new
+    DispatchRider::QueueServices::RegularQueue.new
   end
 
   let(:message){ DispatchRider::Message.new(:subject => "test_handler", :body => {"foo" => true}) }

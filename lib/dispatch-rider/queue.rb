@@ -20,5 +20,5 @@ module DispatchRider
   end
 end
 
-DispatchRider::Queue.register_service(:array, DispatchRider::QueueServices::ArrayQueue)
+DispatchRider::Queue.register_service(:array, DispatchRider::QueueServices::RegularQueue)
 DispatchRider::Queue.register_service(:aws_sqs, DispatchRider::QueueServices::AwsSqs)

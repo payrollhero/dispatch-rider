@@ -1,20 +1,16 @@
 module DispatchRider
   module QueueServices
-    class ArrayQueue < Base
+    class RegularQueue < Base
       def assign_storage(attrs)
-        []
+        Queue.new
       end
 
       def enqueue(item)
-        queue.push(item)
+        queue.enq(item)
       end
 
-      def get_head
-        queue.first
-      end
-
-      def dequeue(item)
-        queue.delete(item)
+      def dequeue
+        queue.deq(true)
       end
 
       def size

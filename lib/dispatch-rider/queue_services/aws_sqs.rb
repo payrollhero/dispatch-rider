@@ -1,6 +1,8 @@
 module DispatchRider
   module QueueServices
     class AwsSqs < Base
+      set_callback :consume_item, :after, :handle_consumed_item
+
       def assign_storage(attrs)
         begin
           AWS::SQS.new.queues.named(attrs.fetch(:name))
@@ -15,16 +17,20 @@ module DispatchRider
         queue.send_message(item)
       end
 
-      def get_head
+      def dequeue
         queue.receive_message
       end
 
-      def dequeue(item)
+      def delete_item(item)
         item.delete
       end
 
       def size
         queue.approximate_number_of_messages
+      end
+
+      def handle_consumed_item(callback_info)
+        delete_item(callback_info.item) if callback_info.success
       end
 
       def deserialize(item)

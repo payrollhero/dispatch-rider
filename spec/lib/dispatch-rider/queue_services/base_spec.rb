@@ -42,7 +42,6 @@ describe DispatchRider::QueueServices::Base do
     before :each do
       DispatchRider::QueueServices::Base.any_instance.stub(:assign_storage).and_return([])
       subject.queue.push(DispatchRider::Message.new(:subject => "foo", :body => "bar").to_json)
-      subject.stub!(:get_head).and_return { subject.queue.first }
       subject.stub!(:dequeue).and_return { subject.queue.shift }
     end
 
@@ -51,7 +50,7 @@ describe DispatchRider::QueueServices::Base do
         subject.pop {|msg| true}.should eq(DispatchRider::Message.new(:subject => 'foo', :body => 'bar'))
       end
 
-      it "should remove the first message from the queue" do
+      it "should run after process callbacks for item" do
         subject.pop do |msg|
           msg.body = {:bar => "baz"}
           true
@@ -88,13 +87,13 @@ describe DispatchRider::QueueServices::Base do
     end
   end
 
-  describe "#get_head" do
+  describe "#dequeue" do
     before :each do
       DispatchRider::QueueServices::Base.any_instance.stub(:assign_storage).and_return([])
     end
 
     it "should raise an exception" do
-      expect { subject.get_head }.to raise_exception(NotImplementedError)
+      expect { subject.dequeue }.to raise_exception(NotImplementedError)
     end
   end
 
