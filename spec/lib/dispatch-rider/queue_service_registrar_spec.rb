@@ -11,7 +11,7 @@ describe DispatchRider::QueueServiceRegistrar do
     context "when the service requested is present" do
       it "should register the service by assigning a queue" do
         subject.register(:simple)
-        subject.queue_services[:simple].queue.should be_a Queue
+        subject.queue_services[:simple].queue.should eq([])
       end
     end
 
@@ -40,7 +40,7 @@ describe DispatchRider::QueueServiceRegistrar do
       end
 
       it "should return the queue service" do
-        subject.fetch(:simple).queue.should be_a Queue
+        subject.fetch(:simple).queue.should eq([])
       end
     end
 

@@ -3,13 +3,8 @@ module DispatchRider
     class Base
       attr_accessor :queue
 
-      include ActiveSupport::Callbacks
-
-      define_callbacks :consume_item
-
       def initialize(options = {})
-        attrs = options.symbolize_keys
-        @queue = assign_storage(attrs)
+        @queue = assign_storage(options.symbolize_keys)
       end
 
       def assign_storage(attrs)
@@ -18,31 +13,37 @@ module DispatchRider
 
       def push(item)
         message = serialize(item)
-        enqueue(message)
+        insert(message)
         message
       end
 
-      def enqueue(item)
+      def insert(item)
         raise NotImplementedError
       end
 
       def pop(&block)
-        item = dequeue
-        consume_item(item, &block) if item
+        obj = head
+        if obj.message
+          block.call(obj.message) && delete(obj.item)
+          obj.message
+        end
       end
 
-      def dequeue
+      def head
+        temp = raw_head
+        OpenStruct.new(:item => temp, :message => construct_message_from(temp))
+      end
+
+      def raw_head
         raise NotImplementedError
       end
 
-      def consume_item(item, &block)
-        callback_info = OpenStruct.new(:item => item, :success => nil)
+      def construct_message_from(item)
+        raise NotImplementedError
+      end
 
-        run_callbacks :consume_item, callback_info do
-          message = deserialize(item)
-          callback_info.success = block.call(message)
-          message
-        end
+      def delete(item)
+        raise NotImplementedError
       end
 
       def empty?
@@ -62,14 +63,6 @@ module DispatchRider
       def deserialize(item)
         attrs = JSON.parse(item).symbolize_keys
         DispatchRider::Message.new(attrs)
-      end
-
-      private
-
-      def run_after_consume_callbacks_for(item)
-        self.class.after_consume_callbacks.each do |callback_method_name|
-          send callback_method_name, item
-        end
       end
     end
   end

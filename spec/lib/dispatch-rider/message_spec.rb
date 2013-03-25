@@ -56,10 +56,4 @@ describe DispatchRider::Message do
       end
     end
   end
-
-  describe "#to_s" do
-    it "should return a string representation of the message" do
-      subject.to_s.should eq("The body of the message \"test\" is \"test_handler\"")
-    end
-  end
 end

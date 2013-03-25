@@ -2,15 +2,23 @@ module DispatchRider
   module QueueServices
     class Simple < Base
       def assign_storage(attrs)
-        Queue.new
+        []
       end
 
-      def enqueue(item)
-        queue.enq(item)
+      def insert(item)
+        queue << item
       end
 
-      def dequeue
-        queue.deq(true)
+      def raw_head
+        queue.first
+      end
+
+      def construct_message_from(item)
+        item ? deserialize(item) : item
+      end
+
+      def delete(item)
+        queue.delete(item)
       end
 
       def size
