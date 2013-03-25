@@ -11,17 +11,20 @@ module DispatchRider
         end
       end
 
-      def enqueue(item)
+      def insert(item)
         queue.send_message(item)
       end
 
-      def get_head
-        message = queue.receive_message || OpenStruct.new(:body => nil)
-        message.body
+      def raw_head
+        queue.receive_message
       end
 
-      def dequeue
-        queue.receive_message.delete
+      def construct_message_from(item)
+        item ? deserialize(item.body) : item
+      end
+
+      def delete(item)
+        item.delete
       end
 
       def size

@@ -4,8 +4,7 @@ module DispatchRider
       attr_accessor :queue
 
       def initialize(options = {})
-        attrs = options.symbolize_keys
-        @queue = assign_storage(attrs)
+        @queue = assign_storage(options.symbolize_keys)
       end
 
       def assign_storage(attrs)
@@ -14,28 +13,36 @@ module DispatchRider
 
       def push(item)
         message = serialize(item)
-        enqueue(message)
+        insert(message)
         message
       end
 
-      def enqueue(item)
+      def insert(item)
         raise NotImplementedError
       end
 
       def pop(&block)
-        message = get_head
-        if message
-          message = deserialize(message)
-          block.call(message) && dequeue
+        obj = head
+        if obj.message
+          block.call(obj.message) && delete(obj.item)
+          obj.message
         end
-        message
       end
 
-      def get_head
+      def head
+        temp = raw_head
+        OpenStruct.new(:item => temp, :message => construct_message_from(temp))
+      end
+
+      def raw_head
         raise NotImplementedError
       end
 
-      def dequeue
+      def construct_message_from(item)
+        raise NotImplementedError
+      end
+
+      def delete(item)
         raise NotImplementedError
       end
 
