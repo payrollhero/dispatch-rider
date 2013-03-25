@@ -1,6 +1,6 @@
 module DispatchRider
   module QueueServices
-    class RegularQueue < Base
+    class Simple < Base
       def assign_storage(attrs)
         Queue.new
       end

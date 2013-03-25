@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DispatchRider::QueueServices::RegularQueue do
+describe DispatchRider::QueueServices::Simple do
   describe "#assign_storage" do
     it "should return an empty array" do
       subject.assign_storage({}).should be_a Queue
