@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem "activesupport"
 gem "activemodel"
+gem "daemons"
 
 group :development do
   gem "bundler"
