@@ -1,3 +1,7 @@
+# This class represents a message. All other objects dela with passing around instances of this class.
+# A message must have a subject and a body. The subject represents the handlers name and the body represents
+# the payload of the process method in the handler.
+# When messages are stored in the queues, they are serialized.
 module DispatchRider
   class Message
     include ActiveModel::Validations
