@@ -1,3 +1,4 @@
+# Top level namespace of the gem
 require "dispatch-rider/version"
 require "active_support/hash_with_indifferent_access"
 require "active_support/inflector"

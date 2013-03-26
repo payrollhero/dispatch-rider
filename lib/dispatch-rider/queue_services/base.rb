@@ -1,3 +1,8 @@
+# This is the base class that provides the template for all queue services.
+# The child classes must implement the following methods to become a concrete class :
+# assign_storage, insert, raw_head, construct_message_from, delete and size.
+# The instances of this class or it's child classes are supposed to perform the following actions on the queue service :
+# initialize, push, pop and empty?
 module DispatchRider
   module QueueServices
     class Base
