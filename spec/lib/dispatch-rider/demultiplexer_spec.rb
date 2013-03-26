@@ -48,6 +48,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
     end
 
     context "when the queue is not empty" do
+
       before do
         queue.push message
       end
@@ -55,6 +56,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
       it "should be sending the message to the dispatcher" do
         demultiplexer.should_receive(:dispatch_message).with(message).at_least(:once)
         demultiplexer_thread.run
+        sleep 0.1 # give it a chance to process the job async before killing the demux
       end
     end
 

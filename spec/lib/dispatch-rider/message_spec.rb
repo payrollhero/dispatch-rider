@@ -24,7 +24,7 @@ describe DispatchRider::Message do
 
     context "when all the required attributes are not passed" do
       it "should raise an exception" do
-        expect { DispatchRider::Message.new(:subject => 'test') }.to raise_exception(DispatchRider::RecordInvalid)
+        expect { DispatchRider::Message.new({}) }.to raise_exception(DispatchRider::RecordInvalid)
       end
     end
   end

@@ -5,12 +5,10 @@ require 'aws'
 require 'rails'
 require 'rake'
 
-module DispatchRider
-  class Application < ::Rails::Application
-  end
+Dir.chdir(File.dirname(__FILE__) + "/dummyapp") do
+  require './config/application'
+  DispatchRider::Application.initialize!
 end
-
-DispatchRider::Application.initialize!
 
 RSpec.configure do |config|
   config.mock_with :rspec

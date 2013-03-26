@@ -1,16 +1,18 @@
 source 'https://rubygems.org'
 
-gemspec
-
-gem "rails"
+gem "activesupport"
+gem "activemodel"
 
 group :development do
   gem "gemfury"
+  gem "bundler"
+  gem "jeweler", "~> 1.8.4"
+  gem "rake"
 end
 
 group :development, :test do
+  gem "rails"
   gem "rspec"
-  gem "ruby-debug", "0.10.4"
 end
 
 group :test do
