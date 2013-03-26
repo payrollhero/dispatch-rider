@@ -12,11 +12,15 @@ rescue Bundler::BundlerError => e
 end
 
 Jeweler::Tasks.new do |gem|
-  require 'dispatch-rider/version'
-
+  def get_version_without_constant
+    version_fn = 'lib/dispatch-rider/version.rb'
+    r = eval "module TempVersionModule; #{File.read(version_fn)}; end", binding, version_fn
+    Object.send(:remove_const, "TempVersionModule")
+    r
+  end
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "dispatch-rider"
-  gem.version = DispatchRider::VERSION
+  gem.version = get_version_without_constant
 
   gem.description = %q{Messaging system that is customizable based on which queueing system we are using.}
   gem.summary = %q{Messaging system based on the reactor patter.
@@ -29,7 +33,10 @@ Jeweler::Tasks.new do |gem|
   gem.authors = ["Suman Mukherjee"]
   gem.email = ["sumanmukherjee03@gmail.com"]
 
+  gem.executables = ["dispatch_rider"]
+
   gem.files = FileList[
+    'bin/*',
     'lib/**/*.rb',
     'lib/tasks/**/*.rake',
   ]
