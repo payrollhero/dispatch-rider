@@ -1,9 +1,10 @@
+# This is a rudementary queue service that uses file system instead of
+# AWS::SQS or SimpleQueue. It addresses SimpleQueue's inability to be used
+# by only one application instance while avoid the cost of setting up AWS::SQS.
+# This is ideal to be used inside development.
+
 module DispatchRider
   module QueueServices
-    # This is a rudementary queue service that uses file system instead of
-    # AWS::SQS or SimpleQueue. It addresses SimpleQueue's inability to be used
-    # by only one application instance while avoid the cost of setting up AWS::SQS.
-    # This is ideal to be used inside development.
     class FileSystem < Base
       class Queue
         def initialize(path)
@@ -13,9 +14,7 @@ module DispatchRider
 
         def add(item)
           name_base = "#{@path}/#{Time.now.to_f}"
-          File.open("#{name_base}.inprogress", "w") {|f|
-            f.write(item)
-          }
+          File.open("#{name_base}.inprogress", "w"){ |f| f.write(item) }
           FileUtils.mv("#{name_base}.inprogress", "#{name_base}.ready")
         end
 
@@ -24,8 +23,7 @@ module DispatchRider
           return nil unless file_path
           file_path_inflight = file_path.gsub(/\.ready$/, '.inflight')
           FileUtils.mv(file_path, file_path_inflight)
-          file = File.new(file_path_inflight)
-          file
+          File.new(file_path_inflight)
         end
 
         def remove(item)
