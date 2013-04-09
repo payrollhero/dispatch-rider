@@ -1,16 +1,15 @@
+# This queue service is based on AWS SNS.
+# To make this queue service work, one would need the aws-sdk gem to be installed.
+# AwsSns is only half of a queue: the end where items are being pushed into.
+# The other end of this queue could be implemented using AWS::SQS.
+# Other possible endpoint (not yet implemented by DispatchRider) would be:
+#   * HTTP
+#   * HTTPS
+#   * eMail
+#   * eMailJson
+#   * SMS
 module DispatchRider
   module QueueServices
-
-    # This queue service is based on AWS SNS.
-    # To make this queue service work, one would need the aws-sdk gem to be installed.
-    # AwsSns is only half of a queue: the end where items are being pushed into.
-    # The other end of this queue could be implemented using AWS::SQS.
-    # Other possible endpoint (not yet implemented by DispatchRider) would be:
-    #   * HTTP
-    #   * HTTPS
-    #   * eMail
-    #   * eMailJson
-    #   * SMS
     class AwsSns < Base
       def assign_storage(attrs)
         begin
