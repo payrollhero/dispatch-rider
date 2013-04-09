@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
     "lib/dispatch-rider/queue_service_registrar.rb",
     "lib/dispatch-rider/queue_services.rb",
     "lib/dispatch-rider/queue_services/aws_sqs.rb",
+    "lib/dispatch-rider/queue_services/aws_sns.rb",
     "lib/dispatch-rider/queue_services/base.rb",
     "lib/dispatch-rider/queue_services/simple.rb",
     "lib/dispatch-rider/railtie.rb",
