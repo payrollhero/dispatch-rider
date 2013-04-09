@@ -2,15 +2,6 @@ require 'spec_helper'
 
 describe DispatchRider::QueueServices::AwsSns do
 
-  before do
-    AWS::Core::Configuration.new({
-      :stub_requests => true,
-      :access_key_id => 'ACCESS_KEY_ID',
-      :secret_access_key => 'SECRET_ACCESS_KEY',
-      :session_token => 'SESSION_TOKEN'
-    })
-  end
-
   let(:amazon_resource_name){ "arn:aws:sns:us-west-2:123456789012:GeneralTopic" }
 
   subject(:aws_sns_queue) do
@@ -19,7 +10,7 @@ describe DispatchRider::QueueServices::AwsSns do
 
   describe "#assign_storage" do
     it "should return an empty array" do
-      aws_sns_queue.assign_storage(name: amazon_resource_name).should be_a AWS::SNS::Topic
+      aws_sns_queue.assign_storage(name: amazon_resource_name).class.name.should == "AWS::SNS::Topic"
     end
   end
 
