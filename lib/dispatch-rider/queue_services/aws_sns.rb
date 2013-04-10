@@ -16,8 +16,6 @@ module DispatchRider
       def assign_storage(attrs)
         begin
           self.class.get_queue_for(attrs.fetch(:name))
-        rescue NameError
-          raise AdapterNotFoundError.new(self.class.name, 'aws-sdk')
         rescue IndexError
           raise RecordInvalid.new(self, ["Name can not be blank"])
         end
@@ -46,7 +44,11 @@ module DispatchRider
       private
 
       def self.sns_constructor
-        AWS::SNS.method(:new)
+        begin
+          AWS::SNS.method(:new)
+        rescue NameError
+          raise AdapterNotFoundError.new(self.class.name, 'aws-sdk')
+        end
       end
 
       def self.get_queue_for(amazon_resource_name)
