@@ -9,39 +9,58 @@ describe DispatchRider::QueueServices::AwsSns do
   end
 
   describe "#assign_storage" do
-    it "should return an empty array" do
+    it "should return a AWS::SNS::Topic" do
       aws_sns_queue.assign_storage(name: amazon_resource_name).class.name.should == "AWS::SNS::Topic"
     end
   end
 
   describe "#insert" do
+    before do
+      described_class.stub!(:sns_constructor) do
+        OpenStruct.new({
+          :call => OpenStruct.new({
+            :topics => sns_topic_collection
+          })
+        })
+      end
+    end
+
+    let(:sns_topic_collection) do
+      topic_collection = OpenStruct.new
+      topic_collection.stub!(:[]){ sns_topic }
+      topic_collection
+    end
+    let(:sns_topic){ mock("AWS::SNS::Topic") }
     let(:item) { {'subject' => 'foo', 'body' => 'bar'}.to_json }
-    let(:response) { AWS::SNS::Client.new.stub_for(:publish) }
 
     it "should insert a serialized object into the queue" do
-      AWS::SNS::Client.any_instance.should_receive(:publish).with({
-        :message => {:default => item }.to_json,
-        :message_structure => 'json',
-        :topic_arn => amazon_resource_name,
-      }).and_return(response)
+      sns_topic.should_receive(:publish).with(item)
 
-      aws_sns_queue.insert( item )
+      aws_sns_queue.insert(item)
     end
   end
 
   describe "#raw_head" do
-    it { expect{ aws_sns_queue.raw_head }.to raise_error NotImplementedError }
+    it "is not implemented" do
+      expect{ aws_sns_queue.raw_head }.to raise_error NotImplementedError
+    end
   end
 
   describe "#construct_message_from" do
-    it { expect{ aws_sns_queue.raw_head }.to raise_error NotImplementedError }
+    it "is not implemented" do
+      expect{ aws_sns_queue.raw_head }.to raise_error NotImplementedError
+    end
   end
 
   describe "#delete" do
-    it { expect{ aws_sns_queue.raw_head }.to raise_error NotImplementedError }
+    it "is not implemented" do
+      expect{ aws_sns_queue.raw_head }.to raise_error NotImplementedError
+    end
   end
 
   describe "#size" do
-    it { expect{ aws_sns_queue.raw_head }.to raise_error NotImplementedError }
+    it "is not implemented" do
+      expect{ aws_sns_queue.raw_head }.to raise_error NotImplementedError
+    end
   end
 end
