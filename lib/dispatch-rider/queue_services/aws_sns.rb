@@ -8,12 +8,14 @@
 #   * eMail
 #   * eMailJson
 #   * SMS
+
 module DispatchRider
   module QueueServices
     class AwsSns < Base
+
       def assign_storage(attrs)
         begin
-          AWS::SNS.new.topics[attrs.fetch(:name)]
+          self.class.get_queue_for(attrs.fetch(:name))
         rescue NameError
           raise AdapterNotFoundError.new(self.class.name, 'aws-sdk')
         rescue IndexError
@@ -40,6 +42,17 @@ module DispatchRider
       def size
         raise NotImplementedError, "Counting messages from #{self.class.name} is not supported."
       end
+
+      private
+
+      def self.sns_constructor
+        AWS::SNS.method(:new)
+      end
+
+      def self.get_queue_for(amazon_resource_name)
+        sns_constructor.call.topics[amazon_resource_name]
+      end
+
     end
   end
 end
