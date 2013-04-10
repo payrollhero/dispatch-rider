@@ -16,18 +16,14 @@ describe DispatchRider::QueueServices::AwsSns do
 
   describe "#insert" do
     before do
-      described_class.stub!(:sns_constructor) do
-        OpenStruct.new({
-          :call => OpenStruct.new({
-            :topics => sns_topic_collection
-          })
-        })
+      described_class.stub(:sns_constructor) do
+        proc { mock(:sns_adaptor, :topics => sns_topic_collection) }
       end
     end
 
     let(:sns_topic_collection) do
-      topic_collection = OpenStruct.new
-      topic_collection.stub!(:[]){ sns_topic }
+      topic_collection = mock(:sns_topic_collection)
+      topic_collection.stub(:[]){ sns_topic }
       topic_collection
     end
     let(:sns_topic){ mock("AWS::SNS::Topic") }
