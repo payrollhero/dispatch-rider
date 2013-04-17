@@ -7,7 +7,7 @@ module DispatchRider
     attr_reader :queue_service_registrar, :dispatcher, :demultiplexer, :publisher
 
     def initialize
-      @queue_service_registrar = QueueServiceRegistrar.new
+      @queue_service_registrar = Registrars::QueueService.new
     end
 
     def register_queue(name, options = {})
