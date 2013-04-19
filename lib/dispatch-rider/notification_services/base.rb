@@ -8,18 +8,34 @@ module DispatchRider
     class Base
       attr_reader :notifier, :channel_registrar
 
-      def initialize(channel_registrar)
+      def initialize(options)
         @notifier = assign_notifier
-        @channel_registrar = channel_registrar
+        @channel_registrar = assign_channel_registrar
       end
 
       def assign_notifier
         raise NotImplementedError
       end
 
+      def assign_channel_registrar
+        raise NotImplementedError
+      end
+
+      def register_channel(name, options = {})
+        channel_registrar.register(name, options)
+      end
+
+      def unregister_channel(name)
+        channel_registrar.unregister(name)
+      end
+
+      def fetch_channel(name)
+        channel_registrar.fetch(name.to_sym)
+      end
+
       def publish(options)
         channels(options[:to]).each do |channel|
-          channel.publish(options[:message])
+          channel.publish(message(options[:message]))
         end
       end
 
@@ -28,7 +44,13 @@ module DispatchRider
       end
 
       def channel(name)
-        channel_registrar.fetch(name.to_sym)
+        raise NotImplementedError
+      end
+
+      private
+
+      def message(attrs)
+        DispatchRider::Message.new(attrs).to_json
       end
     end
   end

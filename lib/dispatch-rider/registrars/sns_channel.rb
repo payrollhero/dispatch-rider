@@ -2,7 +2,7 @@ module DispatchRider
   module Registrars
     class SnsChannel < Base
       def value(name, options = {})
-        options[:notifier].call.topics[name]
+        name.to_s
       end
     end
   end
