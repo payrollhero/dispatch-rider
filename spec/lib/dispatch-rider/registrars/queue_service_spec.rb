@@ -3,7 +3,7 @@ require 'spec_helper'
 describe DispatchRider::Registrars::QueueService do
   describe "#initialize" do
     it "should assign the empty que services container" do
-      subject.queue_services.should eq({})
+      subject.store.should eq({})
     end
   end
 
@@ -11,13 +11,13 @@ describe DispatchRider::Registrars::QueueService do
     context "when the service requested is present" do
       it "should register the service by assigning a queue" do
         subject.register(:simple)
-        subject.queue_services[:simple].queue.should eq([])
+        subject.store[:simple].queue.should eq([])
       end
     end
 
     context "when the service requested is not present" do
       it "should raise an exception" do
-        expect { subject.register(:redis_queue) }.to raise_exception(DispatchRider::QueueServiceNotFound)
+        expect { subject.register(:redis_queue) }.to raise_exception(DispatchRider::NotFound)
       end
     end
   end
@@ -29,7 +29,7 @@ describe DispatchRider::Registrars::QueueService do
 
     it "should remove the registered queue service" do
       subject.unregister(:simple)
-      subject.queue_services.should be_empty
+      subject.store.should be_empty
     end
   end
 
@@ -46,7 +46,7 @@ describe DispatchRider::Registrars::QueueService do
 
     context "when the queue service is not registered" do
       it "should raise an exception" do
-        expect { subject.fetch(:simple) }.to raise_exception(DispatchRider::QueueServiceNotRegistered)
+        expect { subject.fetch(:simple) }.to raise_exception(DispatchRider::NotRegistered)
       end
     end
   end
