@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DispatchRider::QueueServices::AwsSns do
+describe DispatchRider::NotificationServices::AwsSns do
 
   let(:amazon_resource_name){ "arn:aws:sns:us-west-2:123456789012:GeneralTopic" }
 

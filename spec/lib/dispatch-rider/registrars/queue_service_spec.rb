@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DispatchRider::QueueServiceRegistrar do
+describe DispatchRider::Registrars::QueueService do
   describe "#initialize" do
     it "should assign the empty que services container" do
       subject.queue_services.should eq({})
