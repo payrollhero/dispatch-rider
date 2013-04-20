@@ -12,7 +12,6 @@ group :development do
 end
 
 group :development, :test do
-  gem "rails"
   gem "rspec"
 end
 

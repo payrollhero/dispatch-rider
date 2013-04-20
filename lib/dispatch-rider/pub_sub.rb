@@ -3,9 +3,9 @@
 # They need to register their handlers with the dispatcher through this interface as well.
 # When all is setup, the clients can publish through the publisher and subscribe by starting the demultiplexer.
 module DispatchRider
-  module Reactor
+  module PubSub
   end
 end
 
-require "reactor/publisher"
-require "reactor/subscriber"
+require "pub_sub/publisher"
+require "pub_sub/subscriber"

@@ -1,5 +1,6 @@
+# This class takes care of the subscribing side of the messaging system.
 module DispatchRider
-  module Reactor
+  module PubSub
     class Subscriber
       attr_reader :queue_service_registrar, :dispatcher, :demultiplexer
 
@@ -25,7 +26,7 @@ module DispatchRider
 
       def setup_demultiplexer(queue_name)
         queue = queue_service_registrar.fetch(queue_name)
-        @demultiplexer ||= Demultiplexer.new(queue, dispatcher)
+        @demultiplexer ||= DispatchRider::Demultiplexer.new(queue, dispatcher)
         self
       end
 

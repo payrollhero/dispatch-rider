@@ -9,10 +9,9 @@ require "active_model"
 
 require "dispatch-rider/errors"
 require "dispatch-rider/message"
-require "dispatch-rider/publisher"
-require "dispatch-rider/queue_service_registrar"
+require "dispatch-rider/registrars"
+require "dispatch-rider/notification_services"
 require "dispatch-rider/queue_services"
 require "dispatch-rider/dispatcher"
 require "dispatch-rider/demultiplexer"
-require "dispatch-rider/reactor"
-require "dispatch-rider/railtie" if defined?(Rails)
+require "dispatch-rider/pub_sub"

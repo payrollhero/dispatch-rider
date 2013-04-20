@@ -1,5 +1,6 @@
+# This class takes care of the publishing side of the messaging system.
 module DispatchRider
-  module Reactor
+  module PubSub
     class Publisher
       attr_reader :notification_service_registrar, :sns_channel_registrar
 
