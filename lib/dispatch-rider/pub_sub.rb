@@ -7,5 +7,5 @@ module DispatchRider
   end
 end
 
-require "pub_sub/publisher"
-require "pub_sub/subscriber"
+require "dispatch-rider/pub_sub/publisher"
+require "dispatch-rider/pub_sub/subscriber"
