@@ -6,7 +6,11 @@
 module DispatchRider
   module NotificationServices
     class Base
+      extend Forwardable
+
       attr_reader :notifier, :channel_registrar
+
+      def_delegators :channel_registrar, :register, :fetch, :unregister
 
       def initialize(options)
         @notifier = assign_notifier
@@ -19,18 +23,6 @@ module DispatchRider
 
       def assign_channel_registrar
         raise NotImplementedError
-      end
-
-      def register_channel(name, options = {})
-        channel_registrar.register(name, options)
-      end
-
-      def unregister_channel(name)
-        channel_registrar.unregister(name)
-      end
-
-      def fetch_channel(name)
-        channel_registrar.fetch(name.to_sym)
       end
 
       def publish(options)

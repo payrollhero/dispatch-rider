@@ -12,7 +12,7 @@ module DispatchRider
       end
 
       def channel(name)
-        notifier.call.topics[fetch_channel(name)]
+        notifier.call.topics[self.fetch(name)]
       end
     end
   end

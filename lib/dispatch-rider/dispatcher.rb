@@ -4,32 +4,18 @@
 # What handler to dispatch the message to is figured out from the subject of the message.
 module DispatchRider
   class Dispatcher
-    attr_reader :handlers
+    extend Forwardable
+
+    attr_reader :handler_registrar
+
+    def_delegators :handler_registrar, :register, :fetch, :unregister
 
     def initialize
-      @handlers = {}
-    end
-
-    def register(handler)
-      handlers[handler.to_sym] = handler.to_s.camelize.constantize
-      self
-    rescue NameError
-      raise NotFound.new(handler)
-    end
-
-    def unregister(handler)
-      handlers.delete(handler.to_sym)
-      self
-    end
-
-    def fetch(handler)
-      handlers.fetch(handler.to_sym)
-    rescue IndexError
-      raise NotRegistered.new(handler)
+      @handler_registrar = Registrars::Handler.new
     end
 
     def dispatch(message)
-      fetch(message.subject).process(message.body)
+      handler_registrar.fetch(message.subject).process(message.body)
     end
   end
 end

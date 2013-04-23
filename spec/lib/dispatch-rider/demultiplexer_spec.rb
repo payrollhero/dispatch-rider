@@ -12,6 +12,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
   let(:dispatcher) do
     dispatcher = DispatchRider::Dispatcher.new
     dispatcher.register(:test_handler)
+    dispatcher
   end
 
   let(:queue) do
@@ -37,7 +38,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
     end
 
     it "should assign the dispatcher" do
-      demultiplexer.dispatcher.handlers.should eq({:test_handler => TestHandler})
+      demultiplexer.dispatcher.fetch(:test_handler).should eq(TestHandler)
     end
   end
 
