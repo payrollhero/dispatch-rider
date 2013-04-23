@@ -14,7 +14,7 @@ module DispatchRider
       handlers[handler.to_sym] = handler.to_s.camelize.constantize
       self
     rescue NameError
-      raise HandlerNotFound.new(handler)
+      raise NotFound.new(handler)
     end
 
     def unregister(handler)
@@ -25,7 +25,7 @@ module DispatchRider
     def fetch(handler)
       handlers.fetch(handler.to_sym)
     rescue IndexError
-      raise HandlerNotRegistered.new(handler)
+      raise NotRegistered.new(handler)
     end
 
     def dispatch(message)

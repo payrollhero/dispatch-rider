@@ -25,7 +25,7 @@ describe DispatchRider::Dispatcher, :nodb => true do
 
     context "when the handler does not exist" do
       it "should raise an exception" do
-        expect { subject.register('foo') }.to raise_exception(DispatchRider::HandlerNotFound)
+        expect { subject.register('foo') }.to raise_exception(DispatchRider::NotFound)
       end
     end
   end
@@ -54,7 +54,7 @@ describe DispatchRider::Dispatcher, :nodb => true do
 
     context "when a handler is not registered" do
       it "should raise an exception" do
-        expect { subject.fetch(:foo) }.to raise_exception(DispatchRider::HandlerNotRegistered)
+        expect { subject.fetch(:foo) }.to raise_exception(DispatchRider::NotRegistered)
       end
     end
   end
