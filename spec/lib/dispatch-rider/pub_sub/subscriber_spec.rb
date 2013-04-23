@@ -11,7 +11,7 @@ describe DispatchRider::PubSub::Subscriber do
 
   describe "#initialize" do
     it "should assign a new queue service registrar" do
-      subject.queue_service_registrar.queue_services.should be_empty
+      subject.queue_service_registrar.store.should be_empty
     end
   end
 
@@ -48,33 +48,6 @@ describe DispatchRider::PubSub::Subscriber do
         subject.demultiplexer.queue.should be_empty
         subject.demultiplexer.dispatcher.handlers.should eq({:foo_bar => FooBar})
       end
-    end
-  end
-
-  describe "#setup_publisher" do
-    before :each do
-      subject.register_queue(:simple)
-    end
-
-    context "when a queue is registered" do
-      it "should assign a publisher" do
-        subject.setup_publisher(:simple)
-        subject.publisher.queue.should be_empty
-      end
-    end
-  end
-
-  describe "#process" do
-    before :each do
-      subject.register_queue(:simple)
-      subject.setup_publisher(:simple)
-      subject.register_handler(:foo_bar)
-      subject.setup_demultiplexer(:simple)
-    end
-
-    it "should be able to start the demultiplexer and process messages" do
-      subject.publisher.publish(:subject => :foo_bar, :body => {'foo' => 'bar'})
-      expect { subject.process }.to throw_symbol(:process_was_called)
     end
   end
 end
