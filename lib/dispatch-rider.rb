@@ -7,6 +7,9 @@ require "active_support/json"
 require "active_support/core_ext/array/conversions"
 require "active_model"
 
+module DispatchRider
+end
+
 require "dispatch-rider/errors"
 require "dispatch-rider/message"
 require "dispatch-rider/registrars"
