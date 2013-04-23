@@ -40,10 +40,10 @@ describe DispatchRider::PubSub::Subscriber do
     context "when a queue is registered" do
       before :each do
         subject.register_queue(:simple)
+        subject.register_handler(:foo_bar)
       end
 
       it "should assign a demultiplexer" do
-        subject.register_handler(:foo_bar)
         subject.setup_demultiplexer(:simple)
         subject.demultiplexer.queue.should be_empty
         subject.demultiplexer.dispatcher.fetch(:foo_bar).should eq(FooBar)
@@ -52,7 +52,15 @@ describe DispatchRider::PubSub::Subscriber do
   end
 
   describe "#process" do
+    before :each do
+      subject.register_queue(:simple)
+      subject.queue_service_registrar.fetch(:simple).push(DispatchRider::Message.new(:subject => :foo_bar, :body => {'baz' => 'blah'}))
+      subject.register_handler(:foo_bar)
+      subject.setup_demultiplexer(:simple)
+    end
+
     it "should process the queue" do
+      expect { subject.process }.to throw_symbol(:process_was_called)
     end
   end
 end
