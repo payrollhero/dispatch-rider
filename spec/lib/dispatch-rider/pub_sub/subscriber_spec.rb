@@ -46,8 +46,13 @@ describe DispatchRider::PubSub::Subscriber do
         subject.register_handler(:foo_bar)
         subject.setup_demultiplexer(:simple)
         subject.demultiplexer.queue.should be_empty
-        subject.demultiplexer.dispatcher.handlers.should eq({:foo_bar => FooBar})
+        subject.demultiplexer.dispatcher.fetch(:foo_bar).should eq(FooBar)
       end
+    end
+  end
+
+  describe "#process" do
+    it "should process the queue" do
     end
   end
 end
