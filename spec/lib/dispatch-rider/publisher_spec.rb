@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DispatchRider::PubSub::Publisher do
+describe DispatchRider::Publisher do
   subject do
     described_class.new
   end

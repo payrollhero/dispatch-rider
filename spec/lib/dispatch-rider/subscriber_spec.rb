@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe DispatchRider::PubSub::Subscriber do
+describe DispatchRider::Subscriber do
   module FooBar
     class << self
       def process(options)
