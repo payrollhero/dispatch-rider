@@ -2,7 +2,7 @@ module DispatchRider
   module Registrars
     class SnsChannel < Base
       def value(name, options = {})
-        name.to_s
+        "arn:aws:sns:#{options[:region]}:#{options[:account]}:#{options[:topic]}"
       end
     end
   end

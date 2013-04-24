@@ -35,8 +35,8 @@ describe DispatchRider::NotificationServices::Base do
 
   describe "#publish" do
     before :each do
-      subject.register(:foo)
-      subject.notifier.topics['foo'] = channel
+      subject.register(:foo, account: 123, region: "us-east-1", topic: "PlanOfAttack")
+      subject.notifier.topics['arn:aws:sns:us-east-1:123:PlanOfAttack'] = channel
     end
 
     it "publishes the message to the channels" do
@@ -48,8 +48,8 @@ describe DispatchRider::NotificationServices::Base do
 
   describe "#channels" do
     before :each do
-      subject.register(:foo)
-      subject.notifier.topics['foo'] = channel
+      subject.register(:foo, account: 123, region: "us-east-1", topic: "PlanOfAttack")
+      subject.notifier.topics['arn:aws:sns:us-east-1:123:PlanOfAttack'] = channel
     end
 
     it "returns an array of channels" do
