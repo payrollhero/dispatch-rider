@@ -1,6 +1,6 @@
 module DispatchRider
   module Registrars
-    class NotificationService
+    class NotificationService < Base
       def value(name, options = {})
         "DispatchRider::NotificationServices::#{name.to_s.camelize}".constantize.new(options)
       end

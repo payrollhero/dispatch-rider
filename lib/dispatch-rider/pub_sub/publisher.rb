@@ -9,13 +9,13 @@ module DispatchRider
       end
 
       def register_notification_service(name, options = {})
-        notification_service_registrar.register(name, options.merge(:channel_registrar => sns_channel_registrar))
+        notification_service_registrar.register(name, options)
         self
       end
 
       def register_channel(notification_service_name, name, options = {})
         notification_service = notification_service_registrar.fetch(notification_service_name)
-        notification_service.register_channel(name, options)
+        notification_service.register(name, options)
         self
       end
 

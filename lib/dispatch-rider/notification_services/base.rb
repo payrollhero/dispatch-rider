@@ -12,16 +12,16 @@ module DispatchRider
 
       def_delegators :channel_registrar, :register, :fetch, :unregister
 
-      def initialize(options)
-        @notifier = assign_notifier
-        @channel_registrar = assign_channel_registrar
+      def initialize(options = {})
+        @notifier = notifier_builder.new(options)
+        @channel_registrar = channel_registrar_builder.new
       end
 
-      def assign_notifier
+      def notifier_builder
         raise NotImplementedError
       end
 
-      def assign_channel_registrar
+      def channel_registrar_builder
         raise NotImplementedError
       end
 
@@ -39,10 +39,14 @@ module DispatchRider
         raise NotImplementedError
       end
 
+      def message_builder
+        DispatchRider::Message
+      end
+
       private
 
       def message(attrs)
-        DispatchRider::Message.new(attrs).to_json
+        message_builder.new(attrs).to_json
       end
     end
   end
