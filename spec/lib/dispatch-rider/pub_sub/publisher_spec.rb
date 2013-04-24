@@ -30,8 +30,8 @@ describe DispatchRider::PubSub::Publisher do
     end
 
     it "registers a channel for the notification service" do
-      subject.register_channel(:aws_sns, :foo)
-      subject.notification_service_registrar.fetch(:aws_sns).channel_registrar.fetch(:foo).should eq('foo')
+      subject.register_channel(:aws_sns, :foo, account: 123, region: "us-east-1", topic: "PlanOfAttack")
+      subject.notification_service_registrar.fetch(:aws_sns).channel_registrar.fetch(:foo).should eq('arn:aws:sns:us-east-1:123:PlanOfAttack')
     end
 
     it "returns the publisher" do
@@ -53,7 +53,7 @@ describe DispatchRider::PubSub::Publisher do
     let :topic_collection do
       obj = mock("AWS::SNS::TopicCollection")
       obj.stub!(:[]).and_return do |key|
-        topic if key == 'foo'
+        topic if key == 'arn:aws:sns:us-east-1:123:PlanOfAttack'
       end
       obj
     end
@@ -64,7 +64,7 @@ describe DispatchRider::PubSub::Publisher do
 
     before :each do
       subject.register_notification_service(:aws_sns)
-      subject.register_channel(:aws_sns, :foo)
+      subject.register_channel(:aws_sns, :foo, account: 123, region: "us-east-1", topic: "PlanOfAttack")
     end
 
     it "publishes the message to the notification service" do
