@@ -1,3 +1,4 @@
+# This si the registrar for queue services.
 module DispatchRider
   module Registrars
     class QueueService < Base

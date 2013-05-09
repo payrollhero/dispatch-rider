@@ -18,7 +18,27 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+  # For the publishing side
+  publisher = DispatchRider::Publisher.new
+  publisher.register_notification_service(:aws_sns)
+  publisher.register_channel(:aws_sns, :foo)
+  publisher.publish(:service => :aws_sns, :to => :foo, :message =>
+{:subject => "bar_handler", :body => {"bar" => "hola"}})
+
+  # For the subscribing side
+  module BarHandler
+    class << self
+      def process(options)
+        throw :process_was_called
+      end
+    end
+  end
+
+  subscriber = DispatchRider::Subscriber.new
+  subscriber.register_queue(:aws_sqs)
+  subscriber.register_handler(:bar_handler)
+  subscriber.setup_demultiplexer(:aws_sqs)
+  subscriber.process
 
 ## Contributing
 

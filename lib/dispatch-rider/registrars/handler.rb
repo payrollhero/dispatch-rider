@@ -1,3 +1,4 @@
+# This is the registrar for the handlers.
 module DispatchRider
   module Registrars
     class Handler < Base
