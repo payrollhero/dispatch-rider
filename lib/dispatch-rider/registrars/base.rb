@@ -1,3 +1,7 @@
+# This is the base class for the registrars.
+#  It defines the interface that other registrars inherit.
+#  This is an abstract class.
+#  The child classes inheriting this interface must define the 'value' method.
 module DispatchRider
   module Registrars
     class Base

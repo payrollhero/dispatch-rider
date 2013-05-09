@@ -1,3 +1,7 @@
+# This is a basic implementation of the Notification service using Amazon SNS.
+# The expected usage is as follows :
+#   notification_service = DispatchRider::NotificationServices::AwsSns.new
+#   notification_service.publish(:to => [:foo, :oof], :message => {:subject => "bar", :body => "baz"})
 module DispatchRider
   module NotificationServices
     class AwsSns < Base

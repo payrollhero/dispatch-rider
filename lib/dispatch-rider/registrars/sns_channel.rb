@@ -1,3 +1,4 @@
+# This is the registrar for the AWS SNS channels.
 module DispatchRider
   module Registrars
     class SnsChannel < Base

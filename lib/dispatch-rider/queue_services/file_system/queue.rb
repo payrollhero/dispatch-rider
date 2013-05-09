@@ -1,8 +1,4 @@
-# This is a rudementary queue service that uses file system instead of
-# AWS::SQS or SimpleQueue. It addresses SimpleQueue's inability to be used
-# by only one application instance while avoid the cost of setting up AWS::SQS.
-# This is ideal to be used inside development.
-
+# This is a queue implementation for the queue service based on file systems
 module DispatchRider
   module QueueServices
     class FileSystem < Base
