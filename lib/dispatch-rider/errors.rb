@@ -4,12 +4,14 @@ module DispatchRider
   class DispatchRiderError < StandardError
   end
 
+  # The error class for objects not being found
   class NotFound < DispatchRiderError
     def initialize(name)
       super("#{name.to_s} could not be found")
     end
   end
 
+  # The error class for keys not registered in a registrar
   class NotRegistered < DispatchRiderError
     def initialize(name)
       super("#{name.to_s} has not been registered")
