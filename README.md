@@ -18,6 +18,17 @@ Or install it yourself as:
 
 ## Usage
 
+# FileSystem Based publishing
+
+```ruby
+  publisher = DispatchRider::Publisher.new
+  publisher.register_notification_service(:file_system)
+  publisher.register_channel(:file_system, :foo, :path => "some/folder")
+  publisher.publish(:service => :file_system, :to => :foo, :message => {:subject => "bar_handler", :body => {"bar" => "hola"}})
+```
+
+# SNS Based
+
   # For the publishing side
   publisher = DispatchRider::Publisher.new
   publisher.register_notification_service(:aws_sns)
