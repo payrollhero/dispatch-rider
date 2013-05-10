@@ -6,3 +6,4 @@ end
 
 require "dispatch-rider/notification_services/base"
 require "dispatch-rider/notification_services/aws_sns"
+require "dispatch-rider/notification_services/file_system"
