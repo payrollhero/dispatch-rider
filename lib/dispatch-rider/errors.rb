@@ -4,31 +4,17 @@ module DispatchRider
   class DispatchRiderError < StandardError
   end
 
-  # This error is raised when a handler one is trying to register with the dispatcher is not found
-  class HandlerNotFound < DispatchRiderError
+  # The error class for objects not being found
+  class NotFound < DispatchRiderError
     def initialize(name)
-      super("The handler #{name.to_s} could not be registered, because such a handler does not exist")
+      super("#{name.to_s} could not be found")
     end
   end
 
-  # This error is raised when you try to call a handler that has not been registered with the dispatcher
-  class HandlerNotRegistered < DispatchRiderError
+  # The error class for keys not registered in a registrar
+  class NotRegistered < DispatchRiderError
     def initialize(name)
-      super("The handler #{name.to_s} has not been registered")
-    end
-  end
-
-  # This error is raised when you try to register a queue service that is not present
-  class QueueServiceNotFound < DispatchRiderError
-    def initialize(name)
-      super("The queue service #{name.to_s} could not be registered, because such a service does not exist")
-    end
-  end
-
-  # This error is raised when you try to fetch a queue service that is not registered
-  class QueueServiceNotRegistered < DispatchRiderError
-    def initialize(name)
-      super("The queue service #{name.to_s} has not been registered")
+      super("#{name.to_s} has not been registered")
     end
   end
 

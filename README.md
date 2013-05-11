@@ -18,7 +18,51 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Amazon SNS
+
+```ruby
+  # For the publishing side
+  publisher = DispatchRider::Publisher.new
+  publisher.register_notification_service(:aws_sns)
+  publisher.register_destination(:sns_foo, :aws_sns, :foo, :account => 777,
+:region => 'us-east-1', :topic => 'aliens') #
+publisher.register_destination(<convinient unique name>, <notification
+service registered>, <channel to publish to>, {:account => <SNS account
+id>, :region => <amazon region>, :topic => <name of topic in SNS>})
+  publisher.publish(:destinations => :sns_foo, :message =>
+{:subject => "bar_handler", :body => {"bar" => "hola"}})
+
+  # For the subscribing side
+  module BarHandler
+    class << self
+      def process(options)
+        throw :process_was_called
+      end
+    end
+  end
+
+  subscriber = DispatchRider::Subscriber.new
+  subscriber.register_queue(:aws_sqs)
+  subscriber.register_handler(:bar_handler)
+  subscriber.setup_demultiplexer(:aws_sqs)
+  subscriber.process
+```
+
+### File system based
+
+```ruby
+  publisher.register_notification_service(:file_system)
+  publisher.register_destination(:file_foo, :file_system, :foo, :path => "some/folder")
+  publisher.publish(:destinations => :file_foo, :message =>
+{:subject => "bar_handler", :body => {"bar" => "hola"}})
+```
+
+### Multiple services
+
+```ruby
+  publisher.publish(:destinations => [:sns_foo, :file_foo], :message =>
+{:subject => "bar_handler", :body => {"bar" => "hola"}})
+```
 
 ## Contributing
 

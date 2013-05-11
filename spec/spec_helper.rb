@@ -2,13 +2,8 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'aws'
-require 'rails'
 require 'rake'
-
-Dir.chdir(File.dirname(__FILE__) + "/dummyapp") do
-  require './config/application'
-  DispatchRider::Application.initialize!
-end
+require 'tempfile'
 
 RSpec.configure do |config|
   config.mock_with :rspec
