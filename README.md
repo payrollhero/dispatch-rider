@@ -18,22 +18,18 @@ Or install it yourself as:
 
 ## Usage
 
-# FileSystem Based publishing
+### Amazon SNS
 
 ```ruby
-  publisher = DispatchRider::Publisher.new
-  publisher.register_notification_service(:file_system)
-  publisher.register_channel(:file_system, :foo, :path => "some/folder")
-  publisher.publish(:service => :file_system, :to => :foo, :message => {:subject => "bar_handler", :body => {"bar" => "hola"}})
-```
-
-# SNS Based
-
   # For the publishing side
   publisher = DispatchRider::Publisher.new
   publisher.register_notification_service(:aws_sns)
-  publisher.register_channel(:aws_sns, :foo)
-  publisher.publish(:service => :aws_sns, :to => :foo, :message =>
+  publisher.register_destination(:sns_foo, :aws_sns, :foo, :account => 777,
+:region => 'us-east-1', :topic => 'aliens') #
+publisher.register_destination(<convinient unique name>, <notification
+service registered>, <channel to publish to>, {:account => <SNS account
+id>, :region => <amazon region>, :topic => <name of topic in SNS>})
+  publisher.publish(:destinations => :sns_foo, :message =>
 {:subject => "bar_handler", :body => {"bar" => "hola"}})
 
   # For the subscribing side
@@ -50,6 +46,23 @@ Or install it yourself as:
   subscriber.register_handler(:bar_handler)
   subscriber.setup_demultiplexer(:aws_sqs)
   subscriber.process
+```
+
+### File system based
+
+```ruby
+  publisher.register_notification_service(:file_system)
+  publisher.register_destination(:file_foo, :file_system, :foo, :path => "some/folder")
+  publisher.publish(:destinations => :file_foo, :message =>
+{:subject => "bar_handler", :body => {"bar" => "hola"}})
+```
+
+### Multiple services
+
+```ruby
+  publisher.publish(:destinations => [:sns_foo, :file_foo], :message =>
+{:subject => "bar_handler", :body => {"bar" => "hola"}})
+```
 
 ## Contributing
 
