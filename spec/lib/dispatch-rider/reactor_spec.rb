@@ -4,7 +4,7 @@ describe DispatchRider::Reactor do
   module FooBar
     class << self
       def process(options)
-        throw options['foo'] if options.fetch('foo')
+        throw :process_was_called
       end
     end
   end
@@ -25,14 +25,14 @@ describe DispatchRider::Reactor do
   describe "#register_handler" do
     it "should register a handler" do
       subject.register_handler(:foo_bar)
-      expect { subject.dispatcher.dispatch(DispatchRider::Message.new(:subject => :foo_bar, :body => {'foo' => 'bar'})) }.to throw_symbol('bar')
+      expect { subject.dispatcher.dispatch(DispatchRider::Message.new(:subject => :foo_bar, :body => {'foo' => 'bar'})) }.to throw_symbol(:process_was_called)
     end
   end
 
   describe "#register_handlers" do
     it "should register all the handlers" do
       subject.register_handlers(:foo_bar)
-      expect { subject.dispatcher.dispatch(DispatchRider::Message.new(:subject => :foo_bar, :body => {'foo' => 'bar'})) }.to throw_symbol('bar')
+      expect { subject.dispatcher.dispatch(DispatchRider::Message.new(:subject => :foo_bar, :body => {'foo' => 'bar'})) }.to throw_symbol(:process_was_called)
     end
   end
 
@@ -74,7 +74,7 @@ describe DispatchRider::Reactor do
 
     it "should be able to start the demultiplexer and process messages" do
       subject.publisher.publish(:subject => :foo_bar, :body => {'foo' => 'bar'})
-      expect { subject.process }.to throw_symbol('bar')
+      expect { subject.process }.to throw_symbol(:process_was_called)
     end
   end
 end

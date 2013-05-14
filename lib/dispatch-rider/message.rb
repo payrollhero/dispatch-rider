@@ -9,12 +9,11 @@ module DispatchRider
     attr_accessor :subject, :body
 
     validates :subject, :presence => true
-    validates :body, :presence => true
 
     def initialize(options)
       attrs = options.symbolize_keys
       @subject = attrs[:subject]
-      @body = attrs[:body]
+      @body = attrs[:body] || {}
       raise RecordInvalid.new(self, errors.full_messages) unless valid?
     end
 
