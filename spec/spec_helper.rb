@@ -1,10 +1,16 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
-require 'rubygems'
-require 'rspec'
-require 'ostruct'
 require 'aws'
+require 'rails'
+require 'rake'
+
+module DispatchRider
+  class Application < ::Rails::Application
+  end
+end
+
+DispatchRider::Application.initialize!
 
 RSpec.configure do |config|
   config.mock_with :rspec
