@@ -4,6 +4,11 @@ Dispatch rider is a pub/sub kind of library that allows you to publish a
 message to a notification system (like Amazon SNS) and then you
 can subscribe to the channels that you subscribed to and start
 handling the messages.
+
+### Build status
+
+[![Build Status](https://travis-ci.org/payrollhero/dispatch-rider.png)](https://travis-ci.org/payrollhero/dispatch-rider)
+
 ## Installation
 
 Add this line to your application's Gemfile:
