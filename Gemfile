@@ -8,6 +8,7 @@ group :development do
   gem "bundler"
   gem "jeweler", "~> 1.8.4"
   gem "rake"
+  gem "travis-lint"
 end
 
 group :development, :test do
