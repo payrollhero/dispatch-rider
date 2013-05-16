@@ -37,22 +37,17 @@ describe DispatchRider::QueueServices::FileSystem do
   end
 
   describe "#construct_message_from" do
-    context "when the item is not nil" do
-      it "should return the item casted as a message" do
-        file = Tempfile.new('item')
-        file.write({'subject' => 'foo', 'body' => 'bar'}.to_json)
-        file.rewind
-
-        result = file_system_queue.construct_message_from(file)
-        result.subject.should eq('foo')
-        result.body.should eq('bar')
-      end
+    let(:new_file) do
+      file = Tempfile.new('item')
+      file.write({'subject' => 'foo', 'body' => 'bar'}.to_json)
+      file.rewind
+      file
     end
 
-    context "when the item is nil" do
-      it "should return nil" do
-        file_system_queue.construct_message_from(nil).should be_nil
-      end
+    it "should return the item casted as a message" do
+      result = file_system_queue.construct_message_from(new_file)
+      result.subject.should eq('foo')
+      result.body.should eq('bar')
     end
   end
 

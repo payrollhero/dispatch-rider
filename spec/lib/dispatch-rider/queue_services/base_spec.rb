@@ -70,6 +70,31 @@ describe DispatchRider::QueueServices::Base do
     end
   end
 
+  describe "#head" do
+    before { base_queue.stub(:raw_head).and_return(new_item) }
+
+    context "when there is no new item" do
+      let(:new_item){ nil }
+
+      it "should raise an exception" do
+        base_queue.head.should be_nil
+      end
+    end
+
+    context "when a new item exists" do
+      before { base_queue.stub(:construct_message_from){|item| item.message} }
+
+      let(:new_item){ OpenStruct.new(:message => new_message) }
+      let(:new_message){ :the_message }
+
+      it "should raise an exception" do
+        received_head = base_queue.head
+        received_head.item.should == new_item
+        received_head.message.should == new_message
+      end
+    end
+  end
+
   describe "#raw_head" do
     it "should raise an exception" do
       expect { base_queue.raw_head }.to raise_exception(NotImplementedError)
