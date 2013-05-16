@@ -33,18 +33,10 @@ describe DispatchRider::QueueServices::Simple do
   end
 
   describe "#construct_message_from" do
-    context "when the item is not nil" do
-      it "should return the item casted as a message" do
-        result = simple_queue.construct_message_from({'subject' => 'foo', 'body' => 'bar'}.to_json)
-        result.subject.should eq('foo')
-        result.body.should eq('bar')
-      end
-    end
-
-    context "when the item is nil" do
-      it "should return nil" do
-        simple_queue.construct_message_from(nil).should be_nil
-      end
+    it "should return the item casted as a message" do
+      result = simple_queue.construct_message_from({'subject' => 'foo', 'body' => 'bar'}.to_json)
+      result.subject.should eq('foo')
+      result.body.should eq('bar')
     end
   end
 
