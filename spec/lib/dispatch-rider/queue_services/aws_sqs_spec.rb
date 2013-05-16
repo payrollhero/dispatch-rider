@@ -79,17 +79,31 @@ describe DispatchRider::QueueServices::AwsSqs do
   end
 
   describe "#construct_message_from" do
-    context "when the item is not nil" do
+    context "when the item is directly published to AWS::SQS" do
+      let(:sqs_message){ OpenStruct.new(:body => {'subject' => 'foo', 'body' => 'bar'}.to_json) }
+
       it "should return a message" do
-        result = aws_sqs_queue.construct_message_from(OpenStruct.new(:body => {'subject' => 'foo', 'body' => 'bar'}.to_json))
+        result = aws_sqs_queue.construct_message_from(sqs_message)
+        result.subject.should eq('foo')
+        result.body.should eq('bar')
+      end
+    end
+
+    context "when the item is published through AWS::SNS" do
+      let(:sqs_message){ OpenStruct.new(:body => {"Type" => "Notification", "Message" => {'subject' => 'foo', 'body' => 'bar'}.to_json}.to_json) }
+
+      it "should return a message" do
+        result = aws_sqs_queue.construct_message_from(sqs_message)
         result.subject.should eq('foo')
         result.body.should eq('bar')
       end
     end
 
     context "when the item is nil" do
+      let(:sqs_message){ nil }
+
       it "should return nil" do
-        aws_sqs_queue.construct_message_from(nil).should be_nil
+        aws_sqs_queue.construct_message_from(sqs_message).should be_nil
       end
     end
   end
