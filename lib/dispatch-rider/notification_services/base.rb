@@ -27,7 +27,7 @@ module DispatchRider
 
       def publish(options)
         channels(options[:to]).each do |channel|
-          channel.publish(message(options[:message]))
+          channel.publish(serialize(message(options[:message])))
         end
       end
 
@@ -46,7 +46,11 @@ module DispatchRider
       private
 
       def message(attrs)
-        message_builder.new(attrs).to_json
+        message_builder.new(attrs)
+      end
+
+      def serialize(item)
+        item.to_json
       end
     end
   end

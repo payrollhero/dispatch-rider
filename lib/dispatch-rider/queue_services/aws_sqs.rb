@@ -22,7 +22,7 @@ module DispatchRider
       end
 
       def construct_message_from(item)
-        item ? deserialize(item.body) : item
+        deserialize(MessageBodyExtractor.new(item).extract)
       end
 
       def delete(item)
@@ -31,6 +31,18 @@ module DispatchRider
 
       def size
         queue.approximate_number_of_messages
+      end
+
+      class MessageBodyExtractor
+        attr_reader :parsed_message
+
+        def initialize(raw_message)
+          @parsed_message = JSON.parse(raw_message.body)
+        end
+
+        def extract
+          parsed_message.has_key?("Message") ? parsed_message["Message"] : parsed_message.to_json
+        end
       end
     end
   end
