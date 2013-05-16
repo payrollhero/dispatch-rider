@@ -10,14 +10,16 @@ module DispatchRider
     def initialize(queue, dispatcher)
       @queue = queue
       @dispatcher = dispatcher
+      @continue = true
     end
 
     def start
-      @continue = true
-      loop do
-        break unless @continue
-        queue.pop do |message|
-          dispatch_message(message)
+      catch(:done) do
+        loop do
+          throw :done unless @continue
+          queue.pop do |message|
+            dispatch_message(message)
+          end
         end
       end
       self
