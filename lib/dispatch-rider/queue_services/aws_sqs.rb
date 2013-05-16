@@ -22,7 +22,7 @@ module DispatchRider
       end
 
       def construct_message_from(item)
-        item ? deserialize(item.body) : item
+        item && deserialize(sns_message_from(item) || item.body)
       end
 
       def delete(item)
@@ -32,6 +32,15 @@ module DispatchRider
       def size
         queue.approximate_number_of_messages
       end
+
+      private
+
+      def sns_message_from(item)
+        parsed_body = JSON.parse(item.body)
+
+        (parsed_body["Type"] == "Notification") && parsed_body["Message"]
+      end
+
     end
   end
 end
