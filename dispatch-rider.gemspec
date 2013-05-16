@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "dispatch-rider"
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Suman Mukherjee"]
@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
     "lib/dispatch-rider/publisher.rb",
     "lib/dispatch-rider/queue_services.rb",
     "lib/dispatch-rider/queue_services/aws_sqs.rb",
+    "lib/dispatch-rider/queue_services/aws_sqs/message_body_extractor.rb",
     "lib/dispatch-rider/queue_services/base.rb",
     "lib/dispatch-rider/queue_services/file_system.rb",
     "lib/dispatch-rider/queue_services/file_system/queue.rb",
