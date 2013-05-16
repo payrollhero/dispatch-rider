@@ -22,7 +22,7 @@ module DispatchRider
       end
 
       def construct_message_from(item)
-        item && deserialize(sns_message_from(item) || item.body)
+        deserialize(MessageBodyExtractor.new(item).extract)
       end
 
       def delete(item)
@@ -33,14 +33,17 @@ module DispatchRider
         queue.approximate_number_of_messages
       end
 
-      private
+      class MessageBodyExtractor
+        attr_reader :parsed_message
 
-      def sns_message_from(item)
-        parsed_body = JSON.parse(item.body)
+        def initialize(raw_message)
+          @parsed_message = JSON.parse(raw_message.body)
+        end
 
-        (parsed_body["Type"] == "Notification") && parsed_body["Message"]
+        def extract
+          parsed_message.has_key?("Message") ? parsed_message["Message"] : parsed_message.to_json
+        end
       end
-
     end
   end
 end
