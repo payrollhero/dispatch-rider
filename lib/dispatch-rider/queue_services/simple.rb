@@ -15,7 +15,7 @@ module DispatchRider
       end
 
       def construct_message_from(item)
-        item ? deserialize(item) : item
+        deserialize(item)
       end
 
       def delete(item)

@@ -28,15 +28,15 @@ module DispatchRider
 
       def pop(&block)
         obj = head
-        if obj.message
+        if obj
           block.call(obj.message) && delete(obj.item)
           obj.message
         end
       end
 
       def head
-        temp = raw_head
-        OpenStruct.new(:item => temp, :message => construct_message_from(temp))
+        raw_item = raw_head
+        raw_item && OpenStruct.new(:item => raw_item, :message => construct_message_from(raw_item))
       end
 
       def raw_head
