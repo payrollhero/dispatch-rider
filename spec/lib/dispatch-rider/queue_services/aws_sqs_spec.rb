@@ -98,14 +98,6 @@ describe DispatchRider::QueueServices::AwsSqs do
         result.body.should eq('bar')
       end
     end
-
-    context "when the item is nil" do
-      let(:sqs_message){ nil }
-
-      it "should return nil" do
-        aws_sqs_queue.construct_message_from(sqs_message).should be_nil
-      end
-    end
   end
 
   describe "#delete" do
