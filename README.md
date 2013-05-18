@@ -38,10 +38,13 @@ To publish using the filesystem register the path where to publish the message f
     publisher.register_notification_service(:file_system)
     publisher.register_destination(:local_message_queue, :file_system, :dev_channel, :path => "tmp/news-updates")
 
-    publisher.publish(:destinations => :local_message_queue, :message => {:subject => "read_news", :body => {"headlines" => [
-      "April 29, 2013: Rails 4.0.0.rc1 is released.",
-      "May 14, 2013: Ruby 2.0.0-p195 is released"
-    ]}})
+    publisher.publish(:destinations => :local_message_queue, :message => {
+      :subject => "read_news",
+      :body => {"headlines" => [
+        "April 29, 2013: Rails 4.0.0.rc1 is released.",
+        "May 14, 2013: Ruby 2.0.0-p195 is released"
+      ]
+    }})
 
 ```
 
@@ -53,12 +56,19 @@ It's then as easy as providing the configuration details of the topic to the pub
     publisher = DispatchRider::Publisher.new
 
     publisher.register_notification_service(:aws_sns)
-    publisher.register_destination(:sns_message_queue, :aws_sns, :dev_channel, :account => 777, :region => 'us-east-1', :topic => 'RoR')
+    publisher.register_destination(:sns_message_queue, :aws_sns, :dev_channel, {
+      :account => 777,
+      :region  => 'us-east-1',
+      :topic   => 'RoR'
+    })
 
-    publisher.publish(:destinations => :sns_message_queue, :message => {:subject => "read_news", :body => {"headlines" => [
-      "April 29, 2013: Rails 4.0.0.rc1 is released.",
-      "May 14, 2013: Ruby 2.0.0-p195 is released"
-    ]}})
+    publisher.publish(:destinations => :sns_message_queue, :message => {
+      :subject => "read_news",
+      :body => {"headlines" => [
+        "April 29, 2013: Rails 4.0.0.rc1 is released.",
+        "May 14, 2013: Ruby 2.0.0-p195 is released"
+      ]
+    }})
 
 ```
 
@@ -66,10 +76,13 @@ To publish to multiple destinations:
 
 ```ruby
 
-    publisher.publish(:destinations => [:local_message_queue, :sns_message_queue], :message => {:subject => "read_news", :body => {"headlines" => [
-      "April 29, 2013: Rails 4.0.0.rc1 is released.",
-      "May 14, 2013: Ruby 2.0.0-p195 is released"
-    ]}})
+    publisher.publish(:destinations => [:local_message_queue, :sns_message_queue], :message => {
+      :subject => "read_news",
+      :body => {"headlines" => [
+        "April 29, 2013: Rails 4.0.0.rc1 is released.",
+        "May 14, 2013: Ruby 2.0.0-p195 is released"
+      ]
+    }})
 
 ```
 
@@ -104,7 +117,10 @@ Sample Rails publisher:
       end
 
       def publish
-        publisher.publish(:destinations => destinations, :message => {:subject => "read_news", :body => {"headlines" => @news.headlines}})
+        publisher.publish(:destinations => destinations, :message => {
+          :subject => "read_news",
+          :body => {"headlines" => @news.headlines}
+        })
       end
     end
 
