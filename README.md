@@ -25,6 +25,34 @@ Or install it yourself as:
 
 ## Usage
 
+### Hash Based Configuration
+
+All configuration can be loaded from a hash instead of being done like the examples below.
+(currently only implemented for the publisher)
+
+eg:
+
+```ruby
+  publisher = DispatchRider::Publisher.new
+  publisher.configure({
+    notification_services: {
+      file_system: {}
+    },
+    destinations: {
+      file_foo: {
+        service: :file_system,
+        channel: :foo,
+        options: {
+          path: "test/channel",
+        }
+      }
+    }
+  })
+```
+
+You can load this configuration hash from a YAML file or something, whatever works
+well for your environment.
+
 ### Amazon SNS
 
 ```ruby
