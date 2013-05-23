@@ -12,14 +12,14 @@ module DispatchRider
 
         private
 
-          def configure_notification_services(configuration_hash, publisher)
-            configuration_hash.each do |(service_name, service_options)|
+          def configure_notification_services(notification_services, publisher)
+            notification_services.each do |(service_name, service_options)|
               publisher.register_notification_service(service_name, service_options)
             end
           end
 
-          def configure_destinations(configuration_hash, publisher)
-            configuration_hash.each do |(destination_name, info)|
+          def configure_destinations(destinations, publisher)
+            destinations.each do |(destination_name, info)|
               publisher.register_destination(destination_name, info[:service], info[:channel], info[:options])
             end
           end
