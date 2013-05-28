@@ -30,7 +30,7 @@ describe DispatchRider::Publisher do
     end
 
     it "calls config reader" do
-      DispatchRider::Publisher::ConfigurationReader.should_receive(:parse).with(configuration_hash, subject)
+      DispatchRider::Publisher::ConfigurationReader.should_receive(:parse).with(configuration_hash.with_indifferent_access, subject)
       subject.configure(configuration_hash)
     end
   end
