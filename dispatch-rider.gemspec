@@ -12,14 +12,13 @@ Gem::Specification.new do |s|
   s.date = "2013-05-16"
   s.description = "Messaging system that is customizable based on which queueing system we are using."
   s.email = ["sumanmukherjee03@gmail.com"]
-  s.executables = ["dispatch_rider"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.md"
   ]
   s.files = [
-    "bin/dispatch_rider",
     "lib/dispatch-rider.rb",
+    "lib/dispatch-rider/command.rb",
     "lib/dispatch-rider/demultiplexer.rb",
     "lib/dispatch-rider/dispatcher.rb",
     "lib/dispatch-rider/errors.rb",
@@ -31,6 +30,7 @@ Gem::Specification.new do |s|
     "lib/dispatch-rider/notification_services/file_system/channel.rb",
     "lib/dispatch-rider/notification_services/file_system/notifier.rb",
     "lib/dispatch-rider/publisher.rb",
+    "lib/dispatch-rider/publisher/configuration_reader.rb",
     "lib/dispatch-rider/queue_services.rb",
     "lib/dispatch-rider/queue_services/aws_sqs.rb",
     "lib/dispatch-rider/queue_services/aws_sqs/message_body_extractor.rb",
