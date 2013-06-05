@@ -5,7 +5,7 @@ require 'optparse'
 module DispatchRider
   class Command
 
-    def initialize(options)
+    def initialize(options = {})
       @app_home = Pathname.new(Dir.getwd)
       @options = {
         :log_output => true,
