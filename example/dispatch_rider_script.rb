@@ -2,6 +2,7 @@
 
 require './config/boot'
 require 'dispatch-rider'
+require 'dispatch-rider/command'
 
 DispatchRider::Command.new.run(ARGV) do
   require './config/environment'
