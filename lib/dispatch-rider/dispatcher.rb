@@ -12,10 +12,23 @@ module DispatchRider
 
     def initialize
       @handler_registrar = Registrars::Handler.new
+      @error_handler = method(:default_error_handler)
+    end
+
+    def on_error(&block)
+      @error_handler = block
     end
 
     def dispatch(message)
       handler_registrar.fetch(message.subject).process(message.body)
+    rescue Exception => exception
+      @error_handler.call(message, exception)
+    end
+
+    private
+
+    def default_error_handler(message, exception)
+      raise exception
     end
   end
 end
