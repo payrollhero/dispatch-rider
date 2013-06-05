@@ -52,7 +52,7 @@ describe DispatchRider::Dispatcher, :nodb => true do
           subject.on_error &method(:error_handler)
         end
 
-        it "raises the original error" do
+        it "gets handled by the defined method" do
           expect {
             subject.dispatch(message).should == :flag_for_message_deletion
           }.to_not raise_exception
