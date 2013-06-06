@@ -205,6 +205,31 @@ Sample subscriber setup:
 
 ```
 
+Sample subscriber dispatch error handling (optional):
+
+```ruby
+
+    # using blocks
+
+    subscriber.on_dispatch_error do |message, exception|
+      # put your error handling code here
+
+      return false # or return true to permanently remove the message
+    end
+
+    # using methods
+
+    def handle_dispatch_error(message, exception)
+      # put your error handling code here
+
+      return false # or return true to permanently remove the message
+    end
+
+    subscriber.on_dispatch_error &method(:handle_dispatch_error)
+
+```
+
+
 Sample Rails application rake task:
 
 ```ruby
