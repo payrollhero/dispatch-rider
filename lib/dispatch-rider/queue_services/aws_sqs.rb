@@ -7,7 +7,7 @@ module DispatchRider
 
       def assign_storage(attrs)
         begin
-          AWS::SQS.new.queues.named(attrs.fetch(:name))
+          AWS::SQS.new(:logger => nil).queues.named(attrs.fetch(:name))
         rescue NameError
           raise AdapterNotFoundError.new(self.class.name, 'aws-sdk')
         rescue IndexError
