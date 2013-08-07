@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe DispatchRider::QueueServices::AwsSqs do
   before do
+    AWS.config(stub_requests: true)
     response = AWS::SQS::Client.new.stub_for(:get_queue_url)
     response.data[:queue_url] = "the.queue.url"
-    AWS::SQS::Client.any_instance.stub(:get_queue_url).and_return(response)
+    AWS::SQS::Client.any_instance.stub(:client_request).and_return(response)
   end
 
   subject(:aws_sqs_queue) do
@@ -56,7 +57,7 @@ describe DispatchRider::QueueServices::AwsSqs do
       before :each do
         response = AWS::SQS::Client.new.stub_for(:receive_message)
         response.data[:messages] = [response_message]
-        AWS::SQS::Client.any_instance.stub(:receive_message).and_return(response)
+        AWS::SQS::Client::V20121105.any_instance.stub(:receive_message).and_return(response)
       end
 
       it "should return the first item in the queue" do
@@ -69,7 +70,7 @@ describe DispatchRider::QueueServices::AwsSqs do
 
     context "when the sqs queue is empty" do
       before :each do
-        aws_sqs_queue.queue.stub!(:receive_message).and_return(nil)
+        aws_sqs_queue.queue.stub(:receive_message).and_return(nil)
       end
 
       it "should return nil" do

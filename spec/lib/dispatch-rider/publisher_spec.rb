@@ -98,7 +98,7 @@ describe DispatchRider::Publisher do
 
   describe "#publish" do
     let :topic do
-      obj = mock("AWS::SNS::Topic")
+      obj = double("AWS::SNS::Topic")
       class << obj
         define_method(:publish) do |msg|
           throw :published, JSON.parse(msg)["body"]["bar"]
@@ -108,8 +108,8 @@ describe DispatchRider::Publisher do
     end
 
     let :topic_collection do
-      obj = mock("AWS::SNS::TopicCollection")
-      obj.stub!(:[]).and_return do |key|
+      obj = double("AWS::SNS::TopicCollection")
+      obj.stub(:[]).and_return do |key|
         topic if key == 'arn:aws:sns:us-east-1:123:PlanOfAttack'
       end
       obj

@@ -18,8 +18,8 @@ describe DispatchRider::NotificationServices::AwsSns do
   describe "#channel" do
     before { subject.stub(:channel_registrar).and_return(foo: amazon_resource_name) }
 
-    let(:topics){ mock :sns_topics }
-    let(:topic){ mock :sns_topic }
+    let(:topics){ double :sns_topics }
+    let(:topic){ double :sns_topic }
 
     it "returns the channel" do
       subject.notifier.should_receive(:topics).and_return(topics)

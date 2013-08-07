@@ -3,7 +3,7 @@ require 'spec_helper'
 describe DispatchRider::Publisher::ConfigurationReader do
 
   let :publisher do
-    mock(:publisher)
+    double(:publisher)
   end
 
   describe ".parse" do
