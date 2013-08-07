@@ -9,6 +9,14 @@ describe DispatchRider::Dispatcher, :nodb => true do
     end
   end
 
+  module HandlerThatReturnsFalse
+    class << self
+      def process(params)
+        false
+      end
+    end
+  end
+
   module FailHandling
     class << self
       def process(params)
@@ -27,6 +35,18 @@ describe DispatchRider::Dispatcher, :nodb => true do
 
       it "should process the message" do
         expect { subject.dispatch(message) }.to throw_symbol(:something)
+      end
+    end
+
+    context "when the handler returns false" do
+      let(:message){ DispatchRider::Message.new(:subject => "handler_that_returns_false", :body => { :do_throw_something => true }) }
+
+      before :each do
+        subject.register('handler_that_returns_false')
+      end
+
+      it "should return true indicating message is good to be removed" do
+        subject.dispatch(message).should be_true
       end
     end
 
