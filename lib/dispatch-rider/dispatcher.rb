@@ -21,6 +21,7 @@ module DispatchRider
 
     def dispatch(message)
       handler_registrar.fetch(message.subject).process(message.body)
+      true # success => true (delete message)
     rescue Exception => exception
       @error_handler.call(message, exception)
     end
