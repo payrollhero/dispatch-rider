@@ -33,7 +33,7 @@ Jeweler::Tasks.new do |gem|
   gem.authors = ["Suman Mukherjee"]
   gem.email = ["sumanmukherjee03@gmail.com"]
 
-  gem.executables = ["dispatch_rider"]
+  gem.executables = []
 
   gem.files = FileList[
     'bin/*',
