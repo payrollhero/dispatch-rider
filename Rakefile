@@ -44,12 +44,3 @@ Jeweler::Tasks.new do |gem|
   # dependencies defined in Gemfile
 end
 
-# remove some weird jeweler stuff
-[
-  'git:release',
-  'gemspec:release',
-].each do |task|
-  Rake::Task[task].clear
-  Rake::Task[task].clear_comments
-end
-
