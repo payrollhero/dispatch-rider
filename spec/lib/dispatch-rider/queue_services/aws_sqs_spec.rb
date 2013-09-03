@@ -58,6 +58,7 @@ describe DispatchRider::QueueServices::AwsSqs do
         response = AWS::SQS::Client.new.stub_for(:receive_message)
         response.data[:messages] = [response_message]
         AWS::SQS::Client::V20121105.any_instance.stub(:receive_message).and_return(response)
+        AWS::SQS::Queue.any_instance.stub(:verify_receive_message_checksum).and_return([])
       end
 
       it "should return the first item in the queue" do
