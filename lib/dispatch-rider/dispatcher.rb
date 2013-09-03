@@ -2,9 +2,13 @@
 # The handlers must be registered with the dispatcher.
 # Tha handlers need to be modules that implement the process method.
 # What handler to dispatch the message to is figured out from the subject of the message.
+
 module DispatchRider
   class Dispatcher
     extend Forwardable
+
+    require 'dispatch-rider/dispatcher/named_process'
+    include NamedProcess
 
     attr_reader :handler_registrar
 
@@ -20,7 +24,10 @@ module DispatchRider
     end
 
     def dispatch(message)
-      handler_registrar.fetch(message.subject).process(message.body)
+      with_named_process(message.subject) do
+        handler_registrar.fetch(message.subject).process(message.body)
+      end
+
       true # success => true (delete message)
     rescue Exception => exception
       @error_handler.call(message, exception)
