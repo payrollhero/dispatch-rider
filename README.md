@@ -37,21 +37,21 @@ All configuration can be loaded from a hash instead of being done like the examp
 eg:
 
 ```ruby
-  publisher = DispatchRider::Publisher.new
-  publisher.configure({
-    notification_services: {
-      file_system: {}
-    },
-    destinations: {
-      file_foo: {
-        service: :file_system,
-        channel: :foo,
-        options: {
-          path: "test/channel",
-        }
+publisher = DispatchRider::Publisher.new
+publisher.configure({
+  notification_services: {
+    file_system: {}
+  },
+  destinations: {
+    file_foo: {
+      service: :file_system,
+      channel: :foo,
+      options: {
+        path: "test/channel",
       }
     }
-  })
+  }
+})
 ```
 
 You can load this configuration hash from a YAML file or something, whatever works
@@ -62,113 +62,106 @@ well for your environment.
 To publish using the filesystem register the path where to publish the message files.
 
 ```ruby
+publisher = DispatchRider::Publisher.new
 
-    publisher = DispatchRider::Publisher.new
+publisher.register_notification_service(:file_system)
+publisher.register_destination(:local_message_queue, :file_system, :dev_channel, :path => "tmp/news-updates")
 
-    publisher.register_notification_service(:file_system)
-    publisher.register_destination(:local_message_queue, :file_system, :dev_channel, :path => "tmp/news-updates")
-
-    publisher.publish(:destinations => :local_message_queue, :message => {
-      :subject => "read_news",
-      :body => {"headlines" => [
-        "April 29, 2013: Rails 4.0.0.rc1 is released.",
-        "May 14, 2013: Ruby 2.0.0-p195 is released"
-      ]
-    }})
-
+publisher.publish(:destinations => :local_message_queue, :message => {
+  :subject => "read_news",
+  :body => {"headlines" => [
+    "April 29, 2013: Rails 4.0.0.rc1 is released.",
+    "May 14, 2013: Ruby 2.0.0-p195 is released"
+  ]
+}})
 ```
 
 To publish using ```AWS::SNS``` make sure ```AWS.config``` has been setup.
 It's then as easy as providing the configuration details of the topic to the publisher.
 
 ```ruby
+publisher = DispatchRider::Publisher.new
 
-    publisher = DispatchRider::Publisher.new
+publisher.register_notification_service(:aws_sns)
+publisher.register_destination(:sns_message_queue, :aws_sns, :dev_channel, {
+  :account => 777,
+  :region  => 'us-east-1',
+  :topic   => 'RoR'
+})
 
-    publisher.register_notification_service(:aws_sns)
-    publisher.register_destination(:sns_message_queue, :aws_sns, :dev_channel, {
-      :account => 777,
-      :region  => 'us-east-1',
-      :topic   => 'RoR'
-    })
-
-    publisher.publish(:destinations => :sns_message_queue, :message => {
-      :subject => "read_news",
-      :body => {"headlines" => [
-        "April 29, 2013: Rails 4.0.0.rc1 is released.",
-        "May 14, 2013: Ruby 2.0.0-p195 is released"
-      ]
-    }})
-
+publisher.publish(:destinations => :sns_message_queue, :message => {
+  :subject => "read_news",
+  :body => {"headlines" => [
+    "April 29, 2013: Rails 4.0.0.rc1 is released.",
+    "May 14, 2013: Ruby 2.0.0-p195 is released"
+  ]
+}})
 ```
 
 To publish to multiple destinations:
 
 ```ruby
-
-    publisher.publish(:destinations => [:local_message_queue, :sns_message_queue], :message => {
-      :subject => "read_news",
-      :body => {"headlines" => [
-        "April 29, 2013: Rails 4.0.0.rc1 is released.",
-        "May 14, 2013: Ruby 2.0.0-p195 is released"
-      ]
-    }})
-
+publisher.publish(:destinations => [:local_message_queue, :sns_message_queue], :message => {
+  :subject => "read_news",
+  :body => {"headlines" => [
+    "April 29, 2013: Rails 4.0.0.rc1 is released.",
+    "May 14, 2013: Ruby 2.0.0-p195 is released"
+  ]
+}})
 ```
 
 Sample Rails publisher:
 
 ```ruby
+# app/publishers/news_update
+class NewsPublisher
+  @publisher = DispatchRider::Publisher.new
 
-    # app/publishers/news_update
-    class NewsPublisher
-      @publisher = DispatchRider::Publisher.new
+  amazon_config = YAML.load_file("#{Rails.root}/config/amazon.yml")
 
-      amazon_config = YAML.load_file("#{Rails.root}/config/amazon.yml")
+  @publisher.register_notification_service(:aws_sns)
+  @publisher.register_destination(:sns_message_queue, :aws_sns, :dev_channel, {
+    :account => amazon_config[:account],
+    :region  => amazon_config[:region],
+    :topic   => "news-updates-#{Rails.env}"
+  })
 
-      @publisher.register_notification_service(:aws_sns)
-      @publisher.register_destination(:sns_message_queue, :aws_sns, :dev_channel, {
-        :account => amazon_config[:account],
-        :region  => amazon_config[:region],
-        :topic   => "news-updates-#{Rails.env}"
-      })
+  @destinations = [:sns_message_queue]
 
-      @destinations = [:sns_message_queue]
+  class << self
+    attr_reader :publisher
+    attr_accessor :destinations
+  end
 
-      class << self
-        attr_reader :publisher
-        attr_accessor :destinations
-      end
+  delegate :publisher, :destinations, :to => :"self.class"
 
-      delegate :publisher, :destinations, :to => :"self.class"
+  def initialize(news)
+    @news = news
+  end
 
-      def initialize(news)
-        @news = news
-      end
+  def publish
+    publisher.publish(:destinations => destinations, :message => {
+      :subject => "read_news",
+      :body => {"headlines" => @news.headlines}
+    })
+  end
+end
 
-      def publish
-        publisher.publish(:destinations => destinations, :message => {
-          :subject => "read_news",
-          :body => {"headlines" => @news.headlines}
-        })
-      end
-    end
+# app/models/news
+class News
+  serialize :headlines, Array
 
-    # app/models/news
-    class News
-      serialize :headlines, Array
+  after_create :publish
 
-      after_create :publish
+  def publish
+     NewsPublisher.new(self).publish
+  end
+end
 
-      def publish
-         NewsPublisher.new(self).publish
-      end
-    end
-
-    News.create!(:headlines => [
-      "April 29, 2013: Rails 4.0.0.rc1 is released.",
-      "May 14, 2013: Ruby 2.0.0-p195 is released"
-    ])
+News.create!(:headlines => [
+  "April 29, 2013: Rails 4.0.0.rc1 is released.",
+  "May 14, 2013: Ruby 2.0.0-p195 is released"
+])
 ```
 
 ### Subscriber
@@ -177,117 +170,51 @@ To setup a subscriber you'll need message handlers. The handlers are named the s
 
 Sample message handler:
 ```ruby
-
-    # app/handlers/bar_handler
-    module ReadNews
-      class << self
-        def process(message_body)
-          message_body["headlines"].each do |headline|
-            puts headline
-          end
-        end
+# app/handlers/bar_handler
+module ReadNews
+  class << self
+    def process(message_body)
+      message_body["headlines"].each do |headline|
+        puts headline
       end
     end
-
+  end
+end
 ```
 
 Sample subscriber setup:
 
 ```ruby
+subscriber = DispatchRider::Subscriber.new
 
-    subscriber = DispatchRider::Subscriber.new
+subscriber.register_queue(:aws_sqs, :name => "news-updates")
+subscriber.register_handler(:read_news)
+subscriber.setup_demultiplexer(:aws_sqs)
 
-    subscriber.register_queue(:aws_sqs, :name => "news-updates")
-    subscriber.register_handler(:read_news)
-    subscriber.setup_demultiplexer(:aws_sqs)
-
-    subscriber.process
-
+subscriber.process
 ```
 
 Sample subscriber dispatch error handling (optional):
 
 ```ruby
+# using blocks
 
-    # using blocks
+subscriber.on_dispatch_error do |message, exception|
+  # put your error handling code here
 
-    subscriber.on_dispatch_error do |message, exception|
-      # put your error handling code here
+  return false # or return true to permanently remove the message
+end
 
-      return false # or return true to permanently remove the message
-    end
+# using methods
 
-    # using methods
+def handle_dispatch_error(message, exception)
+  # put your error handling code here
 
-    def handle_dispatch_error(message, exception)
-      # put your error handling code here
+  return false # or return true to permanently remove the message
+end
 
-      return false # or return true to permanently remove the message
-    end
-
-    subscriber.on_dispatch_error &method(:handle_dispatch_error)
-
+subscriber.on_dispatch_error &method(:handle_dispatch_error)
 ```
-
-
-Sample Rails application rake task:
-
-```ruby
-
-    # lib/tasks/dispatch-rider
-    namespace :"dispatch-rider" do
-      desc "Tells DispatchRider to start running"
-      task :run => [:"run:remote"]
-  
-      namespace :run do
-        desc "Tells DispatchRider to start running"
-        task :remote => [:ready, :set_aws_sqs_queue, :process]
-  
-        desc "Tells DispatchRider to start running (using the filesystem as the queue)"
-        task :local => [:ready, :set_local_queue, :process]
-  
-        task :ready => :environment do
-          puts "Creating subscriber..."
-          @subscriber = DispatchRider::Subscriber.new
-  
-          [ # list of message handlers
-            :read_news
-          ].each do |handler_name|
-            puts "Registering #{handler_name} handler..."
-            @subscriber.register_handler(handler_name)
-          end
-        end
-  
-        task :set_aws_sqs_queue do
-          queue_name = "news-updates-#{Rails.env}"
-          puts "Setting AWS::SQS #{queue_name} queue..."
-          @subscriber.register_queue(:aws_sqs, :name => queue_name)
-          @subscriber.setup_demultiplexer(:aws_sqs)
-        end
-  
-        task :set_local_queue do
-          queue_path = "tmp/news-updates-#{Rails.env}"
-          puts "Setting local filesystem queue @ #{queue_path.inspect}..."
-          @subscriber.register_queue(:file_system, :path => queue_path)
-          @subscriber.setup_demultiplexer(:file_system)
-        end
-  
-        task :process do
-          puts "Running..."
-          @subscriber.process
-        end
-      end
-    end
-
-```
-
-To run the subscriber simply execute following:
-
-    $ bundle exec rake dispatch-rider:run
-
-To run locally:
-
-    $ bundle exec rake dispatch-rider:run:local
 
 ## Contributing
 
