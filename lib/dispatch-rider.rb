@@ -11,6 +11,7 @@ module DispatchRider
 end
 
 require "dispatch-rider/errors"
+require "dispatch-rider/error_handlers"
 require "dispatch-rider/message"
 require "dispatch-rider/registrars"
 require "dispatch-rider/notification_services"

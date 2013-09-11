@@ -9,8 +9,6 @@ describe DispatchRider::Subscriber do
     end
   end
 
-  let(:error_handler){ double(:error_handler) }
-
   describe "#initialize" do
     it "should assign a new queue service registrar" do
       subject.queue_service_registrar.store.should be_empty
@@ -46,7 +44,7 @@ describe DispatchRider::Subscriber do
       end
 
       it "should assign a demultiplexer" do
-        subject.setup_demultiplexer(:simple, error_handler)
+        subject.setup_demultiplexer(:simple)
         subject.demultiplexer.queue.should be_empty
         subject.demultiplexer.dispatcher.fetch(:foo_bar).should eq(FooBar)
       end
@@ -58,7 +56,7 @@ describe DispatchRider::Subscriber do
       subject.register_queue(:simple)
       subject.queue_service_registrar.fetch(:simple).push(DispatchRider::Message.new(:subject => :foo_bar, :body => {'baz' => 'blah'}))
       subject.register_handler(:foo_bar)
-      subject.setup_demultiplexer(:simple, error_handler)
+      subject.setup_demultiplexer(:simple)
     end
 
     it "should process the queue" do
