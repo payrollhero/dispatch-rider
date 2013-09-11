@@ -9,6 +9,8 @@ describe DispatchRider::Subscriber do
     end
   end
 
+  let(:error_handler){ double(:error_handler) }
+
   describe "#initialize" do
     it "should assign a new queue service registrar" do
       subject.queue_service_registrar.store.should be_empty
@@ -44,7 +46,7 @@ describe DispatchRider::Subscriber do
       end
 
       it "should assign a demultiplexer" do
-        subject.setup_demultiplexer(:simple)
+        subject.setup_demultiplexer(:simple, error_handler)
         subject.demultiplexer.queue.should be_empty
         subject.demultiplexer.dispatcher.fetch(:foo_bar).should eq(FooBar)
       end
@@ -56,27 +58,11 @@ describe DispatchRider::Subscriber do
       subject.register_queue(:simple)
       subject.queue_service_registrar.fetch(:simple).push(DispatchRider::Message.new(:subject => :foo_bar, :body => {'baz' => 'blah'}))
       subject.register_handler(:foo_bar)
-      subject.setup_demultiplexer(:simple)
+      subject.setup_demultiplexer(:simple, error_handler)
     end
 
     it "should process the queue" do
       expect { subject.process }.to throw_symbol(:process_was_called)
-    end
-  end
-
-  describe "#on_dispatch_error" do
-    let(:error_handler) do
-      lambda do |message, exception|
-        # I'm a block of code
-      end
-    end
-
-    it "passes the error handler to the dispatcher" do
-      subject.dispatcher.should_receive(:on_error) do |&received_block|
-        received_block.should == error_handler
-      end
-
-      subject.on_dispatch_error &error_handler
     end
   end
 
