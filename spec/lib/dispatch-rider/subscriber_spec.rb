@@ -1,11 +1,9 @@
 require "spec_helper"
 
 describe DispatchRider::Subscriber do
-  module FooBar
-    class << self
-      def process(options)
-        throw :process_was_called
-      end
+  class FooBar < DispatchRider::Handlers::Base
+    def process(options)
+      throw :process_was_called
     end
   end
 
