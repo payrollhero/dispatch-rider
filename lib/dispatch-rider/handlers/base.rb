@@ -1,9 +1,8 @@
-require 'dispatch-rider/handlers/named_process'
-
 module DispatchRider
   module Handlers
     class Base
       include NamedProcess
+      extend InheritanceTracking
 
       def do_process(options)
         with_named_process(self.class.name) do
