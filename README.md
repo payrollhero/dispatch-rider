@@ -197,23 +197,29 @@ subscriber.process
 Sample subscriber dispatch error handling (optional):
 
 ```ruby
-# using blocks
+# using objects
 
-subscriber.on_dispatch_error do |message, exception|
+module ErrorHandler
+
+  def self.call(message, exception)
+    # put your error handling code here
+
+    return false # or return true to permanently remove the message
+  end
+
+end
+
+subscriber.setup_demultiplexer(kind, ErrorHandler)
+
+# using lambdas
+
+error_handler = ->(message, exception) do
   # put your error handling code here
 
   return false # or return true to permanently remove the message
 end
 
-# using methods
-
-def handle_dispatch_error(message, exception)
-  # put your error handling code here
-
-  return false # or return true to permanently remove the message
-end
-
-subscriber.on_dispatch_error &method(:handle_dispatch_error)
+subscriber.setup_demultiplexer(kind, error_handler)
 ```
 
 ## Contributing

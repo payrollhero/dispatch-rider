@@ -23,13 +23,9 @@ module DispatchRider
       self
     end
 
-    def on_dispatch_error(&block)
-      dispatcher.on_error &block
-    end
-
-    def setup_demultiplexer(queue_name)
+    def setup_demultiplexer(queue_name, error_handler = DispatchRider::DefaultErrorHandler)
       queue = queue_service_registrar.fetch(queue_name)
-      @demultiplexer ||= DispatchRider::Demultiplexer.new(queue, dispatcher)
+      @demultiplexer ||= DispatchRider::Demultiplexer.new(queue, dispatcher, error_handler)
       self
     end
 

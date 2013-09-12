@@ -4,7 +4,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
   module TestHandler
     class << self
       def process(options)
-        throw :bar if options["foo"]
+        raise "OMG!!!" if options["raise_exception"]
       end
     end
   end
@@ -19,7 +19,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
     DispatchRider::QueueServices::Simple.new
   end
 
-  let(:message){ DispatchRider::Message.new(:subject => "test_handler", :body => {"foo" => true}) }
+  let(:message){ DispatchRider::Message.new(:subject => "test_handler", :body => {}) }
 
   let(:demultiplexer_thread) do
     demultiplexer
@@ -30,7 +30,9 @@ describe DispatchRider::Demultiplexer, :nodb => true do
     thread
   end
 
-  subject(:demultiplexer) { DispatchRider::Demultiplexer.new(queue, dispatcher) }
+  let(:error_handler){ ->(message, exception){ raise exception }}
+
+  subject(:demultiplexer) { DispatchRider::Demultiplexer.new(queue, dispatcher, error_handler) }
 
   describe "#initialize" do
     it "should assign the queue" do
@@ -57,7 +59,13 @@ describe DispatchRider::Demultiplexer, :nodb => true do
       it "should be sending the message to the dispatcher" do
         demultiplexer.should_receive(:dispatch_message).with(message).at_least(:once)
         demultiplexer_thread.run
-        sleep 0.1 # give it a chance to process the job async before killing the demux
+        sleep 0.01 # give it a chance to process the job async before killing the demux
+      end
+
+      it "should call the correct handler" do
+        TestHandler.should_receive(:process).with(message.body)
+        demultiplexer_thread.run
+        sleep 0.01 # give it a chance to process the job async before killing the demux
       end
     end
 
@@ -65,6 +73,32 @@ describe DispatchRider::Demultiplexer, :nodb => true do
       it "should not be sending any message to the dispatcher" do
         demultiplexer.should_receive(:dispatch_message).exactly(0).times
         demultiplexer_thread.run
+      end
+    end
+
+    context "when the handler crashes" do
+      before do
+        message.body = { "raise_exception" => true }
+        queue.push message
+      end
+
+      it "should call the error handler" do
+        error_handler.should_receive(:call).at_least(:once)
+        demultiplexer_thread.run
+        sleep 0.01 # give it a chance to process the job async before killing the demux
+      end
+    end
+
+    context "when the queue crashes" do
+      before do
+        queue.stub(:pop){ raise "OMG!!!"}
+      end
+
+      it "should call the error handler" do
+        error_handler.should_receive(:call).once
+        demultiplexer_thread.run
+
+        sleep 0.01 # give it a chance to process the job async before killing the demux
       end
     end
   end
@@ -79,9 +113,4 @@ describe DispatchRider::Demultiplexer, :nodb => true do
     end
   end
 
-  describe "#dispatch_message" do
-    it "should call dispatcher to dispatch the message" do
-      expect { demultiplexer.dispatch_message(message) }.to throw_symbol(:bar)
-    end
-  end
 end

@@ -16,11 +16,6 @@ module DispatchRider
 
     def initialize
       @handler_registrar = Registrars::Handler.new
-      @error_handler = method(:default_error_handler)
-    end
-
-    def on_error(&block)
-      @error_handler = block
     end
 
     def dispatch(message)
@@ -29,14 +24,7 @@ module DispatchRider
       end
 
       true # success => true (delete message)
-    rescue Exception => exception
-      @error_handler.call(message, exception)
     end
 
-    private
-
-    def default_error_handler(message, exception)
-      raise exception
-    end
   end
 end
