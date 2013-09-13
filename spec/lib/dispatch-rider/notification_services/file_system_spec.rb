@@ -16,7 +16,7 @@ describe DispatchRider::NotificationServices::FileSystem do
 
   describe "#channel" do
     it "returns the channel" do
-      subject.channel_registrar.register(:foo, :path => "test/channel")
+      subject.channel_registrar.register(:foo, :path => "tmp/test/channel")
       subject.channel(:foo).should be_a(DispatchRider::NotificationServices::FileSystem::Channel)
     end
   end
