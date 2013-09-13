@@ -10,6 +10,7 @@ describe DispatchRider::Configuration do
       subject.error_handler.should == DispatchRider::DefaultErrorHandler
       subject.queue_kind.should == :file_system
       subject.queue_info.should == { path: "tmp/dispatch-rider-queue" }
+      subject.subscriber.should == DispatchRider::Subscriber
     end
   end
 

@@ -7,14 +7,25 @@ require "active_support/json"
 require "active_support/core_ext/array/conversions"
 require "active_model"
 
+require "dispatch-rider/configuration"
+
 module DispatchRider
+  class << self
+    def configure
+      yield configuration
+    end
+
+    def configuration
+      @configuration ||= Configuration.new
+    end
+    alias_method :config, :configuration
+  end
 end
 
 require "dispatch-rider/errors"
 require "dispatch-rider/error_handlers"
 require "dispatch-rider/handlers"
 require "dispatch-rider/callbacks"
-require "dispatch-rider/configuration"
 require "dispatch-rider/message"
 require "dispatch-rider/registrars"
 require "dispatch-rider/notification_services"
