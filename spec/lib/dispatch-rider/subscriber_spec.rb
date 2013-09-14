@@ -64,20 +64,4 @@ describe DispatchRider::Subscriber do
     end
   end
 
-  describe "#on_dispatch_error" do
-    let(:error_handler) do
-      lambda do |message, exception|
-        # I'm a block of code
-      end
-    end
-
-    it "passes the error handler to the dispatcher" do
-      subject.dispatcher.should_receive(:on_error) do |&received_block|
-        received_block.should == error_handler
-      end
-
-      subject.on_dispatch_error &error_handler
-    end
-  end
-
 end
