@@ -166,6 +166,31 @@ News.create!(:headlines => [
 
 ### Subscriber
 
+### Configuration
+
+You can configure the subscription side of DispatchRider by using the built in configuration object.
+
+```ruby
+DispatchRider.config do |config|
+  config.before(:initialize) do
+    # code to run before initialize
+  end
+
+  config.after(:process) do
+    # code to run after process
+  end
+
+  config.error_handler = DefaultErrorHandler # an object that responds to .call(message, exception)
+
+  config.queue_kind = :sqs
+  config.queue_info = { name: "queue-production" }
+
+  config.handler_path = Rails.root + "app/handlers" # path to handler files to be autoloaded
+end
+```
+
+### Manual Setup
+
 To setup a subscriber you'll need message handlers. The handlers are named the same as the message subjects.
 
 Sample message handler:
