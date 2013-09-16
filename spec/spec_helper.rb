@@ -12,4 +12,7 @@ RSpec.configure do |config|
   config.tty = true
 end
 
+# Airbrake dummy module
+module Airbrake; end
+
 require 'dispatch-rider.rb'

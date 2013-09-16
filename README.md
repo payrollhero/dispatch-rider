@@ -222,6 +222,16 @@ end
 subscriber.setup_demultiplexer(kind, error_handler)
 ```
 
+#### Airbrake Support
+Airbrake is supported out of the box. All you need to do is:
+
+1. Install and configure the [airbrake gem](https://github.com/airbrake/airbrake).
+2. Use the `AirbrakeErrorHandler`.
+
+```ruby
+subscriber.setup_demultiplexer(kind, AirbrakeErrorHandler)
+```
+
 ## Contributing
 
 ### Process
