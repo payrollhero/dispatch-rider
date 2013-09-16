@@ -104,7 +104,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
                 service: :file_system,
                 channel: :foo,
                 options: {
-                  path: "test/channel"
+                  path: "tmp/test/channel"
                 }
               }
             }
@@ -112,7 +112,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
         end
 
         it "should call register_destination with the right parameters" do
-          publisher.should_receive(:register_destination).exactly(1).times.with(:out1, :file_system, :foo, path: "test/channel")
+          publisher.should_receive(:register_destination).exactly(1).times.with(:out1, :file_system, :foo, path: "tmp/test/channel")
           subject.parse(configuration_hash, publisher)
         end
 

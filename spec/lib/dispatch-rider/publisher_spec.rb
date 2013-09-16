@@ -18,7 +18,7 @@ describe DispatchRider::Publisher do
             service: :file_system,
             channel: :foo,
             options: {
-              path: "test/channel",
+              path: "tmp/test/channel",
             }
           }
         }
