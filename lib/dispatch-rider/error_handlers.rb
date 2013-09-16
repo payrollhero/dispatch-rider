@@ -8,4 +8,11 @@ module DispatchRider
     end
   end
 
+  # This error handler integrates with airbrake.io, i
+  # sending the mesage and environment details.
+  module AirbrakeErrorHandler
+    def self.call(message, exception)
+      Airbrake.notify(exception, controller: "DispatchRider", action: message.subject, parameters: message.attributes, cgi_data: ENV)
+    end
+  end
 end
