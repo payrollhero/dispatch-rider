@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe DispatchRider::NotificationServices::FileSystem::Channel do
 
-  let(:path) { File.expand_path("test/channel") }
+  let(:path) { File.expand_path("tmp/test/channel") }
   let(:published_message) { File.new(Dir["#{path}/*.ready"].first).read }
 
   before { FileUtils.mkdir_p(path) }

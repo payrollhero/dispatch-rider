@@ -7,9 +7,6 @@ module DispatchRider
   class Dispatcher
     extend Forwardable
 
-    require 'dispatch-rider/dispatcher/named_process'
-    include NamedProcess
-
     attr_reader :handler_registrar
 
     def_delegators :handler_registrar, :register, :fetch, :unregister
@@ -19,10 +16,7 @@ module DispatchRider
     end
 
     def dispatch(message)
-      with_named_process(message.subject) do
-        handler_registrar.fetch(message.subject).process(message.body)
-      end
-
+      handler_registrar.fetch(message.subject).new.do_process(message.body)
       true # success => true (delete message)
     end
 

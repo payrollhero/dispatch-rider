@@ -1,11 +1,9 @@
 require 'spec_helper'
 
 describe DispatchRider::Demultiplexer, :nodb => true do
-  module TestHandler
-    class << self
-      def process(options)
-        raise "OMG!!!" if options["raise_exception"]
-      end
+  class TestHandler < DispatchRider::Handlers::Base
+    def process(options)
+      raise "OMG!!!" if options["raise_exception"]
     end
   end
 
@@ -63,7 +61,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
       end
 
       it "should call the correct handler" do
-        TestHandler.should_receive(:process).with(message.body)
+        TestHandler.any_instance.should_receive(:process).with(message.body)
         demultiplexer_thread.run
         sleep 0.01 # give it a chance to process the job async before killing the demux
       end

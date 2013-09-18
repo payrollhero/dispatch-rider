@@ -1,27 +1,15 @@
 require 'spec_helper'
 
 describe DispatchRider::Dispatcher, :nodb => true do
-  module HandleSomething
-    class << self
-      def process(params)
-        throw :something if params[:do_throw_something]
-      end
+  class HandleSomething < DispatchRider::Handlers::Base
+    def process(params)
+      throw :something if params[:do_throw_something]
     end
   end
 
-  module HandlerThatReturnsFalse
-    class << self
-      def process(params)
-        false
-      end
-    end
-  end
-
-  module FailHandling
-    class << self
-      def process(params)
-        raise Exception.new("failed")
-      end
+  class HandlerThatReturnsFalse < DispatchRider::Handlers::Base
+    def process(params)
+      false
     end
   end
 
