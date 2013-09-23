@@ -31,6 +31,7 @@ module DispatchRider
       true # success => true (delete message)
     rescue Exception => exception
       @error_handler.call(message, exception)
+      false # failure => false (put message back on queue)
     end
 
     private
