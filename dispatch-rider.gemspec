@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "dispatch-rider"
-  s.version = "0.0.5"
+  s.version = "0.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Suman Mukherjee"]
@@ -18,10 +18,19 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     "lib/dispatch-rider.rb",
+    "lib/dispatch-rider/callbacks.rb",
+    "lib/dispatch-rider/callbacks/access.rb",
+    "lib/dispatch-rider/callbacks/storage.rb",
     "lib/dispatch-rider/command.rb",
+    "lib/dispatch-rider/configuration.rb",
     "lib/dispatch-rider/demultiplexer.rb",
     "lib/dispatch-rider/dispatcher.rb",
+    "lib/dispatch-rider/error_handlers.rb",
     "lib/dispatch-rider/errors.rb",
+    "lib/dispatch-rider/handlers.rb",
+    "lib/dispatch-rider/handlers/base.rb",
+    "lib/dispatch-rider/handlers/inheritance_tracking.rb",
+    "lib/dispatch-rider/handlers/named_process.rb",
     "lib/dispatch-rider/message.rb",
     "lib/dispatch-rider/notification_services.rb",
     "lib/dispatch-rider/notification_services/aws_sns.rb",
@@ -46,6 +55,7 @@ Gem::Specification.new do |s|
     "lib/dispatch-rider/registrars/publishing_destination.rb",
     "lib/dispatch-rider/registrars/queue_service.rb",
     "lib/dispatch-rider/registrars/sns_channel.rb",
+    "lib/dispatch-rider/runner.rb",
     "lib/dispatch-rider/subscriber.rb",
     "lib/dispatch-rider/version.rb"
   ]
