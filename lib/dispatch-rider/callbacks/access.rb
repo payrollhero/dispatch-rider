@@ -12,7 +12,7 @@ module DispatchRider
 
         callbacks.for(event).reverse.each do |filter_block|
           current_action = action_proc
-          action_proc = proc { filter_block.call(current_action) }
+          action_proc = proc { filter_block.call(current_action, *args) }
         end
 
         action_proc.call
