@@ -6,14 +6,18 @@ describe DispatchRider::Callbacks::Access do
     let(:callback2){ double(:callback2) }
     let(:callback3){ double(:callback3) }
     let(:callback4){ double(:callback4) }
+    let(:callback5){ proc { |block| block.call } }
 
     let(:callbacks){ double(:callbacks) }
+    let(:invoke_body) { proc { |block| block.call if block } }
 
     before :each do
       callbacks.stub(:for).with(:before, :initialize).and_return([callback1])
       callbacks.stub(:for).with(:after, :initialize).and_return([callback4])
       callbacks.stub(:for).with(:before, :destroy).and_return([])
       callbacks.stub(:for).with(:after, :destroy).and_return([callback2, callback3])
+      callbacks.stub(:for).with(:around, :initialize).and_return([callback5])
+      callbacks.stub(:for).with(:around, :destroy).and_return([])
     end
 
     subject{ described_class.new(callbacks) }
@@ -23,8 +27,11 @@ describe DispatchRider::Callbacks::Access do
       callback2.should_not_receive(:call)
       callback3.should_not_receive(:call)
       callback4.should_receive(:call).once
+      callback5.should_receive(:call).once.and_call_original
 
-      subject.invoke(:initialize){ true }
+      invoke_body.should_receive(:call).once
+
+      subject.invoke(:initialize, &invoke_body)
     end
 
     example do
@@ -32,8 +39,11 @@ describe DispatchRider::Callbacks::Access do
       callback2.should_receive(:call).once
       callback3.should_receive(:call).once
       callback4.should_not_receive(:call)
+      callback5.should_not_receive(:call).and_call_original
 
-      subject.invoke(:destroy){ true }
+      invoke_body.should_receive(:call).once
+
+      subject.invoke(:destroy, &invoke_body)
     end
   end
 

@@ -14,6 +14,10 @@ module DispatchRider
         add_callback :after, event, block_param, &block
       end
 
+      def around(event, block_param = nil, &block)
+        add_callback :around, event, block_param, &block
+      end
+
       def for(modifier, event)
         @callbacks[[modifier, event]] || []
       end

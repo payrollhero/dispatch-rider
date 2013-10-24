@@ -4,6 +4,16 @@ describe DispatchRider::Callbacks::Storage do
 
   subject{ described_class.new }
 
+  describe "#around" do
+    example do
+      blk = proc do |block|
+        block.call
+      end
+      subject.around(:initialize, &blk)
+      subject.for(:around, :initialize).should == [blk]
+    end
+  end
+
   describe "#for" do
     let(:block){ "blah" }
 
