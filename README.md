@@ -180,6 +180,13 @@ DispatchRider.config do |config|
     # code to run after process
   end
 
+  # allows you to wrap a callback around the execution of each job
+  config.around(:process) do |job|
+    some_block_around do
+      job.call
+    end
+  end
+
   config.error_handler = DefaultErrorHandler # an object that responds to .call(message, exception)
 
   config.queue_kind = :sqs
