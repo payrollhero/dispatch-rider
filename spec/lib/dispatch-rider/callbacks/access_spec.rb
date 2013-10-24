@@ -2,38 +2,60 @@ require 'spec_helper'
 
 describe DispatchRider::Callbacks::Access do
   describe "#invoke" do
-    let(:callback1){ double(:callback1) }
-    let(:callback2){ double(:callback2) }
-    let(:callback3){ double(:callback3) }
-    let(:callback4){ double(:callback4) }
 
-    let(:callbacks){ double(:callbacks) }
+    let(:callback_a1) { proc { |x| x.call } }
+    let(:callback_a2) { proc { |x| x.call } }
+    let(:callback_a3) { proc { |x| x.call } }
+    let(:callbacks_a) { [callback_a1, callback_a2, callback_a3] }
 
-    before :each do
-      callbacks.stub(:for).with(:before, :initialize).and_return([callback1])
-      callbacks.stub(:for).with(:after, :initialize).and_return([callback4])
-      callbacks.stub(:for).with(:before, :destroy).and_return([])
-      callbacks.stub(:for).with(:after, :destroy).and_return([callback2, callback3])
+    let(:callback_b1) { proc { |x| x.call } }
+    let(:callbacks_b) { [callback_b1] }
+
+    let(:storage) { DispatchRider::Callbacks::Storage.new }
+    let(:action) { proc { } }
+
+    subject { described_class.new(storage) }
+
+    before do
+      callbacks_a.each do |cb|
+        storage.around :event1, cb
+      end
+      callbacks_b.each do |cb|
+        storage.around :event2, cb
+      end
     end
 
-    subject{ described_class.new(callbacks) }
+    example "a bunch of handlers" do
+      callback_a1.should_receive(:call).once.and_call_original
+      callback_a2.should_receive(:call).once.and_call_original
+      callback_a3.should_receive(:call).once.and_call_original
+      callback_b1.should_not_receive(:call)
 
-    example do
-      callback1.should_receive(:call).once
-      callback2.should_not_receive(:call)
-      callback3.should_not_receive(:call)
-      callback4.should_receive(:call).once
+      action.should_receive(:call).once.and_call_original
 
-      subject.invoke(:initialize){ true }
+      subject.invoke(:event1, &action)
     end
 
-    example do
-      callback1.should_not_receive(:call)
-      callback2.should_receive(:call).once
-      callback3.should_receive(:call).once
-      callback4.should_not_receive(:call)
+    example "single handler" do
+      callback_a1.should_not_receive(:call)
+      callback_a2.should_not_receive(:call)
+      callback_a3.should_not_receive(:call)
+      callback_b1.should_receive(:call).once.and_call_original
 
-      subject.invoke(:destroy){ true }
+      action.should_receive(:call).once.and_call_original
+
+      subject.invoke(:event2, &action)
+    end
+
+    example "no handlers" do
+      callback_a1.should_not_receive(:call)
+      callback_a2.should_not_receive(:call)
+      callback_a3.should_not_receive(:call)
+      callback_b1.should_not_receive(:call)
+
+      action.should_receive(:call).once.and_call_original
+
+      subject.invoke(:event3, &action)
     end
   end
 

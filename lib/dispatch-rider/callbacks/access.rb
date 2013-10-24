@@ -7,21 +7,15 @@ module DispatchRider
         @callbacks = callbacks
       end
 
-      def invoke(event, *args)
-        begin
-          invoke_callbacks :before, event, *args
-          yield
-        ensure
-          invoke_callbacks :after, event, *args
-        end
-      end
+      def invoke(event, *args, &block)
+        action_proc = block
 
-      private
-
-      def invoke_callbacks(modifier, event, *args)
-        callbacks.for(modifier, event).each do |callback|
-          callback.call(*args)
+        callbacks.for(event).reverse.each do |filter_block|
+          current_action = action_proc
+          action_proc = proc { filter_block.call(current_action, *args) }
         end
+
+        action_proc.call
       end
 
     end

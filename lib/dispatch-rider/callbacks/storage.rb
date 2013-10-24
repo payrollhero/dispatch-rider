@@ -7,23 +7,26 @@ module DispatchRider
       end
 
       def before(event, block_param = nil, &block)
-        add_callback :before, event, block_param, &block
+        around(event) do |job, *args|
+          (block_param || block).call(*args)
+          job.call
+        end
       end
 
       def after(event, block_param = nil, &block)
-        add_callback :after, event, block_param, &block
+        around(event) do |job, *args|
+          job.call
+          (block_param || block).call(*args)
+        end
       end
 
-      def for(modifier, event)
-        @callbacks[[modifier, event]] || []
+      def around(event, block_param = nil, &block)
+        @callbacks[event] ||= []
+        @callbacks[event] << (block_param || block)
       end
 
-      private
-
-      def add_callback(modifier, event, block_param = nil, &block)
-        block = block || block_param
-        @callbacks[[modifier, event]] ||= []
-        @callbacks[[modifier, event]] << block
+      def for(event)
+        @callbacks[event] || []
       end
 
     end
