@@ -12,7 +12,7 @@ module DispatchRider
       @subscriber = DispatchRider::Subscriber
     end
 
-    delegate :before, :after, :to => :callbacks
+    delegate :before, :after, :around, :to => :callbacks
 
     def handlers
       @handlers ||= begin

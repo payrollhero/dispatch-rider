@@ -14,6 +14,24 @@ describe DispatchRider::Configuration do
     end
   end
 
+  describe "#before" do
+    example do
+      subject.should respond_to(:before)
+    end
+  end
+
+  describe "#after" do
+    example do
+      subject.should respond_to(:after)
+    end
+  end
+
+  describe "#around" do
+    example do
+      subject.should respond_to(:around)
+    end
+  end
+
   describe "#handlers" do
     before :each do
       subject.handler_path = "./spec/fixtures/handlers"
