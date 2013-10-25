@@ -16,6 +16,34 @@ describe DispatchRider::Dispatcher, :nodb => true do
   describe "#dispatch" do
     let(:message){ DispatchRider::Message.new(:subject => "handle_something", :body => { :do_throw_something => true }) }
 
+    describe "callbacks" do
+      let(:dummy) { double(:dummy) }
+      let(:storage) { DispatchRider::Callbacks::Storage.new }
+      let(:message){ DispatchRider::Message.new(:subject => "handle_something", :body => { :do_throw_something => true }) }
+
+      before do
+        DispatchRider.config.stub(:callbacks) { storage }
+        storage.around(:message) do |block, message|
+          begin
+            dummy.before
+            dummy.log(message)
+            block.call
+          ensure
+            dummy.after
+          end
+        end
+        subject.register('handle_something')
+      end
+      example do
+        dummy.should_receive(:before).once
+        dummy.should_receive(:after).once
+        dummy.should_receive(:log).with(message).once
+        catch(:something) do
+          subject.dispatch(message)
+        end
+      end
+    end
+
     context "when the handler provided in the message is present" do
       before :each do
         subject.register('handle_something')
