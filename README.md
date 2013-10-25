@@ -181,7 +181,7 @@ DispatchRider.config do |config|
   end
 
   # allows you to wrap a callback around the execution of each job
-  config.around(:process) do |job|
+  config.around(:dispatch_message) do |job, message|
     some_block_around do
       job.call
     end
@@ -195,6 +195,19 @@ DispatchRider.config do |config|
   config.handler_path = Rails.root + "app/handlers" # path to handler files to be autoloaded
 end
 ```
+
+### Callbacks
+
+Dispatch rider supports injecting callbacks in a few parts of the
+lifecycle of the process.
+
+```
+  :initialize       - when the runner is being initialized
+  :process          - when the runner is running its event loop
+  :dispatch_message - around the execution of a single message (the block is passed the job )
+```
+
+Each callback can have hooks plugged into it at `before`, `after` and `around` the execution.
 
 ### Manual Setup
 
