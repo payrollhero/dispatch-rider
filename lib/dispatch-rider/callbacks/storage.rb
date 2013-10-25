@@ -15,8 +15,11 @@ module DispatchRider
 
       def after(event, block_param = nil, &block)
         around(event) do |job, *args|
-          job.call
-          (block_param || block).call(*args)
+          begin
+            job.call
+          ensure
+            (block_param || block).call(*args)
+          end
         end
       end
 
