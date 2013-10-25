@@ -3,6 +3,8 @@
 # Tha handlers need to be modules that implement the process method.
 # What handler to dispatch the message to is figured out from the subject of the message.
 
+require 'forwardable'
+
 module DispatchRider
   class Dispatcher
     extend Forwardable

@@ -3,6 +3,9 @@
 # The expected usage is as follows :
 #   notification_service = DispatchRider::NotificationServices::Base.new
 #   notification_service.publish(:to => [:foo, :oof], :message => {:subject => "bar", :body => "baz"})
+
+require 'forwardable'
+
 module DispatchRider
   module NotificationServices
     class Base
