@@ -16,7 +16,7 @@ module DispatchRider
     end
 
     def dispatch(message)
-      callbacks.invoke(:message, message) do
+      callbacks.invoke(:dispatch_message, message) do
         handler_registrar.fetch(message.subject).new.do_process(message.body)
       end
       true # success => true (delete message)

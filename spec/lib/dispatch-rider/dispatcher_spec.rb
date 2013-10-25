@@ -23,7 +23,7 @@ describe DispatchRider::Dispatcher, :nodb => true do
 
       before do
         DispatchRider.config.stub(:callbacks) { storage }
-        storage.around(:message) do |block, message|
+        storage.around(:dispatch_message) do |block, message|
           begin
             dummy.before
             dummy.log(message)
