@@ -181,7 +181,7 @@ DispatchRider.config do |config|
   end
 
   # allows you to wrap a callback around the execution of each job
-  config.around(:process) do |job|
+  config.around(:message) do |job, message|
     some_block_around do
       job.call
     end
