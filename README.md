@@ -187,7 +187,7 @@ DispatchRider.config do |config|
     end
   end
 
-  config.error_handler = DefaultErrorHandler # an object that responds to .call(message, exception)
+  config.error_handler = DispatchRider::DefaultErrorHandler # an object that responds to .call(message, exception)
 
   config.queue_kind = :sqs
   config.queue_info = { name: "queue-production" }
@@ -271,10 +271,18 @@ subscriber.setup_demultiplexer(kind, error_handler)
 Airbrake is supported out of the box. All you need to do is:
 
 1. Install and configure the [airbrake gem](https://github.com/airbrake/airbrake).
-2. Use the `AirbrakeErrorHandler`.
+2. Use the `DispatchRider::AirbrakeErrorHandler`.
 
 ```ruby
-subscriber.setup_demultiplexer(kind, AirbrakeErrorHandler)
+subscriber.setup_demultiplexer(kind, DispatchRider::AirbrakeErrorHandler)
+```
+
+or set it up in the config ...
+
+```ruby
+DispatchRider.config do |config|
+  config.error_handler = DispatchRider::AirbrakeErrorHandler
+end
 ```
 
 ## Contributing
