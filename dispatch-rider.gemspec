@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "dispatch-rider"
-  s.version = "0.1.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Suman Mukherjee"]
-  s.date = "2013-10-25"
+  s.date = "2013-11-01"
   s.description = "Messaging system that is customizable based on which queueing system we are using."
   s.email = ["sumanmukherjee03@gmail.com"]
   s.extra_rdoc_files = [
