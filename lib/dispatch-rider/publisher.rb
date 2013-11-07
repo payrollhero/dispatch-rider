@@ -1,14 +1,12 @@
 require "active_support/core_ext/hash/indifferent_access"
+require_relative "publisher/configuration_support"
 
 # This class takes care of the publishing side of the messaging system.
 module DispatchRider
   class Publisher
+    include ConfigurationSupport
+
     attr_reader :service_channel_mapper, :notification_service_registrar, :publishing_destination_registrar, :sns_channel_registrar
-
-
-    def configure(configuration = self.class.configuration)
-      ConfigurationReader.load_config(configuration, self)
-    end
 
     def initialize
       @notification_service_registrar = DispatchRider::Registrars::NotificationService.new
@@ -71,5 +69,5 @@ module DispatchRider
   end
 end
 
-require_relative "publisher/configuration_reader"
 require_relative "publisher/configuration"
+require_relative "publisher/configuration_reader"

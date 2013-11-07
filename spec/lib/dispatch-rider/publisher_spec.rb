@@ -6,37 +6,6 @@ describe DispatchRider::Publisher do
     described_class.new
   end
 
-  describe "#configure" do
-
-    let :configuration_hash do
-      {
-        notification_services: {
-          file_system: {}
-        },
-        destinations: {
-          file_foo: {
-            service: :file_system,
-            channel: :foo,
-            options: {
-              path: "tmp/test/channel",
-            }
-          }
-        }
-      }
-    end
-
-    it "responds to :configure" do
-      subject.should respond_to :configure
-    end
-
-    let (:configuration){ DispatchRider::Publisher::Configuration.new }
-
-    it "calls config reader" do
-      DispatchRider::Publisher::ConfigurationReader.should_receive(:load_config).with(configuration, subject)
-      subject.configure(configuration)
-    end
-  end
-
   describe "#initialize" do
     it "assigns the notification service registrar" do
       subject.notification_service_registrar.store.should be_empty
