@@ -71,3 +71,4 @@ module DispatchRider
 end
 
 require_relative "publisher/configuration_reader"
+require_relative "publisher/configuration"
