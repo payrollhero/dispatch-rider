@@ -5,8 +5,9 @@ module DispatchRider
   class Publisher
     attr_reader :service_channel_mapper, :notification_service_registrar, :publishing_destination_registrar, :sns_channel_registrar
 
-    def configure(configuration_hash = {})
-      ConfigurationReader.parse(configuration_hash.with_indifferent_access, self)
+
+    def configure(configuration = self.class.configuration)
+      ConfigurationReader.load_config(configuration, self)
     end
 
     def initialize

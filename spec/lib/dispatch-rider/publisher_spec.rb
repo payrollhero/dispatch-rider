@@ -29,9 +29,11 @@ describe DispatchRider::Publisher do
       subject.should respond_to :configure
     end
 
+    let (:configuration){ DispatchRider::Publisher::Configuration.new }
+
     it "calls config reader" do
-      DispatchRider::Publisher::ConfigurationReader.should_receive(:parse).with(configuration_hash.with_indifferent_access, subject)
-      subject.configure(configuration_hash)
+      DispatchRider::Publisher::ConfigurationReader.should_receive(:load_config).with(configuration, subject)
+      subject.configure(configuration)
     end
   end
 
