@@ -34,11 +34,12 @@ Setting up a publisher is simple.
 All configuration can be loaded from a hash instead of being done like the examples below.
 (currently only implemented for the publisher)
 
-eg:
+#### Global configuration
+
+You can set the global configuration using either a hash:
 
 ```ruby
-publisher = DispatchRider::Publisher.new
-publisher.configure({
+DispatchRider::Publisher.configure({
   notification_services: {
     file_system: {}
   },
@@ -52,6 +53,59 @@ publisher.configure({
     }
   }
 })
+```
+
+or a block:
+
+```ruby
+DispatchRider::Publisher.configure do |config|
+  config.parse({
+    notification_services: {
+      file_system: {}
+    },
+    destinations: {
+      file_foo: {
+        service: :file_system,
+        channel: :foo,
+        options: {
+          path: "test/channel",
+        }
+      }
+    }
+  })
+end
+```
+
+Then anytime you call configure on a new publisher, it will default to global configuration.
+
+```ruby
+DispatchRider::Publisher.new
+
+# is the same as
+
+DispatchRider::Publisher.new(DispatchRider::Publisher.configuration)
+```
+
+#### Local configuration
+Alternatively, you can create your own configuration and load that configuration into your new publisher.
+
+```ruby
+  config = DispatchRider::Publisher::Configuration.new({
+    notification_services: {
+      file_system: {}
+    },
+    destinations: {
+      file_foo: {
+        service: :file_system,
+        channel: :foo,
+        options: {
+          path: "test/channel",
+        }
+      }
+    }
+  })
+
+  DispatchRider::Publisher.new(config)
 ```
 
 You can load this configuration hash from a YAML file or something, whatever works

@@ -2,37 +2,10 @@ require 'spec_helper'
 
 describe DispatchRider::Publisher do
 
+  let (:configuration){ DispatchRider::Publisher::Configuration.new }
+
   subject do
-    described_class.new
-  end
-
-  describe "#configure" do
-
-    let :configuration_hash do
-      {
-        notification_services: {
-          file_system: {}
-        },
-        destinations: {
-          file_foo: {
-            service: :file_system,
-            channel: :foo,
-            options: {
-              path: "tmp/test/channel",
-            }
-          }
-        }
-      }
-    end
-
-    it "responds to :configure" do
-      subject.should respond_to :configure
-    end
-
-    it "calls config reader" do
-      DispatchRider::Publisher::ConfigurationReader.should_receive(:parse).with(configuration_hash.with_indifferent_access, subject)
-      subject.configure(configuration_hash)
-    end
+    described_class.new(configuration)
   end
 
   describe "#initialize" do
@@ -46,6 +19,10 @@ describe DispatchRider::Publisher do
 
     it "assigns a service channel mapper" do
       subject.service_channel_mapper.destination_registrar.store.should be_empty
+    end
+
+    it "loads the configuration" do
+      DispatchRider::Publisher::ConfigurationReader.should_receive(:load_config).with(configuration, subject)
     end
   end
 

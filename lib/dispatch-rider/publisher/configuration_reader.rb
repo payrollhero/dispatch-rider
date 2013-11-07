@@ -1,32 +1,29 @@
 module DispatchRider
-
   class Publisher
-
     module ConfigurationReader
 
       class << self
-        def parse(configuration_hash, publisher)
-          configure_notification_services(configuration_hash[:notification_services], publisher) if configuration_hash[:notification_services]
-          configure_destinations(configuration_hash[:destinations], publisher) if configuration_hash[:destinations]
+        def load_config(configuration, publisher)
+          configure_notification_services(configuration.notification_services, publisher)
+          configure_destinations(configuration.destinations, publisher)
         end
 
         private
 
-          def configure_notification_services(notification_services, publisher)
-            notification_services.each do |(service_name, service_options)|
-              publisher.register_notification_service(service_name, service_options)
-            end
+        def configure_notification_services(notification_services, publisher)
+          notification_services.each do |service|
+            publisher.register_notification_service(service.name, service.options)
           end
+        end
 
-          def configure_destinations(destinations, publisher)
-            destinations.each do |(destination_name, info)|
-              publisher.register_destination(destination_name, info[:service], info[:channel], info[:options])
-            end
+        def configure_destinations(destinations, publisher)
+          destinations.each do |destination|
+            publisher.register_destination(destination.name, destination.service, destination.channel, destination.options)
           end
+        end
 
       end
+
     end
-
   end
-
 end
