@@ -3,3 +3,5 @@ module DispatchRider
 
   end
 end
+
+require_relative "configuration/destination"
