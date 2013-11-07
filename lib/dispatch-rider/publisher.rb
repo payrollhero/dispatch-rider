@@ -8,10 +8,12 @@ module DispatchRider
 
     attr_reader :service_channel_mapper, :notification_service_registrar, :publishing_destination_registrar, :sns_channel_registrar
 
-    def initialize
+    def initialize(configuration = self.class.configuration)
       @notification_service_registrar = DispatchRider::Registrars::NotificationService.new
       @publishing_destination_registrar = DispatchRider::Registrars::PublishingDestination.new
       @service_channel_mapper = ServiceChannelMapper.new(publishing_destination_registrar)
+
+      ConfigurationReader.load_config(configuration, self)
     end
 
     def register_notification_service(name, options = {})

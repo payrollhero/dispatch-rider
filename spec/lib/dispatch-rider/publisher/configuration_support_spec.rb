@@ -2,21 +2,17 @@ require 'spec_helper'
 
 describe DispatchRider::Publisher::ConfigurationSupport do
 
-  class DummyPublisherClass
-    include DispatchRider::Publisher::ConfigurationSupport
-  end
-
-  subject{ DummyPublisherClass.new }
+  subject{ Object.new.extend(described_class) }
 
   describe ".configuration" do
     example do
-      DummyPublisherClass.configuration.should be_a(DispatchRider::Publisher::Configuration)
+      subject.configuration.should be_a(DispatchRider::Publisher::Configuration)
     end
   end
 
   describe ".config" do
     example do
-      DummyPublisherClass.method(:config).should ==DummyPublisherClass.method(:configuration)
+      subject.method(:config).should == subject.method(:configuration)
     end
   end
 
@@ -57,46 +53,37 @@ describe DispatchRider::Publisher::ConfigurationSupport do
 
     context "when configuring with a hash" do
       before :each do
-        DummyPublisherClass.configure(configuration_hash)
+        subject.configure(configuration_hash)
       end
 
       it "sets the configuration's notification services correctly" do
-        DummyPublisherClass.configuration.notification_services.count.should == 1
-        DummyPublisherClass.configuration.notification_services.should =~ [notification_service]
+        subject.configuration.notification_services.count.should == 1
+        subject.configuration.notification_services.should =~ [notification_service]
       end
 
       it "sets the configuration's destinations correctly" do
-        DummyPublisherClass.configuration.destinations.count.should == 1
-        DummyPublisherClass.configuration.destinations.should =~ [destination]
+        subject.configuration.destinations.count.should == 1
+        subject.configuration.destinations.should =~ [destination]
       end
     end
 
     context "when configuring with a block" do
       before :each do
-        DummyPublisherClass.configure do |config|
+        subject.configure do |config|
           config.parse(configuration_hash)
         end
       end
 
       it "sets the configuration's notification services correctly" do
-        DummyPublisherClass.configuration.notification_services.count.should == 1
-        DummyPublisherClass.configuration.notification_services.should =~ [notification_service]
+        subject.configuration.notification_services.count.should == 1
+        subject.configuration.notification_services.should =~ [notification_service]
       end
 
       it "sets the configuration's destinations correctly" do
-        DummyPublisherClass.configuration.destinations.count.should == 1
-        DummyPublisherClass.configuration.destinations.should =~ [destination]
+        subject.configuration.destinations.count.should == 1
+        subject.configuration.destinations.should =~ [destination]
       end
     end
   end
 
-  describe "#configure" do
-
-    let (:configuration){ DispatchRider::Publisher::Configuration.new }
-
-    it "calls config reader" do
-      DispatchRider::Publisher::ConfigurationReader.should_receive(:load_config).with(configuration, subject)
-      subject.configure(configuration)
-    end
-  end
 end
