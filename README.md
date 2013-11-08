@@ -168,54 +168,17 @@ Sample Rails publisher:
 
 ```ruby
 # app/publishers/news_update
-class NewsPublisher
-  @publisher = DispatchRider::Publisher.new
+class NewsPublisher < DispatchRider::Publisher::Base
 
-  amazon_config = YAML.load_file("#{Rails.root}/config/amazon.yml")
+  destinations :sns_message_queue
+  subject "read_news"
 
-  @publisher.register_notification_service(:aws_sns)
-  @publisher.register_destination(:sns_message_queue, :aws_sns, :dev_channel, {
-    :account => amazon_config[:account],
-    :region  => amazon_config[:region],
-    :topic   => "news-updates-#{Rails.env}"
-  })
-
-  @destinations = [:sns_message_queue]
-
-  class << self
-    attr_reader :publisher
-    attr_accessor :destinations
+  def self.publish(news)
+    publish({"headlines" => news.headlines})
   end
 
-  delegate :publisher, :destinations, :to => :"self.class"
-
-  def initialize(news)
-    @news = news
-  end
-
-  def publish
-    publisher.publish(:destinations => destinations, :message => {
-      :subject => "read_news",
-      :body => {"headlines" => @news.headlines}
-    })
-  end
 end
 
-# app/models/news
-class News
-  serialize :headlines, Array
-
-  after_create :publish
-
-  def publish
-     NewsPublisher.new(self).publish
-  end
-end
-
-News.create!(:headlines => [
-  "April 29, 2013: Rails 4.0.0.rc1 is released.",
-  "May 14, 2013: Ruby 2.0.0-p195 is released"
-])
 ```
 
 ### Subscriber
