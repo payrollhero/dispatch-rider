@@ -73,3 +73,4 @@ end
 
 require_relative "publisher/configuration"
 require_relative "publisher/configuration_reader"
+require_relative "publisher/base"
