@@ -2,10 +2,8 @@ require 'spec_helper'
 
 describe DispatchRider::Publisher do
 
-  let (:configuration){ DispatchRider::Publisher::Configuration.new }
-
   subject do
-    described_class.new(configuration)
+    described_class.new
   end
 
   describe "#initialize" do
@@ -21,8 +19,20 @@ describe DispatchRider::Publisher do
       subject.service_channel_mapper.destination_registrar.store.should be_empty
     end
 
-    it "loads the configuration" do
-      DispatchRider::Publisher::ConfigurationReader.should_receive(:load_config).with(configuration, subject)
+    context "when not passing a configuration" do
+      it "loads the global configuration" do
+        DispatchRider::Publisher::ConfigurationReader.should_receive(:load_config).with(described_class.configuration, subject)
+      end
+    end
+
+    context "when passing a configuration" do
+      let(:configuration){ DispatchRider::Publisher::Configuration.new }
+
+      subject{ described_class.new(configuration) }
+
+      it "loads the configuration" do
+        DispatchRider::Publisher::ConfigurationReader.should_receive(:load_config).with(configuration, subject)
+      end
     end
   end
 
