@@ -4,7 +4,7 @@ require_relative "publisher/configuration_support"
 # This class takes care of the publishing side of the messaging system.
 module DispatchRider
   class Publisher
-    include ConfigurationSupport
+    extend ConfigurationSupport
 
     attr_reader :service_channel_mapper, :notification_service_registrar, :publishing_destination_registrar, :sns_channel_registrar
 
