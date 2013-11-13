@@ -174,7 +174,7 @@ class NewsPublisher < DispatchRider::Publisher::Base
   subject "read_news"
 
   def self.publish(news)
-    publish({"headlines" => news.headlines})
+    new.publish({"headlines" => news.headlines})
   end
 
 end
