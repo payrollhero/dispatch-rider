@@ -1,0 +1,12 @@
+#!env ruby
+
+raise "this script is meant to be ran from inside of a Rails.root" unless File.exist?("config/environment.rb")
+
+require './config/boot'
+require 'dispatch-rider'
+require 'dispatch-rider/command'
+
+DispatchRider::Command.new.run(ARGV) do
+  require './config/environment'
+  DispatchRider::Runner.run
+end
