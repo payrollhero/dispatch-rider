@@ -23,6 +23,10 @@ Or install it yourself as:
 
     $ gem install dispatch-rider
 
+If you are using DispatchRider with rails, run the installer:
+
+    $ rails generate dispatch_rider:install
+
 ## Usage
 
 ### Publisher

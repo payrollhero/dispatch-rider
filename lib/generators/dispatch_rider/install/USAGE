@@ -1,0 +1,7 @@
+Description:
+  Sets up DispatchRider in your Rails project.
+
+Examples:
+  `rails generate dispatch_rider:install`
+
+  `rails generate dispatch_rider:install --help`
