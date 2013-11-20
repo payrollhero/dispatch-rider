@@ -18,7 +18,7 @@ module DispatchRider
       do_loop do
         begin
           handle_next_queue_item
-        rescue Exception => exception
+        rescue => exception
           error_handler.call(Message.new(subject: "TopLevelError", body: {}), exception)
           throw :done
         end
@@ -34,7 +34,7 @@ module DispatchRider
 
     def dispatch_message(message)
       dispatcher.dispatch(message)
-    rescue Exception => exception
+    rescue => exception
       error_handler.call(message, exception)
     end
 
