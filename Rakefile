@@ -28,10 +28,10 @@ Jeweler::Tasks.new do |gem|
     The dispatcher hands over the message to the appropriate handler. You can choose your own queueing service.
   }
 
-  gem.homepage = ""
+  gem.homepage = "https://github.com/payrollhero/dispatch-rider"
   gem.license = "MIT"
-  gem.authors = ["Suman Mukherjee"]
-  gem.email = ["sumanmukherjee03@gmail.com"]
+  gem.authors = ["Suman Mukherjee", "Dane Natoli", "Piotr Banasik", "Ronald Maravilla"]
+  gem.email = ["suman@payrollhero.com", "dnatoli@payrollhero.com", "piotr@payrollhero.com", "rmaravilla@payrollhero.com"]
 
   gem.executables = []
 
