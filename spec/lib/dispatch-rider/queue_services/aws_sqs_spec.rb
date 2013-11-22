@@ -14,9 +14,17 @@ describe DispatchRider::QueueServices::AwsSqs do
 
   describe "#assign_storage" do
     context "when the aws gem is installed" do
+
       context "when the name of the queue is passed in the options" do
         it "should return an instance representing the aws sqs queue" do
           aws_sqs_queue.assign_storage(:name => 'normal_priority')
+          aws_sqs_queue.queue.url.should eq('the.queue.url')
+        end
+      end
+
+      context "when the url of the queue is passed as the name" do
+        it "should return an instance representing the aws sqs queue" do
+          aws_sqs_queue.assign_storage(:name => 'https://sqs.us-east-1.amazonaws.com/12345/QueueName')
           aws_sqs_queue.queue.url.should eq('the.queue.url')
         end
       end
