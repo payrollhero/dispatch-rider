@@ -7,11 +7,16 @@ module DispatchRider
 
       def assign_storage(attrs)
         begin
-          AWS::SQS.new(:logger => nil).queues.named(attrs.fetch(:name))
+          sqs = AWS::SQS.new(:logger => nil)
+          if attrs[:name]
+            sqs.queues.named(attrs[:name])
+          elsif attrs[:url]
+            sqs.queues[attrs[:url]]
+          else
+            raise RecordInvalid.new(self, ["Either name or url have to be specified"])
+          end
         rescue NameError
           raise AdapterNotFoundError.new(self.class.name, 'aws-sdk')
-        rescue IndexError
-          raise RecordInvalid.new(self, ["Name can not be blank"])
         end
       end
 
