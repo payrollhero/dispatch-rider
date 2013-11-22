@@ -22,14 +22,14 @@ describe DispatchRider::QueueServices::AwsSqs do
         end
       end
 
-      context "when the url of the queue is passed as the name" do
+      context "when the url of the queue is passed in the options" do
         it "should return an instance representing the aws sqs queue" do
-          aws_sqs_queue.assign_storage(:name => 'https://sqs.us-east-1.amazonaws.com/12345/QueueName')
+          aws_sqs_queue.assign_storage(:url => 'https://sqs.us-east-1.amazonaws.com/12345/QueueName')
           aws_sqs_queue.queue.url.should eq('the.queue.url')
         end
       end
 
-      context "when the name of the queue is not passed in the options" do
+      context "when neither the name nor the url of the queue is assed in the options" do
         it "should raise an exception" do
           expect { aws_sqs_queue.assign_storage(:foo => 'bar') }.to raise_exception(DispatchRider::RecordInvalid)
         end
