@@ -37,7 +37,7 @@ Jeweler::Tasks.new do |gem|
 
   gem.files = FileList[
     'bin/*',
-    'lib/**/*.rb',
+    'lib/**/*',
     'lib/tasks/**/*.rake',
   ]
 

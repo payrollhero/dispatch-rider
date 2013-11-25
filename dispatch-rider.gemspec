@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Suman Mukherjee", "Dane Natoli", "Piotr Banasik", "Ronald Maravilla"]
-  s.date = "2013-11-22"
+  s.date = "2013-11-25"
   s.description = "Messaging system that is customizable based on which queueing system we are using."
   s.email = ["suman@payrollhero.com", "dnatoli@payrollhero.com", "piotr@payrollhero.com", "rmaravilla@payrollhero.com"]
   s.extra_rdoc_files = [
@@ -64,7 +64,9 @@ Gem::Specification.new do |s|
     "lib/dispatch-rider/runner.rb",
     "lib/dispatch-rider/subscriber.rb",
     "lib/dispatch-rider/version.rb",
-    "lib/generators/dispatch_rider/install/install_generator.rb"
+    "lib/generators/dispatch_rider/install/USAGE",
+    "lib/generators/dispatch_rider/install/install_generator.rb",
+    "lib/generators/dispatch_rider/install/templates/script/dispatch_rider"
   ]
   s.homepage = "https://github.com/payrollhero/dispatch-rider"
   s.licenses = ["MIT"]
