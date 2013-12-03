@@ -81,7 +81,8 @@ describe DispatchRider::Demultiplexer, :nodb => true do
       end
 
       it "should call the error handler" do
-        error_handler.should_receive(:call).at_least(:once)
+        error_handler.should_receive(:call).at_least(:once).and_return(true)
+        queue.should_not_receive(:delete)
         demultiplexer_thread.run
         sleep 0.01 # give it a chance to process the job async before killing the demux
       end

@@ -36,6 +36,7 @@ module DispatchRider
       dispatcher.dispatch(message)
     rescue => exception
       error_handler.call(message, exception)
+      false
     end
 
     def do_loop
