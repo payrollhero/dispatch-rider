@@ -30,11 +30,16 @@ module DispatchRider
     end
 
     def process
-      interuption_count = 0
+      Signal.trap("QUIT") { demultiplexer.stop } # signal number: 3
+      Signal.trap("TERM") { demultiplexer.stop } # signal number: 15
+
+      # user interuption
+      already_interupted = false
       Signal.trap("INT") do
-        interuption_count += 1
-        interuption_count < 2 ? demultiplexer.stop : exit(0)
+        already_interupted ? exit(0) : demultiplexer.stop
+        already_interupted = true
       end
+
       demultiplexer.start
     end
   end
