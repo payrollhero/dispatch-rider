@@ -84,38 +84,19 @@ describe DispatchRider::Publisher do
   end
 
   describe "#publish" do
-    let :topic do
-      obj = double("AWS::SNS::Topic")
-      class << obj
-        define_method(:publish) do |msg|
-          throw :published, JSON.parse(msg)["body"]["bar"]
-        end
-      end
-      obj
-    end
-
-    let :topic_collection do
-      obj = double("AWS::SNS::TopicCollection")
-      obj.stub(:[]).and_return do |key|
-        topic if key == 'arn:aws:sns:us-east-1:123:PlanOfAttack'
-      end
-      obj
-    end
-
     let :notifier do
       subject.notification_service_registrar.fetch(:aws_sns).notifier
     end
 
     before :each do
-      subject.register_notification_service(:aws_sns)
-      subject.register_destination(:sns_foo, :aws_sns, :foo, account: 123, region: "us-east-1", topic: "PlanOfAttack")
+      subject.register_notification_service(:file_system)
+      subject.register_destination(:fs_foo, :file_system, :foo, path: "tmp/test_queue")
     end
 
     it "publishes the message to the notification service" do
-      catch :published do
-        notifier.should_receive(:topics).and_return(topic_collection)
-        subject.publish(:destinations => [:sns_foo], :message => {:subject => "bar_handler", :body => {"bar" => "baz"}})
-      end.should eq("baz")
+      expect {
+        subject.publish(:destinations => [:fs_foo], :message => {:subject => "bar_handler", :body => {"bar" => "baz"}})
+      }.to change { Dir['tmp/test_queue/*'].length }.by(1)
     end
   end
 end

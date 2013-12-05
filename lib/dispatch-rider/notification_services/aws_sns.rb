@@ -15,8 +15,12 @@ module DispatchRider
         Registrars::SnsChannel
       end
 
+      # not really happy with this, but the notification service registrar system is way too rigid to do this cleaner
+      # since you only can have one notifier for the whole service, but you need to create a new one for each region
       def channel(name)
-        notifier.topics[self.fetch(name)]
+        arn = self.fetch(name)
+        region = arn.split(':')[3]
+        notifier_builder.new(region: region).topics[arn]
       end
     end
   end
