@@ -22,10 +22,7 @@ describe DispatchRider::NotificationServices::AwsSns do
     let(:topic){ double :sns_topic }
 
     it "returns the channel" do
-      subject.notifier.should_receive(:topics).and_return(topics)
-      topics.should_receive(:[]).with(amazon_resource_name).and_return(topic)
-
-      subject.channel(:foo).should == topic
+      subject.channel(:foo).arn.should == amazon_resource_name
     end
   end
 end
