@@ -37,23 +37,24 @@ module DispatchRider
         logger.info "Received SIGQUIT, stopping demultiplexer"
         demultiplexer.stop
       end
+
       Signal.trap("TERM") do
         # signal number: 15
         logger.info "Received SIGTERM, stopping demultiplexer"
         demultiplexer.stop
       end
 
-      # user interuption
-      already_interupted = false
+      # user interruption
+      already_interrupted = false
       Signal.trap("INT") do
-        if already_interupted
+        if already_interrupted
           logger.info "Received SIGINT second time, aborting"
           exit(0)
         else
           logger.info "Received SIGINT first time, stopping demultiplexer"
           demultiplexer.stop
         end
-        already_interupted = true
+        already_interrupted = true
       end
 
       demultiplexer.start

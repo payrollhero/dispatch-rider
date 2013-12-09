@@ -219,6 +219,11 @@ DispatchRider.config do |config|
 end
 ```
 
+Options:
+
+ * `logger` : what logger to use to send messages to (responds to the standard ruby Logger protocol), defaults to a new Logger sending messages to STDERR
+
+
 ### Callbacks
 
 Dispatch rider supports injecting callbacks in a few parts of the
