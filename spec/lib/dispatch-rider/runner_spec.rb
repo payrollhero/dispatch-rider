@@ -3,7 +3,7 @@ require 'spec_helper'
 describe DispatchRider::Runner do
 
   describe ".run" do
-    let(:subscriber){ double(:subscriber, :logger= => nil) }
+    let(:subscriber){ double(:subscriber) }
 
     before :each do
       DispatchRider.configure do |config|
