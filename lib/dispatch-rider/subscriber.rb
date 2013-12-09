@@ -2,10 +2,12 @@
 module DispatchRider
   class Subscriber
     attr_reader :queue_service_registrar, :dispatcher, :demultiplexer
+    attr_accessor :logger
 
     def initialize
       @queue_service_registrar = DispatchRider::Registrars::QueueService.new
       @dispatcher = DispatchRider::Dispatcher.new
+      @logger = Logger.new(STDERR)
     end
 
     def register_queue(name, options = {})
@@ -30,13 +32,27 @@ module DispatchRider
     end
 
     def process
-      Signal.trap("QUIT") { demultiplexer.stop } # signal number: 3
-      Signal.trap("TERM") { demultiplexer.stop } # signal number: 15
+      Signal.trap("QUIT") do
+        # signal number: 3
+        logger.info "Received SIGQUIT, stopping demultiplexer"
+        demultiplexer.stop
+      end
+      Signal.trap("TERM") do
+        # signal number: 15
+        logger.info "Received SIGTERM, stopping demultiplexer"
+        demultiplexer.stop
+      end
 
       # user interuption
       already_interupted = false
       Signal.trap("INT") do
-        already_interupted ? exit(0) : demultiplexer.stop
+        if already_interupted
+          logger.info "Received SIGINT second time, aborting"
+          exit(0)
+        else
+          logger.info "Received SIGINT first time, stopping demultiplexer"
+          demultiplexer.stop
+        end
         already_interupted = true
       end
 

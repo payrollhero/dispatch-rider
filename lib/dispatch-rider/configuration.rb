@@ -1,6 +1,6 @@
 module DispatchRider
   class Configuration
-    attr_accessor :handler_path, :error_handler, :queue_info, :queue_kind, :subscriber
+    attr_accessor :handler_path, :error_handler, :queue_info, :queue_kind, :subscriber, :logger
     attr_reader :callbacks
 
     def initialize
@@ -10,6 +10,7 @@ module DispatchRider
       @queue_info = { path: "tmp/dispatch-rider-queue" }
       @callbacks = Callbacks::Storage.new
       @subscriber = DispatchRider::Subscriber
+      @logger = Logger.new(STDERR)
     end
 
     delegate :before, :after, :around, :to => :callbacks

@@ -30,12 +30,17 @@ module DispatchRider
       @callbacks ||= Callbacks::Access.new(config.callbacks)
     end
 
+    def logger
+      config.logger
+    end
+
     def ready
-      puts "Creating subscriber..."
+      logger.info "Creating subscriber..."
       @subscriber = config.subscriber.new
+      @subscriber.logger = logger
 
       config.handlers.each do |handler_name|
-        puts "Registering #{handler_name} handler..."
+        logger.info "Registering #{handler_name} handler..."
         @subscriber.register_handler(handler_name)
       end
     end
@@ -44,7 +49,7 @@ module DispatchRider
       kind = config.queue_kind
       info = config.queue_info
 
-      puts "Setting #{kind} queue @ #{info.to_json} ..."
+      logger.info "Setting #{kind} queue @ #{info.to_json} ..."
       @subscriber.register_queue(kind, info)
       @subscriber.setup_demultiplexer(kind, config.error_handler)
     end
