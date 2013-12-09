@@ -35,7 +35,7 @@ module DispatchRider
     def dispatch_message(message)
       dispatcher.dispatch(message)
     rescue => exception
-      error_handler.call(message, exception)
+      handle_message_error message, exception
       false
     end
 
@@ -50,8 +50,27 @@ module DispatchRider
 
     def handle_next_queue_item
       queue.pop do |message|
-        dispatch_message(message)
+        begin
+          logger.info "Starting execution of: (#{message.object_id}): #{message.subject} : #{message.body.inspect}"
+          dispatch_message(message)
+        ensure
+          logger.info "Completed execution of: (#{message.object_id}): #{message.subject}"
+        end
       end
+    end
+
+    def handle_message_error(message, exception)
+      begin
+        logger.error "Failed execution of: (#{message.object_id}): #{message.subject} with #{exception.class}: #{exception.message}"
+        error_handler.call(message, exception)
+      rescue => exception2
+        logger.error "Failed error handling of: (#{message.object_id}): #{message.subject} with #{exception2.class}: #{exception2.message}"
+        raise exception2
+      end
+    end
+
+    def logger
+      DispatchRider.config.logger
     end
 
   end
