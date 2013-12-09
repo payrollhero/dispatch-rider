@@ -137,23 +137,4 @@ describe DispatchRider::Subscriber do
     end
   end
 
-  describe "#logger" do
-
-    example { subject.logger.should respond_to(:info) }
-    example { subject.logger.should respond_to(:warn) }
-    example { subject.logger.should respond_to(:error) }
-
-  end
-
-  describe "#logger=" do
-
-    let(:new_logger) { double(:logger) }
-
-    example do
-      subject.logger = new_logger
-      subject.logger.should == new_logger
-    end
-
-  end
-
 end

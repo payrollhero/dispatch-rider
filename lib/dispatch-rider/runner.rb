@@ -37,7 +37,6 @@ module DispatchRider
     def ready
       logger.info "Creating subscriber..."
       @subscriber = config.subscriber.new
-      @subscriber.logger = logger
 
       config.handlers.each do |handler_name|
         logger.info "Registering #{handler_name} handler..."

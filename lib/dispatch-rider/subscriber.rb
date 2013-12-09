@@ -2,12 +2,10 @@
 module DispatchRider
   class Subscriber
     attr_reader :queue_service_registrar, :dispatcher, :demultiplexer
-    attr_accessor :logger
 
     def initialize
       @queue_service_registrar = DispatchRider::Registrars::QueueService.new
       @dispatcher = DispatchRider::Dispatcher.new
-      @logger = Logger.new(STDERR)
     end
 
     def register_queue(name, options = {})
@@ -58,6 +56,12 @@ module DispatchRider
       end
 
       demultiplexer.start
+    end
+
+    private
+
+    def logger
+      DispatchRider.config.logger
     end
   end
 end
