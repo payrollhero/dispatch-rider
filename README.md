@@ -208,6 +208,8 @@ DispatchRider.config do |config|
     end
   end
 
+  config.logger = Rails.logger
+
   config.error_handler = DispatchRider::DefaultErrorHandler # an object that responds to .call(message, exception)
 
   config.queue_kind = :sqs
@@ -216,6 +218,11 @@ DispatchRider.config do |config|
   config.handler_path = Rails.root + "app/handlers" # path to handler files to be autoloaded
 end
 ```
+
+Options:
+
+ * `logger` : what logger to use to send messages to (responds to the standard ruby Logger protocol), defaults to a new Logger sending messages to STDERR
+
 
 ### Callbacks
 
@@ -237,12 +244,10 @@ To setup a subscriber you'll need message handlers. The handlers are named the s
 Sample message handler:
 ```ruby
 # app/handlers/bar_handler
-module ReadNews
-  class << self
-    def process(message_body)
-      message_body["headlines"].each do |headline|
-        puts headline
-      end
+class ReadNews < DispatchRider::Handlers::Base
+  def process(message_body)
+    message_body["headlines"].each do |headline|
+      puts headline
     end
   end
 end

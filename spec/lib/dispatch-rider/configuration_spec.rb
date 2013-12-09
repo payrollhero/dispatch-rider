@@ -41,4 +41,25 @@ describe DispatchRider::Configuration do
       subject.handlers.should include(:test_handler, :another_test_handler)
     end
   end
+
+  describe "#logger" do
+
+    describe "default" do
+      example { subject.logger.should be_kind_of(Logger) }
+    end
+
+    example { subject.should respond_to(:logger) }
+  end
+
+  describe "#logger=" do
+    let(:new_logger) { double(:logger) }
+
+    example { subject.should respond_to(:logger=) }
+
+    example do
+      subject.logger = new_logger
+      subject.logger.should == new_logger
+    end
+  end
+
 end

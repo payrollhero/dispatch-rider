@@ -30,17 +30,38 @@ module DispatchRider
     end
 
     def process
-      Signal.trap("QUIT") { demultiplexer.stop } # signal number: 3
-      Signal.trap("TERM") { demultiplexer.stop } # signal number: 15
+      Signal.trap("QUIT") do
+        # signal number: 3
+        logger.info "Received SIGQUIT, stopping demultiplexer"
+        demultiplexer.stop
+      end
 
-      # user interuption
-      already_interupted = false
+      Signal.trap("TERM") do
+        # signal number: 15
+        logger.info "Received SIGTERM, stopping demultiplexer"
+        demultiplexer.stop
+      end
+
+      # user interruption
+      already_interrupted = false
       Signal.trap("INT") do
-        already_interupted ? exit(0) : demultiplexer.stop
-        already_interupted = true
+        if already_interrupted
+          logger.info "Received SIGINT second time, aborting"
+          exit(0)
+        else
+          logger.info "Received SIGINT first time, stopping demultiplexer"
+          demultiplexer.stop
+        end
+        already_interrupted = true
       end
 
       demultiplexer.start
+    end
+
+    private
+
+    def logger
+      DispatchRider.config.logger
     end
   end
 end
