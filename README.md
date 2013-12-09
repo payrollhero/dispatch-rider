@@ -239,12 +239,10 @@ To setup a subscriber you'll need message handlers. The handlers are named the s
 Sample message handler:
 ```ruby
 # app/handlers/bar_handler
-module ReadNews
-  class << self
-    def process(message_body)
-      message_body["headlines"].each do |headline|
-        puts headline
-      end
+class ReadNews < DispatchRider::Handlers::Base
+  def process(message_body)
+    message_body["headlines"].each do |headline|
+      puts headline
     end
   end
 end
