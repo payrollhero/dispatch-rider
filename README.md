@@ -208,6 +208,8 @@ DispatchRider.config do |config|
     end
   end
 
+  config.logger = Rails.logger
+
   config.error_handler = DispatchRider::DefaultErrorHandler # an object that responds to .call(message, exception)
 
   config.queue_kind = :sqs
