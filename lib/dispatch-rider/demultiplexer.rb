@@ -63,8 +63,8 @@ module DispatchRider
       begin
         logger.error "Failed execution of: (#{message.object_id}): #{message.subject} with #{exception.class}: #{exception.message}"
         error_handler.call(message, exception)
-      rescue => exception2
-        logger.error "Failed error handling of: (#{message.object_id}): #{message.subject} with #{exception2.class}: #{exception2.message}"
+      rescue => error_handler_exception # the error handler crashed
+        logger.error "Failed error handling of: (#{message.object_id}): #{message.subject} with #{error_handler_exception.class}: #{error_handler_exception.message}"
         raise exception2
       end
     end
