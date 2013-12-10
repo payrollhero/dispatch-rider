@@ -48,24 +48,32 @@ module DispatchRider
       end
     end
 
+    def message_info_fragment(message)
+      "(#{message.object_id}): #{message.subject} : #{message.body.inspect}"
+    end
+
     def handle_next_queue_item
       queue.pop do |message|
         begin
-          logger.info "Starting execution of: (#{message.object_id}): #{message.subject} : #{message.body.inspect}"
+          logger.info "Starting execution of: #{message_info_fragment(message)}"
           dispatch_message(message)
         ensure
-          logger.info "Completed execution of: (#{message.object_id}): #{message.subject}"
+          logger.info "Completed execution of: #{message_info_fragment(message)}"
         end
       end
     end
 
+    def exception_info_fragment(message, exception)
+      "(#{message.object_id}): #{message.subject} with #{exception.class}: #{exception.message}"
+    end
+
     def handle_message_error(message, exception)
       begin
-        logger.error "Failed execution of: (#{message.object_id}): #{message.subject} with #{exception.class}: #{exception.message}"
+        logger.error "Failed execution of: #{exception_info_fragment(message, exception)}"
         error_handler.call(message, exception)
       rescue => error_handler_exception # the error handler crashed
-        logger.error "Failed error handling of: (#{message.object_id}): #{message.subject} with #{error_handler_exception.class}: #{error_handler_exception.message}"
-        raise exception2
+        logger.error "Failed error handling of: #{exception_info_fragment(message, error_handler_exception)}"
+        raise error_handler_exception
       end
     end
 
