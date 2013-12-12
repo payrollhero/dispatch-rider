@@ -5,6 +5,9 @@ module DispatchRider
     class AwsSqs < Base
       require "dispatch-rider/queue_services/aws_sqs/message_body_extractor"
 
+      class AbortExecution < RuntimeError; end
+      class VisibilityTimeoutExceeded < RuntimeError; end
+
       def assign_storage(attrs)
         begin
           sqs = AWS::SQS.new(:logger => nil)
@@ -20,12 +23,24 @@ module DispatchRider
         end
       end
 
-      def insert(item)
-        queue.send_message(item)
+      def pop(&block)
+        begin
+          queue.receive_message do |raw_item|
+            obj = OpenStruct.new(:item => raw_item, :message => construct_message_from(raw_item))
+
+            visibility_timout_shield(obj.message) do
+              raise AbortExecution, "false received from handler" unless block.call(obj.message)
+              obj.message
+            end
+
+          end
+        rescue AbortExecution
+          # ignore, it was already handled, just need to break out if pop
+        end
       end
 
-      def raw_head
-        queue.receive_message
+      def insert(item)
+        queue.send_message(item)
       end
 
       def construct_message_from(item)
@@ -39,6 +54,24 @@ module DispatchRider
       def size
         queue.approximate_number_of_messages
       end
+
+      private
+
+      def visibility_timeout
+        queue.visibility_timeout
+      end
+
+      def visibility_timout_shield(message)
+        start_time = Time.now
+        timeout = visibility_timeout # capture it at start
+        begin
+          yield
+        ensure
+          duration = Time.now - start_time
+          raise VisibilityTimeoutExceeded, "message: #{message.subject}, #{message.body.inspect} took #{duration} seconds while the timeout was #{timeout}" if duration > timeout
+        end
+      end
+
     end
   end
 end

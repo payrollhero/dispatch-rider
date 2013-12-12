@@ -1,11 +1,19 @@
 require 'spec_helper'
 
 describe DispatchRider::QueueServices::AwsSqs do
+
+  let(:visibility_timeout) { 100 }
+
+  let(:fake_response) do
+    AWS::SQS::Client.new.stub_for(:get_queue_url).tap { |response|
+      response.data[:queue_url] = "the.queue.url"
+      response.data[:attributes] = { "VisibilityTimeout" => visibility_timeout }
+    }
+  end
+
   before do
     AWS.config(stub_requests: true)
-    response = AWS::SQS::Client.new.stub_for(:get_queue_url)
-    response.data[:queue_url] = "the.queue.url"
-    AWS::SQS::Client.any_instance.stub(:client_request).and_return(response)
+    AWS::SQS::Client.any_instance.stub(:client_request).and_return(fake_response)
   end
 
   subject(:aws_sqs_queue) do
@@ -45,22 +53,26 @@ describe DispatchRider::QueueServices::AwsSqs do
     end
   end
 
-  describe "#raw_head" do
+  describe "#pop" do
     context "when the sqs queue has items in it" do
-      let(:response_attributes) {{
-        "SenderId" => "123456789012",
-        "SentTimestamp" => Time.now.to_i.to_s,
-        "ApproximateReceivedCount" => "12",
-        "ApproximateFirstReceiveTimestamp" => (Time.now + 12).to_i.to_s,
-      }}
+      let(:response_attributes) do
+        {
+          "SenderId" => "123456789012",
+          "SentTimestamp" => Time.now.to_i.to_s,
+          "ApproximateReceivedCount" => "12",
+          "ApproximateFirstReceiveTimestamp" => (Time.now + 12).to_i.to_s,
+        }
+      end
 
-      let(:response_message) { {
-        :message_id => 12345,
-        :md5_of_body => "mmmddd555",
-        :body => {:subject => "foo", :body => {:bar => "baz"}}.to_json,
-        :receipt_handle => "HANDLE",
-        :attributes => response_attributes,
-      } }
+      let(:response_message) do
+        {
+          :message_id => 12345,
+          :md5_of_body => "mmmddd555",
+          :body => {:subject => "foo", :body => {:bar => "baz"}}.to_json,
+          :receipt_handle => "HANDLE",
+          :attributes => response_attributes,
+        }
+      end
 
       before :each do
         response = AWS::SQS::Client.new.stub_for(:receive_message)
@@ -69,12 +81,27 @@ describe DispatchRider::QueueServices::AwsSqs do
         AWS::SQS::Queue.any_instance.stub(:verify_receive_message_checksum).and_return([])
       end
 
-      it "should return the first item in the queue" do
-        received_message = aws_sqs_queue.raw_head
-        result = JSON.parse(received_message.body)
-        result['subject'].should eq('foo')
-        result['body'].should eq({'bar' => 'baz'})
+      context "when the block runs faster than the timeout" do
+        it "should yield the first item in the queue" do
+          aws_sqs_queue.pop do |message|
+            message.subject.should eq('foo')
+            message.body.should eq({'bar' => 'baz'})
+          end
+        end
       end
+
+      context "when the block runs slower than the timeout" do
+        let(:visibility_timeout) { 1 }
+
+        it "should raise" do
+          expect {
+            aws_sqs_queue.pop do |message|
+              sleep(1.1)
+            end
+          }.to raise_exception(/message: foo,.+ took .+ seconds while the timeout was 1/)
+        end
+      end
+
     end
 
     context "when the sqs queue is empty" do
@@ -82,10 +109,13 @@ describe DispatchRider::QueueServices::AwsSqs do
         aws_sqs_queue.queue.stub(:receive_message).and_return(nil)
       end
 
-      it "should return nil" do
-        aws_sqs_queue.raw_head.should be_nil
+      it "should not yield" do
+        expect { |b|
+          aws_sqs_queue.pop(&b)
+        }.not_to yield_control
       end
     end
+
   end
 
   describe "#construct_message_from" do
