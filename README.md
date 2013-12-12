@@ -7,7 +7,7 @@ handling the messages.
 
 ### Build status
 
-[![Build Status](https://travis-ci.org/payrollhero/dispatch-rider.png)](https://travis-ci.org/payrollhero/dispatch-rider)
+[![Build Status](https://travis-ci.org/payrollhero/dispatch-rider.png?branch=master)](https://travis-ci.org/payrollhero/dispatch-rider)
 
 ## Installation
 
