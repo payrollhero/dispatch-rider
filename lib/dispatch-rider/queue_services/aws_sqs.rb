@@ -10,7 +10,7 @@ module DispatchRider
 
       def assign_storage(attrs)
         begin
-          sqs = AWS::SQS.new(:logger => nil)
+          sqs = AWS::SQS.new(logger: nil, region: attrs[:region])
           if attrs[:name]
             sqs.queues.named(attrs[:name])
           elsif attrs[:url]
