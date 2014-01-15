@@ -36,7 +36,7 @@ module DispatchRider
 
       def head
         raw_item = raw_head
-        raw_item && OpenStruct.new(:item => raw_item, :message => construct_message_from(raw_item))
+        raw_item && ::OpenStruct.new(:item => raw_item, :message => construct_message_from(raw_item))
       end
 
       def raw_head

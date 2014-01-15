@@ -26,7 +26,7 @@ module DispatchRider
       def pop(&block)
         begin
           queue.receive_message do |raw_item|
-            obj = OpenStruct.new(:item => raw_item, :message => construct_message_from(raw_item))
+            obj = ::OpenStruct.new(:item => raw_item, :message => construct_message_from(raw_item))
 
             visibility_timout_shield(obj.message) do
               raise AbortExecution, "false received from handler" unless block.call(obj.message)
