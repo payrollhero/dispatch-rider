@@ -33,10 +33,10 @@ module DispatchRider
       def retry
         timeout = retry_timeout
         case timeout
-          when :immediate
-            return_to_queue
-          else
-            extend_timeout(timeout)
+        when :immediate
+          return_to_queue
+        else
+          extend_timeout(timeout)
         end
       end
       

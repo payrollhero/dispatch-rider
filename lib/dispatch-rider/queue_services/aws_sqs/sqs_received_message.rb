@@ -10,7 +10,7 @@ module DispatchRider
           super(message, raw_item)
         end
         
-        #NOTE: Setting the visibility timeout resets the timeout to NOW and makes it visibility timeout this time
+        # NOTE: Setting the visibility timeout resets the timeout to NOW and makes it visibility timeout this time
         # Essentially resetting the timer on this message
         def extend_timeout(timeout)
           item.visibility_timeout = timeout
@@ -19,11 +19,11 @@ module DispatchRider
           end
         end
         
-        #We effectively return the item to the queue by setting
-        #the visibility timeout to zero.  The item
-        #should become immediately visible.
-        #The next receiver will reset the visibility
-        #to something appropriate
+        # We effectively return the item to the queue by setting
+        # the visibility timeout to zero.  The item
+        # should become immediately visible.
+        # The next receiver will reset the visibility
+        # to something appropriate
         def return_to_queue
           extend_timeout(0)
         end
