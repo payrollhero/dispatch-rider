@@ -261,6 +261,29 @@ class ReadNews < DispatchRider::Handlers::Base
 end
 ```
 
+### Timeout & retry handling
+
+If you have a long running job, or if you wish to retry a job later, you may use two methods in your
+handler class.  return_to_queue and extend_timeout.
+
+return_to_queue will retry your item immediately.
+extend_timeout will tell the queue you wish to hold this item longer.
+
+```ruby
+# app/handlers/foo_handler
+class LongRunning < DispatchRider::Handlers::Base
+  def process(body)
+    my_loop.each do |item|
+      
+      #... do some work ...
+      extend_timeout(1.hour)
+    end
+  rescue OutOfResourcesImOutError
+    return_to_queue #oops!  Better give this to somebody else!
+  end
+end
+```
+
 Sample subscriber setup:
 
 ```ruby

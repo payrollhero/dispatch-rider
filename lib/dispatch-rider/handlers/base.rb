@@ -32,11 +32,11 @@ module DispatchRider
       protected
       
       def extend_timeout(timeout)
-        @raw_message.extend_timeout(timeout)
+        raw_message.extend_timeout(timeout)
       end
       
       def return_to_queue
-        @raw_message.return_to_queue
+        raw_message.return_to_queue
       end
       
       def retry
