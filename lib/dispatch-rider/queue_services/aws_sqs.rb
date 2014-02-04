@@ -27,21 +27,17 @@ module DispatchRider
       def pop(&block)
         begin
           queue.receive_message do |raw_item|
-            obj = ::OpenStruct.new(:item => raw_item, :message => construct_message_from(raw_item))
+            obj = SqsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue)
 
-            visibility_timout_shield(obj.message) do
-              raise AbortExecution, "false received from handler" unless block.call(obj.message)
-              obj.message
+            visibility_timeout_shield(obj) do
+              raise AbortExecution, "false received from handler" unless block.call(obj)
+              obj
             end
 
           end
         rescue AbortExecution
           # ignore, it was already handled, just need to break out if pop
         end
-      end
-      
-      def received_message_for(raw_item)
-         SqsReceivedMessage.new(construct_message_from(raw_item), raw_item)
       end
 
       def insert(item)
@@ -62,17 +58,12 @@ module DispatchRider
 
       private
 
-      def visibility_timeout
-        queue.visibility_timeout
-      end
-
-      def visibility_timout_shield(message)
-        start_time = Time.now
-        timeout = visibility_timeout # capture it at start
+      def visibility_timeout_shield(message)
         begin
           yield
         ensure
-          duration = Time.now - start_time
+          duration = Time.now - message.start_time
+          timeout = message.total_timeout
           raise VisibilityTimeoutExceeded, "message: #{message.subject}, #{message.body.inspect} took #{duration} seconds while the timeout was #{timeout}" if duration > timeout
         end
       end

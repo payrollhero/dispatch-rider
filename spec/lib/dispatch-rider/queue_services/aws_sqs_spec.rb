@@ -146,7 +146,9 @@ describe DispatchRider::QueueServices::AwsSqs do
       AWS::SQS::ReceivedMessage.any_instance.should_receive(:visibility_timeout=).with(0)
       aws_sqs_queue.pop do |message|
         message.extend_timeout(10)
+        message.total_timeout.should eq(10)
         message.return_to_queue
+        message.total_timeout.should eq(10)
       end
     end
   end
