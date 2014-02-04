@@ -21,6 +21,11 @@ module DispatchRider
           FileUtils.mv(file_path, file_path_inflight)
           File.new(file_path_inflight)
         end
+        
+        def put_back(item)
+          add(item)
+          remove(item)
+        end
 
         def remove(item)
           item.close

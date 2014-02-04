@@ -4,6 +4,7 @@ module DispatchRider
   module QueueServices
     class AwsSqs < Base
       require "dispatch-rider/queue_services/aws_sqs/message_body_extractor"
+      require "dispatch-rider/queue_services/aws_sqs/sqs_received_message"
 
       class AbortExecution < RuntimeError; end
       class VisibilityTimeoutExceeded < RuntimeError; end
@@ -37,6 +38,10 @@ module DispatchRider
         rescue AbortExecution
           # ignore, it was already handled, just need to break out if pop
         end
+      end
+      
+      def received_message_for(raw_item)
+         SqsReceivedMessage.new(construct_message_from(raw_item), raw_item)
       end
 
       def insert(item)

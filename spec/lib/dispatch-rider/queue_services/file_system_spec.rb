@@ -50,6 +50,19 @@ describe DispatchRider::QueueServices::FileSystem do
       result.body.should eq('bar')
     end
   end
+  
+  describe "#put_back" do
+    before :each do
+      file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
+    end
+    
+    it "should remove and re-add the item" do
+      file = file_system_queue.raw_head
+      file_system_queue.should be_empty
+      file_system_queue.put_back(file)
+      file_system_queue.size.should eq(1)
+    end
+  end
 
   describe "#delete" do
     before :each do

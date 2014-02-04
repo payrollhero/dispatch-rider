@@ -5,6 +5,7 @@
 # initialize, push, pop and empty?
 module DispatchRider
   module QueueServices
+    require "dispatch-rider/queue_services/received_message"
     class Base
       attr_accessor :queue
 
@@ -26,17 +27,23 @@ module DispatchRider
         raise NotImplementedError
       end
 
+      
+      #If you pass a block into pop it will wrap the deletion of the message with it's handling
       def pop(&block)
-        obj = head
-        if obj
-          block.call(obj.message) && delete(obj.item)
-          obj.message
+        received = head
+        if received
+          block.call(received) && delete(received.item)
+          received
         end
       end
 
       def head
         raw_item = raw_head
-        raw_item && ::OpenStruct.new(:item => raw_item, :message => construct_message_from(raw_item))
+        raw_item && received_message_for(raw_item)
+      end
+      
+      def received_message_for(raw_item)
+         QueueServices::ReceivedMessage.new(construct_message_from(raw_item), raw_item)
       end
 
       def raw_head

@@ -87,10 +87,10 @@ describe DispatchRider::QueueServices::Base do
       let(:new_item){ OpenStruct.new(:message => new_message) }
       let(:new_message){ :the_message }
 
-      it "should raise an exception" do
+      it "should return the expected message" do
         received_head = base_queue.head
         received_head.item.should == new_item
-        received_head.message.should == new_message
+        received_head.to_sym == new_message
       end
     end
   end

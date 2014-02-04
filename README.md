@@ -243,11 +243,16 @@ Each callback can have hooks plugged into it at `before`, `after` and `around` t
 ### Manual Setup
 
 To setup a subscriber you'll need message handlers. The handlers are named the same as the message subjects.
+Each handler may also specify a retry_timeout as shown below.  When a job throws an exception it will be put back
+on the queue in that time period if the queue supports timeouts.  If the underlying queue (such as filesystem) does
+not support retry then this setting is ineffective.
 
 Sample message handler:
 ```ruby
 # app/handlers/bar_handler
 class ReadNews < DispatchRider::Handlers::Base
+  retry_timeout 10.minutes
+
   def process(message_body)
     message_body["headlines"].each do |headline|
       puts headline

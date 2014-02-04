@@ -22,9 +22,17 @@ module DispatchRider
       def raw_head
         queue.pop
       end
+      
+      def received_message_for(raw_item)
+         FsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue)
+      end
 
       def construct_message_from(item)
         deserialize(item.read)
+      end
+      
+      def put_back(item)
+        queue.put_back(item)
       end
 
       def delete(item)
