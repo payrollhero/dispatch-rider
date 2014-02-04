@@ -8,6 +8,7 @@ module DispatchRider
         def retry_timeout(value)
           @retry_timeout_value = value
         end
+        
         def retry_timeout_value
           @retry_timeout_value
         end
