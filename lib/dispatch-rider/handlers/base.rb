@@ -4,16 +4,6 @@ module DispatchRider
       include NamedProcess
       extend InheritanceTracking
       
-      class << self
-        def retry_timeout(value)
-          @retry_timeout_value = value
-        end
-        
-        def retry_timeout_value
-          @retry_timeout_value
-        end
-      end
-      
       attr_reader :raw_message
 
       def do_process(raw_message)
@@ -22,7 +12,7 @@ module DispatchRider
           process(raw_message.body)
         end
       rescue Exception => e
-        self.retry if retry_on_failure?
+        self.retry if self.retry_on_failure?
         raise e
       end
 
@@ -41,7 +31,7 @@ module DispatchRider
       end
       
       def retry
-        timeout = self.class.retry_timeout_value
+        timeout = retry_timeout
         case timeout
           when :immediate
             return_to_queue
@@ -51,7 +41,7 @@ module DispatchRider
       end
       
       def retry_on_failure?
-        self.class.retry_timeout_value != nil
+        self.respond_to? :retry_timeout
       end
     end
   end

@@ -251,12 +251,14 @@ Sample message handler:
 ```ruby
 # app/handlers/bar_handler
 class ReadNews < DispatchRider::Handlers::Base
-  retry_timeout 10.minutes
-
   def process(message_body)
     message_body["headlines"].each do |headline|
       puts headline
     end
+  end
+  
+  def retry_timeout
+    10.minutes
   end
 end
 ```

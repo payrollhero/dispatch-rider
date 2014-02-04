@@ -11,17 +11,19 @@ describe DispatchRider::Handlers::Base do
   end
   
   class ProcessWithImmediateRetry < DispatchRider::Handlers::Base
-    retry_timeout :immediate
     def process(options)
       raise "I have failed!"
     end
+    
+    def retry_timeout; :immediate; end
   end
   
   class ProcessWithTenSecondRetry < DispatchRider::Handlers::Base
-    retry_timeout 10*60
     def process(options)
       raise "I have failed!"
     end
+    
+    def retry_timeout; 10*60; end
   end
 
   describe "#do_process" do
