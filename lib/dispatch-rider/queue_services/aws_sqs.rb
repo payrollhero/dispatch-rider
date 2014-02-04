@@ -4,6 +4,7 @@ module DispatchRider
   module QueueServices
     class AwsSqs < Base
       require "dispatch-rider/queue_services/aws_sqs/message_body_extractor"
+      require "dispatch-rider/queue_services/aws_sqs/sqs_received_message"
 
       class AbortExecution < RuntimeError; end
       class VisibilityTimeoutExceeded < RuntimeError; end
@@ -26,11 +27,11 @@ module DispatchRider
       def pop(&block)
         begin
           queue.receive_message do |raw_item|
-            obj = ::OpenStruct.new(:item => raw_item, :message => construct_message_from(raw_item))
+            obj = SqsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue)
 
-            visibility_timout_shield(obj.message) do
-              raise AbortExecution, "false received from handler" unless block.call(obj.message)
-              obj.message
+            visibility_timeout_shield(obj) do
+              raise AbortExecution, "false received from handler" unless block.call(obj)
+              obj
             end
 
           end
@@ -57,17 +58,12 @@ module DispatchRider
 
       private
 
-      def visibility_timeout
-        queue.visibility_timeout
-      end
-
-      def visibility_timout_shield(message)
-        start_time = Time.now
-        timeout = visibility_timeout # capture it at start
+      def visibility_timeout_shield(message)
         begin
           yield
         ensure
-          duration = Time.now - start_time
+          duration = Time.now - message.start_time
+          timeout = message.total_timeout
           raise VisibilityTimeoutExceeded, "message: #{message.subject}, #{message.body.inspect} took #{duration} seconds while the timeout was #{timeout}" if duration > timeout
         end
       end

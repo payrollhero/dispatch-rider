@@ -117,6 +117,41 @@ describe DispatchRider::QueueServices::AwsSqs do
     end
 
   end
+  
+  describe "received message methods" do
+    let(:response_attributes) {{
+        "SenderId" => "123456789012",
+        "SentTimestamp" => Time.now.to_i.to_s,
+        "ApproximateReceivedCount" => "12",
+        "ApproximateFirstReceiveTimestamp" => (Time.now + 12).to_i.to_s,
+      }}
+
+      let(:response_message) { {
+        :message_id => 12345,
+        :md5_of_body => "mmmddd555",
+        :body => {:subject => "foo", :body => {:bar => "baz"}}.to_json,
+        :receipt_handle => "HANDLE",
+        :attributes => response_attributes,
+      } }
+      
+      before :each do
+        response = AWS::SQS::Client.new.stub_for(:receive_message)
+        response.data[:messages] = [response_message]
+        AWS::SQS::Client::V20121105.any_instance.stub(:receive_message).and_return(response)
+        AWS::SQS::Queue.any_instance.stub(:verify_receive_message_checksum).and_return([])
+      end
+      
+    it "should set the visibility timeout when extend is called" do
+      AWS::SQS::ReceivedMessage.any_instance.should_receive(:visibility_timeout=).with(10)
+      AWS::SQS::ReceivedMessage.any_instance.should_receive(:visibility_timeout=).with(0)
+      aws_sqs_queue.pop do |message|
+        message.extend_timeout(10)
+        message.total_timeout.should eq(10)
+        message.return_to_queue
+        message.total_timeout.should eq(10)
+      end
+    end
+  end
 
   describe "#construct_message_from" do
     context "when the item is directly published to AWS::SQS" do
