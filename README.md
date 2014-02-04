@@ -212,6 +212,7 @@ DispatchRider.config do |config|
   end
 
   config.logger = Rails.logger
+  config.default_retry_timeout = 300
 
   config.error_handler = DispatchRider::DefaultErrorHandler # an object that responds to .call(message, exception)
 

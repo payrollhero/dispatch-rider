@@ -41,6 +41,15 @@ describe DispatchRider::Configuration do
       subject.handlers.should include(:test_handler, :another_test_handler)
     end
   end
+  
+  describe "#default_retry_timeout" do
+    it "sets the default timeout" do
+      subject.default_retry_timeout = 60
+      TestHandler.instance_methods.should include(:retry_timeout)
+      #Need to do this so that all the other tests don't have this as default!
+      DispatchRider::Handlers::Base.send(:remove_method,:retry_timeout)
+    end
+  end
 
   describe "#logger" do
 
