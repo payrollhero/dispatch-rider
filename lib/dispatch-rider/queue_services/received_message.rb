@@ -1,3 +1,5 @@
+require 'delegate'
+
 module DispatchRider
   module QueueServices
     class ReceivedMessage < ::SimpleDelegator
