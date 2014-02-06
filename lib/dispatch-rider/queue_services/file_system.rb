@@ -5,6 +5,7 @@
 module DispatchRider
   module QueueServices
     require "dispatch-rider/queue_services/file_system/queue"
+    require "dispatch-rider/queue_services/file_system/fs_received_message"
     class FileSystem < Base
       def assign_storage(attrs)
         begin
