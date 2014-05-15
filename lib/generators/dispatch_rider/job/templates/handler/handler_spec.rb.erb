@@ -1,0 +1,18 @@
+require 'spec_helper'
+
+describe <%= handler_name.classify %> do
+
+  subject(:handler) { described_class.new }
+
+  # TODO: set some attributes
+  let(:attributes) { {} }
+
+  describe "#process" do
+    it "does something useful" do
+      handler.process attributes
+      # TODO: assert something
+      fail "not implemented"
+    end
+  end
+
+end
