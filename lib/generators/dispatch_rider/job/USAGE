@@ -1,0 +1,13 @@
+Description:
+    Generates a Publisher/Handler pair
+
+Example:
+    rails generate dispatch_rider:job some_job
+
+    This will create:
+        app/publishers/some_job_publisher.rb
+        app/handlers/some_job.rb
+
+    As well as its tests (currently only supporting rspec):
+        spec/publishers/some_job_publisher_spec.rb
+        spec/handlers/some_job_spec.rb

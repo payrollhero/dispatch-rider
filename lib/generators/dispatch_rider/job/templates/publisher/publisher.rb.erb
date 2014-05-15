@@ -1,0 +1,14 @@
+class <%= publisher_name.classify %> < DispatchRider::Publisher::Base
+
+  # TODO: set the correct destination
+  destinations [:some_destination]
+  subject "<%= handler_name.underscore %>"
+
+  # TODO: accept some custom arguments here
+  # @return [<%= handler_name.classify %>]
+  def self.publish
+    # TODO: pass them to the message as hash arguments
+    new.publish({})
+  end
+
+end

@@ -1,0 +1,18 @@
+require 'spec_helper'
+
+describe <%= publisher_name.classify %> do
+
+  describe '.process' do
+
+    # TODO: set up whatever needs to be set up
+
+    it "publishes the task" do
+      # TODO: assert the correct arguments
+      described_class.any_instance.should_receive(:publish).with()
+      # TODO: pass the right arguments
+      described_class.publish()
+    end
+
+  end
+
+end
