@@ -36,5 +36,3 @@ require "dispatch-rider/demultiplexer"
 require "dispatch-rider/runner"
 require "dispatch-rider/publisher"
 require "dispatch-rider/subscriber"
-
-require "dispatch-rider/integrations/appsignal"
