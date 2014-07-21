@@ -12,7 +12,7 @@ group :development do
 end
 
 group :development, :test do
-  gem "rspec"
+  gem "rspec", "~> 2.0"
   gem "byebug", platform: :ruby_20, require: !ENV['CI']
 end
 
