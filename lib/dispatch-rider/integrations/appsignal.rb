@@ -38,7 +38,7 @@ if defined? Appsignal
     ENV.to_hash
   )
 
-  Appsignal.start_logger(app_settings.root)
+  Appsignal.start_logger(Rails.root)
 
   if Appsignal.active?
     Appsignal.start
