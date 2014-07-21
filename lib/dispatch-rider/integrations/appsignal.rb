@@ -33,10 +33,9 @@ if defined? Appsignal
     end
   end
 
-  app_settings = ::Sinatra::Application.settings
   Appsignal.config = Appsignal::Config.new(
-    app_settings.root,
-    app_settings.environment
+    Rails.root,
+    ENV.to_hash
   )
 
   Appsignal.start_logger(app_settings.root)
