@@ -13,7 +13,7 @@ end
 
 group :development, :test do
   gem "rspec"
-  gem "debugger"
+  gem "byebug", require: !ENV['CI']
 end
 
 group :test do
