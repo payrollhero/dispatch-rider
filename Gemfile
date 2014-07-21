@@ -12,8 +12,8 @@ group :development do
 end
 
 group :development, :test do
-  gem "rspec"
-  gem "debugger"
+  gem "rspec", "~> 2.0"
+  gem "byebug", platform: :ruby_20, require: !ENV['CI']
 end
 
 group :test do
