@@ -20,6 +20,19 @@ module DispatchRider
       def return_to_queue
         raise NotImplementedError
       end
+
+      def receive_count
+        raise NotImplementedError
+      end
+
+      def sent_at
+        raise NotImplementedError
+      end
+
+      def queue_name
+        raise NotImplementedError
+      end
+
     end
   end
 end

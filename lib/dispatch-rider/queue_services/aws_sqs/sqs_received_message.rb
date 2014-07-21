@@ -27,7 +27,19 @@ module DispatchRider
         def return_to_queue
           extend_timeout(0)
         end
-        
+
+        def receive_count
+          @item.approximate_receive_count
+        end
+
+        def sent_at
+          @item.sent_timestamp
+        end
+
+        def queue_name
+          queue.arn.split(':').last
+        end
+
       end
     end
   end

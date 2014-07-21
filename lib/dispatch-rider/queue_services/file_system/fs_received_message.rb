@@ -16,7 +16,19 @@ module DispatchRider
         def return_to_queue
           queue.put_back(item)
         end
-        
+
+        def receive_count
+          1 # can't really check that in this service
+        end
+
+        def sent_at
+          @item.ctime
+        end
+
+        def queue_name
+          File.basename(File.dirname(@item.path))
+        end
+
       end
     end
   end
