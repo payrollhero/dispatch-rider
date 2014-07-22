@@ -33,11 +33,6 @@ if defined? Appsignal
     end
   end
 
-  Appsignal.config = Appsignal::Config.new(
-    Rails.root,
-    ENV.to_hash
-  )
-
   if Appsignal.active?
     Appsignal.start
 
