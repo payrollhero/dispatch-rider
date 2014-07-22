@@ -38,15 +38,13 @@ if defined? Appsignal
     ENV.to_hash
   )
 
-  Appsignal.start_logger(Rails.root)
-
   if Appsignal.active?
     Appsignal.start
 
     DispatchRider.config do |config|
 
       config.around(:dispatch_message) do |job, message|
-        DispatchRider::Appsignal.wrap_message(job, message)
+        DispatchRider::Integrations::Appsignal.wrap_message(job, message)
       end
 
     end
