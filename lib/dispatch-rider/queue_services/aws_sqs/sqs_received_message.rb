@@ -5,6 +5,7 @@ module DispatchRider
         attr_reader :total_timeout, :start_time
         
         def initialize(message, raw_item, queue)
+          @queue = queue
           @total_timeout = queue.visibility_timeout
           @start_time = Time.now
           super(message, raw_item)
@@ -37,7 +38,7 @@ module DispatchRider
         end
 
         def queue_name
-          queue.arn.split(':').last
+          @queue.arn.split(':').last
         end
 
       end

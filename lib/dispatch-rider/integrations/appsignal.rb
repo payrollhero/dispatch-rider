@@ -1,5 +1,5 @@
 if defined? Appsignal
-  Appsignal.logger.info('Loading Dispatch Rider integration')
+  ::Appsignal.logger.info('Loading Dispatch Rider integration')
 
   module DispatchRider
     module Integrations
@@ -7,9 +7,9 @@ if defined? Appsignal
 
         def self.wrap_message(job, message)
           begin
-            Appsignal::Transaction.create(SecureRandom.uuid, ENV.to_hash)
+            ::Appsignal::Transaction.create(SecureRandom.uuid, ENV.to_hash)
 
-            ActiveSupport::Notifications.instrument(
+            ::ActiveSupport::Notifications.instrument(
               'perform_job.dispatch-rider',
               :class => message.subject,
               :method => 'handle',
@@ -20,12 +20,12 @@ if defined? Appsignal
               job.call
             end
           rescue Exception => exception
-            unless Appsignal.is_ignored_exception?(exception)
-              Appsignal::Transaction.current.add_exception(exception)
+            unless ::Appsignal.is_ignored_exception?(exception)
+              ::Appsignal::Transaction.current.add_exception(exception)
             end
             raise exception
           ensure
-            Appsignal::Transaction.current.complete!
+            ::Appsignal::Transaction.current.complete!
           end
         end
 
@@ -33,17 +33,16 @@ if defined? Appsignal
     end
   end
 
-  if Appsignal.active?
-    Appsignal.start
+  DispatchRider.configure do |config|
 
-    DispatchRider.configure do |config|
-
-      config.around(:dispatch_message) do |job, message|
-        DispatchRider::Integrations::Appsignal.wrap_message(job, message)
-      end
-
+    config.around(:dispatch_message) do |job, message|
+      DispatchRider::Integrations::Appsignal.wrap_message(job, message)
     end
 
+  end
+
+  if ::Appsignal.active?
+    ::Appsignal.start
   end
 
 end
