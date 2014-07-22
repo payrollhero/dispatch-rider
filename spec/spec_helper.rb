@@ -8,7 +8,7 @@ require 'tempfile'
 RSpec.configure do |config|
   config.mock_with :rspec
   config.order = 'random'
-  config.color_enabled = true
+  config.color = true
   config.tty = true
 end
 
