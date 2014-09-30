@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Suman Mukherjee", "Dane Natoli", "Piotr Banasik", "Ronald Maravilla"]
-  s.date = "2014-07-22"
+  s.date = "2014-09-30"
   s.description = "Messaging system that is customizable based on which queueing system we are using."
   s.email = ["suman@payrollhero.com", "dnatoli@payrollhero.com", "piotr@payrollhero.com", "rmaravilla@payrollhero.com"]
   s.extra_rdoc_files = [
@@ -67,6 +67,7 @@ Gem::Specification.new do |s|
     "lib/dispatch-rider/registrars/queue_service.rb",
     "lib/dispatch-rider/registrars/sns_channel.rb",
     "lib/dispatch-rider/runner.rb",
+    "lib/dispatch-rider/signal_tools.rb",
     "lib/dispatch-rider/subscriber.rb",
     "lib/dispatch-rider/version.rb",
     "lib/generators/dispatch_rider/install/USAGE",
@@ -81,7 +82,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "https://github.com/payrollhero/dispatch-rider"
   s.licenses = ["MIT"]
-  s.rubygems_version = "2.3.0"
+  s.rubygems_version = "2.2.2"
   s.summary = "Messaging system based on the reactor patter. You can publish messages to a queue and then a demultiplexer runs an event loop which pops items from the queue and hands it over to a dispatcher. The dispatcher hands over the message to the appropriate handler. You can choose your own queueing service."
 
   if s.respond_to? :specification_version then
