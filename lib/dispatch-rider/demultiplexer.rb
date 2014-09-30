@@ -12,6 +12,8 @@ module DispatchRider
       @dispatcher = dispatcher
       @error_handler = error_handler
       @continue = true
+      @current_message = nil
+      install_term_trap
     end
 
     def start
@@ -32,8 +34,22 @@ module DispatchRider
 
     private
 
+    def install_term_trap
+      SignalTools.append_trap('TERM') do
+        logger.info "Got SIGTERM while executing: #{message_info_fragment(@current_message)}"
+      end
+    end
+
+    def with_current_message(message)
+      @current_message = message
+      yield
+      @current_message = nil
+    end
+
     def dispatch_message(message)
-      dispatcher.dispatch(message)
+      with_current_message(message) do
+        dispatcher.dispatch(message)
+      end
     rescue => exception
       handle_message_error message, exception
       false

@@ -40,7 +40,7 @@ module DispatchRider
     private
 
     def register_quit_trap
-      Signal.trap("QUIT") do
+      SignalTools.append_trap("QUIT") do
         # signal number: 3
         logger.info "Received SIGQUIT, stopping demultiplexer"
         demultiplexer.stop
@@ -48,7 +48,7 @@ module DispatchRider
     end
 
     def register_term_trap
-      Signal.trap("TERM") do
+      SignalTools.append_trap("TERM") do
         # signal number: 15
         logger.info "Received SIGTERM, stopping demultiplexer"
         demultiplexer.stop
@@ -57,7 +57,7 @@ module DispatchRider
 
     def register_int_trap
       @already_interrupted = false
-      Signal.trap("INT") do
+      SignalTools.append_trap("INT") do
         if @already_interrupted
           logger.info "Received SIGINT second time, aborting"
           exit(0)
