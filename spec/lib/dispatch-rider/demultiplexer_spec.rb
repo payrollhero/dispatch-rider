@@ -60,8 +60,13 @@ describe DispatchRider::Demultiplexer, :nodb => true do
         sleep 0.01 # give it a chance to process the job async before killing the demux
       end
 
+      let!(:test_handler_instance) { TestHandler.new }
+      before do
+        TestHandler.stub(:new) { test_handler_instance }
+      end
+
       it "should call the correct handler" do
-        TestHandler.any_instance.should_receive(:process).with(message.body)
+        test_handler_instance.should_receive(:process).with(message.body).at_least(1).times
         demultiplexer_thread.run
         sleep 0.01 # give it a chance to process the job async before killing the demux
       end
