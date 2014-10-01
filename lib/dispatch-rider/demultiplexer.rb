@@ -37,10 +37,12 @@ module DispatchRider
     private
 
     def with_current_message(message)
-      @current_message = message
-      result = yield
-      @current_message = nil
-      result
+      begin
+        @current_message = message
+        yield
+      ensure
+        @current_message = nil
+      end
     end
 
     # This needs to return true/false based on the success of the jobs!
