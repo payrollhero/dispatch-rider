@@ -36,7 +36,7 @@ module DispatchRider
 
     def install_term_trap
       SignalTools.append_trap('TERM') do
-        logger.info "Got SIGTERM while executing: #{message_info_fragment(@current_message)}"
+        logger.info "Got SIGTERM while executing: #{message_info_fragment(@current_message)}" if @current_message
       end
     end
 
