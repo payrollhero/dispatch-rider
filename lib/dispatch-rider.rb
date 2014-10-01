@@ -24,7 +24,6 @@ module DispatchRider
 end
 
 require "dispatch-rider/debug"
-require "dispatch-rider/signal_tools"
 require "dispatch-rider/errors"
 require "dispatch-rider/error_handlers"
 require "dispatch-rider/handlers"
