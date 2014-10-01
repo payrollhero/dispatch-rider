@@ -21,6 +21,16 @@ module DispatchRider
         raise NotImplementedError
       end
 
+      private
+
+      def generate_new_message_id
+        if DispatchRider.config.debug
+          DispatchRider::Debug::PUBLISHER_MESSAGE_GUID
+        else
+          SecureRandom.uuid
+        end
+      end
+
     end
 
     def initialize(publisher = nil)
@@ -30,16 +40,10 @@ module DispatchRider
     def publish(body)
       raise ArgumentError, 'body should be a hash' unless body.kind_of?(Hash)
       body = body.merge({
-        'guid' => self.class.generate_new_message_id,
+        'guid' => generate_new_message_id,
       })
       publisher.publish(destinations: destinations, message: { subject: subject, body: body })
     end
-
-    def self.generate_new_message_id
-      SecureRandom.uuid
-    end
-
-    private
 
     def publisher
       @publisher || self.class.default_publisher
@@ -51,6 +55,12 @@ module DispatchRider
 
     def subject
       self.class.instance_variable_get(:@subject)
+    end
+
+    private
+
+    def generate_new_message_id
+      self.class.send(:generate_new_message_id)
     end
 
   end

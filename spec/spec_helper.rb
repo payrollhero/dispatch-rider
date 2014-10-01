@@ -15,4 +15,4 @@ end
 # Airbrake dummy module
 module Airbrake; end
 
-require 'dispatch-rider.rb'
+require 'dispatch-rider'

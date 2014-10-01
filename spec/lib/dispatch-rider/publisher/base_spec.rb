@@ -29,15 +29,19 @@ describe DispatchRider::Publisher::Base do
   describe ".publish" do
     context "in the base class" do
       example do
-        expect{
+        expect {
           described_class.publish
         }.to raise_error NotImplementedError
       end
     end
 
-    before do
-      # make this testable since random is not
-      DispatchRider::Publisher::Base.stub(:generate_new_message_id) { "some-secure-random-uuid" }
+    around do |ex|
+      begin
+        DispatchRider.config.debug = true
+        ex.call
+      ensure
+        DispatchRider.config.debug = false
+      end
     end
 
     context "in a derived class with publish implemented" do
@@ -48,7 +52,7 @@ describe DispatchRider::Publisher::Base do
             subject: "Loud Cheering",
             body: {
               "bla" => "WOOOOOOOO!",
-              "guid" => "some-secure-random-uuid",
+              "guid" => DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
             }
           }
         }
@@ -56,7 +60,7 @@ describe DispatchRider::Publisher::Base do
 
       example do
         DummyPublisher.default_publisher.should_receive(:publish).with(message)
-        DummyPublisher.publish({ "bla" => "WOOOOOOOO!" })
+        DummyPublisher.publish({"bla" => "WOOOOOOOO!"})
       end
     end
 
@@ -68,17 +72,17 @@ describe DispatchRider::Publisher::Base do
             subject: "Ferocious Tigers!",
             body: {
               "bla" => "RAAAAAWWWWW!",
-              "guid" => "some-secure-random-uuid",
+              "guid" => DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
             },
           }
         }
       end
 
-      let(:publisher){ double(:publisher) }
+      let(:publisher) { double(:publisher) }
 
       example do
         publisher.should_receive(:publish).with(message)
-        DummyCustomPublisher.publish({ "bla" => "RAAAAAWWWWW!" }, publisher)
+        DummyCustomPublisher.publish({"bla" => "RAAAAAWWWWW!"}, publisher)
       end
     end
   end
