@@ -1,3 +1,5 @@
+require 'securerandom'
+
 module DispatchRider
   class Publisher::Base
 
@@ -26,7 +28,15 @@ module DispatchRider
     end
 
     def publish(body)
+      raise ArgumentError, 'body should be a hash' unless body.kind_of?(Hash)
+      body = body.merge({
+        'guid' => self.class.generate_new_message_id,
+      })
       publisher.publish(destinations: destinations, message: { subject: subject, body: body })
+    end
+
+    def self.generate_new_message_id
+      SecureRandom.uuid
     end
 
     private

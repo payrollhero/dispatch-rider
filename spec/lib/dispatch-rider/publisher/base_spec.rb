@@ -35,20 +35,28 @@ describe DispatchRider::Publisher::Base do
       end
     end
 
+    before do
+      # make this testable since random is not
+      DispatchRider::Publisher::Base.stub(:generate_new_message_id) { "some-secure-random-uuid" }
+    end
+
     context "in a derived class with publish implemented" do
       let(:message) do
         {
           destinations: [:sns_message_queue, :file_system_queue],
           message: {
             subject: "Loud Cheering",
-            body: "WOOOOOOOO!"
+            body: {
+              "bla" => "WOOOOOOOO!",
+              "guid" => "some-secure-random-uuid",
+            }
           }
         }
       end
 
       example do
         DummyPublisher.default_publisher.should_receive(:publish).with(message)
-        DummyPublisher.publish("WOOOOOOOO!")
+        DummyPublisher.publish({ "bla" => "WOOOOOOOO!" })
       end
     end
 
@@ -58,7 +66,10 @@ describe DispatchRider::Publisher::Base do
           destinations: [:sqs_message_queue],
           message: {
             subject: "Ferocious Tigers!",
-            body: "RAAAAAWWWWW!"
+            body: {
+              "bla" => "RAAAAAWWWWW!",
+              "guid" => "some-secure-random-uuid",
+            },
           }
         }
       end
@@ -67,7 +78,7 @@ describe DispatchRider::Publisher::Base do
 
       example do
         publisher.should_receive(:publish).with(message)
-        DummyCustomPublisher.publish("RAAAAAWWWWW!", publisher)
+        DummyCustomPublisher.publish({ "bla" => "RAAAAAWWWWW!" }, publisher)
       end
     end
   end
