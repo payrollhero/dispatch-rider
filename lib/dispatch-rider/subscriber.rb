@@ -43,7 +43,7 @@ module DispatchRider
       Signal.trap("QUIT") do
         # signal number: 3
         logger.info "Received SIGQUIT, stopping demultiplexer"
-        demultiplexer.stop("Got SIGQUIT")
+        demultiplexer.stop(reason: "Got SIGQUIT")
       end
     end
 
@@ -51,7 +51,7 @@ module DispatchRider
       Signal.trap("TERM") do
         # signal number: 15
         logger.info "Received SIGTERM, stopping demultiplexer"
-        demultiplexer.stop("Got SIGTERM")
+        demultiplexer.stop(reason: "Got SIGTERM")
       end
     end
 
@@ -63,7 +63,7 @@ module DispatchRider
           exit(0)
         else
           logger.info "Received SIGINT first time, stopping demultiplexer"
-          demultiplexer.stop("Got SIGINT")
+          demultiplexer.stop(reason: "Got SIGINT")
         end
         @already_interrupted = true
       end
