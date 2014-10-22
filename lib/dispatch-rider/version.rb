@@ -1,4 +1,4 @@
 # This file specifies the current version of the gem.
 module DispatchRider
-  VERSION = "1.3.2"
+  VERSION = "1.3.3"
 end
