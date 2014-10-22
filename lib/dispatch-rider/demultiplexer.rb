@@ -72,7 +72,9 @@ module DispatchRider
       queue.pop do |message|
         begin
           logger.info "Starting execution of: #{message_info_fragment(message)}"
-          dispatch_message(message)
+          dispatch_message(message).tap {
+            logger.info "Succeded execution of: #{message_info_fragment(message)}"
+          }
         ensure
           logger.info "Completed execution of: #{message_info_fragment(message)}"
         end
