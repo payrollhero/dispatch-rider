@@ -2,10 +2,10 @@ module DispatchRider
   module Handlers
     module NamedProcess
 
-      def with_named_process(subject)
+      def with_named_process(message)
         original_program_name = $0
         begin
-          $0 += " - #{subject}"
+          $0 += " - #{message.subject} (#{message.body['guid']})"
           yield
         ensure
           $0 = original_program_name

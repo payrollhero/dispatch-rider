@@ -27,9 +27,8 @@ describe DispatchRider::Handlers::Base do
   end
 
   describe "#do_process" do
-    let(:message){ double(:message) {}}
-    before { message.stub(:body) {}}
-    
+    let(:message){ double(:message, subject: 'some_message', body: { 'guid' => DispatchRider::Debug::PUBLISHER_MESSAGE_GUID }) }
+
     context "when class doesn't implement process" do
       let(:handler){ NoProcessImplemented.new }
 

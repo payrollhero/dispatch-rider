@@ -15,7 +15,7 @@ module DispatchRider
       attr_reader :raw_message
 
       def do_process(raw_message)
-        with_named_process(self.class.name) do
+        with_named_process(raw_message) do
           @raw_message = raw_message
           process(raw_message.body)
         end
