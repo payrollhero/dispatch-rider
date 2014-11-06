@@ -65,7 +65,13 @@ module DispatchRider
     end
 
     def message_info_fragment(message)
-      "(#{message.object_id}): #{message.subject} : #{message.body.inspect}"
+      "(#{message.guid}): #{message.subject} : #{message_info_arguments(message).inspect}"
+    end
+
+    def message_info_arguments(message)
+      message.body.dup.tap { |m|
+        m.delete('guid')
+      }
     end
 
     def handle_next_queue_item
