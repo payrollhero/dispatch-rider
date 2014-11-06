@@ -13,6 +13,10 @@ module DispatchRider
         super(message)
       end
 
+      def guid
+        self.body['guid']
+      end
+
       def extend_timeout(time)
         raise NotImplementedError
       end
