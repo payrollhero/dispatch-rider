@@ -30,7 +30,7 @@ module DispatchRider
     private
 
     def load_handler_files
-      Dir["#{@handler_path}/*.rb"].each do |filename|
+      Dir["#{@handler_path}/**/*.rb"].each do |filename|
         require filename.gsub(/\.rb$/, '')
       end
     end
