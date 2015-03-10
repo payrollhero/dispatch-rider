@@ -35,15 +35,6 @@ describe DispatchRider::Publisher::Base do
       end
     end
 
-    around do |ex|
-      begin
-        DispatchRider.config.debug = true
-        ex.call
-      ensure
-        DispatchRider.config.debug = false
-      end
-    end
-
     context "in a derived class with publish implemented" do
       let(:message) do
         {
@@ -52,7 +43,6 @@ describe DispatchRider::Publisher::Base do
             subject: "Loud Cheering",
             body: {
               "bla" => "WOOOOOOOO!",
-              "guid" => DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
             }
           }
         }
@@ -72,7 +62,6 @@ describe DispatchRider::Publisher::Base do
             subject: "Ferocious Tigers!",
             body: {
               "bla" => "RAAAAAWWWWW!",
-              "guid" => DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
             },
           }
         }
