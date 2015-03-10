@@ -93,10 +93,31 @@ describe DispatchRider::Publisher do
       subject.register_destination(:fs_foo, :file_system, :foo, path: "tmp/test_queue")
     end
 
+    around do |ex|
+      begin
+        DispatchRider.config.debug = true
+        ex.call
+      ensure
+        DispatchRider.config.debug = false
+      end
+    end
+
     it "publishes the message to the notification service" do
+      existing = Dir['tmp/test_queue/*']
       expect {
         subject.publish(:destinations => [:fs_foo], :message => {:subject => "bar_handler", :body => {"bar" => "baz"}})
       }.to change { Dir['tmp/test_queue/*'].length }.by(1)
+      new_job = Dir['tmp/test_queue/*'] - existing
+      data = JSON.load(File.read(new_job.first))
+
+      expected_message = {
+        "subject" => "bar_handler",
+        "body" => {
+          "guid" => DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
+          "bar" => "baz",
+        },
+      }
+      expect(data).to eq(expected_message)
     end
   end
 end

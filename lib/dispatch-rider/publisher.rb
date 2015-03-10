@@ -35,8 +35,23 @@ module DispatchRider
 
     def publish(opts = {})
       options = opts.dup
+      add_message_id(options[:message])
       service_channel_mapper.map(options.delete(:destinations)).each do |(service, channels)|
         notification_service_registrar.fetch(service).publish(options.merge(:to => channels))
+      end
+    end
+
+    private
+
+    def add_message_id(message)
+      message[:body][:guid] = generate_new_message_id
+    end
+
+    def generate_new_message_id
+      if DispatchRider.config.debug
+        DispatchRider::Debug::PUBLISHER_MESSAGE_GUID
+      else
+        SecureRandom.uuid
       end
     end
 

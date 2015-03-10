@@ -17,5 +17,5 @@ group :development, :test do
 end
 
 group :test do
-  gem "aws-sdk"
+  gem "aws-sdk", "~> 1"
 end
