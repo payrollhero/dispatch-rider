@@ -115,7 +115,7 @@ describe DispatchRider::QueueServices::Base do
 
   describe "#empty?" do
     before :each do
-      base_queue.stub(:size).and_return { base_queue.queue.size }
+      base_queue.stub(:size) { base_queue.queue.size }
     end
 
     context "when the queue is empty" do

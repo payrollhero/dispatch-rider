@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'rspec/its'
 
 describe DispatchRider::Publisher::Configuration::Destination do
 
@@ -21,19 +22,19 @@ describe DispatchRider::Publisher::Configuration::Destination do
   subject{ described_class.new("employee", attributes) }
 
   describe "#name" do
-    its(:name){ should == "employee" }
+    its(:name) { is_expected.to eq("employee") }
   end
 
   describe "#service" do
-    its(:service){ should == "aws_sns" }
+    its(:service) { is_expected.to eq("aws_sns") }
   end
 
   describe "#channel" do
-    its(:channel){ should == "employee_updates" }
+    its(:channel) { is_expected.to eq("employee_updates") }
   end
 
   describe "#options" do
-    its(:options){ should == options }
+    its(:options) { is_expected.to eq(options) }
   end
 
   describe "#==" do

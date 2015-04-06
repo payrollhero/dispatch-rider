@@ -25,7 +25,7 @@ describe DispatchRider::Registrars::Base do
 
     context "when there is a missing constant while registering" do
       it "raises an exception" do
-        subject.should_receive(:value).with(:foo, {}).and_return { 'bar'.camelize.constantize }
+        subject.should_receive(:value).with(:foo, {}) { 'bar'.camelize.constantize }
         expect { subject.register(:foo) }.to raise_exception(DispatchRider::NotFound)
       end
     end

@@ -62,7 +62,7 @@ describe DispatchRider::Dispatcher, :nodb => true do
       end
 
       it "should return true indicating message is good to be removed" do
-        subject.dispatch(message).should be_true
+        expect(subject.dispatch(message)).to be true
       end
     end
   end
