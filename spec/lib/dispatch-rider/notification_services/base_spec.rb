@@ -14,7 +14,7 @@ describe DispatchRider::NotificationServices::Base do
   before :each do
     DispatchRider::NotificationServices::Base.any_instance.stub(:notifier_builder).and_return(OpenStruct)
     DispatchRider::NotificationServices::Base.any_instance.stub(:channel_registrar_builder).and_return(DispatchRider::Registrars::SnsChannel)
-    DispatchRider::NotificationServices::Base.any_instance.stub(:channel).and_return do |name|
+    DispatchRider::NotificationServices::Base.any_instance.stub(:channel) do |name|
       subject.notifier.topics[subject.fetch(name)] if name == :foo
     end
   end
