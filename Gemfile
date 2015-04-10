@@ -1,24 +1,25 @@
 source 'https://rubygems.org'
 
-gem "activesupport"
-gem "activemodel"
-gem "daemons"
-gem "retries"
+gemspec
 
-group :development do
-  gem "bundler"
-  gem "jeweler", "~> 1.8.4"
-  gem "rake"
-  gem "travis-lint"
-  gem "github_changelog_generator"
-end
+# only add dev/test gems here, runtime gems should go in the gemspec
 
-group :development, :test do
-  gem "rspec", "~> 2.0"
-  gem 'rspec-its', "~> 1.0"
-  gem "byebug", platform: :ruby_20, require: !ENV['CI']
-end
+# Base
+gem "bundler"
+gem "rake"
 
-group :test do
-  gem "aws-sdk", "~> 1"
-end
+# Gem Stuff
+gem 'rubygems-tasks'
+gem 'github_changelog_generator'
+gem 'yard'
+
+# Testing
+gem "rspec", "~> 2.0"
+gem 'rspec-its', "~> 1.0"
+
+# CI
+gem "travis-lint"
+
+# Dev/Debugging
+gem "byebug", platform: :ruby_20, require: !ENV['CI']
+gem "aws-sdk", "~> 1"

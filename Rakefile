@@ -1,51 +1,38 @@
 # encoding: utf-8
 
 require 'rubygems'
-require 'bundler'
+
 begin
-  Bundler.setup(:default, :development)
-  Bundler.require(:default, :development)
+  require 'bundler'
+rescue LoadError => e
+  warn e.message
+  warn "Run `gem install bundler` to install Bundler."
+  exit -1
+end
+
+begin
+  Bundler.setup(:development)
 rescue Bundler::BundlerError => e
-  $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
+  warn e.message
+  warn "Run `bundle install` to install missing gems."
   exit e.status_code
 end
 
+require 'rake'
+require 'rubygems/tasks'
+Gem::Tasks.new
+
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new
+
+task :test    => :spec
+task :default => :spec
+
+require 'yard'
+YARD::Rake::YardocTask.new
+task :doc => :yard
+
+desc "Updates the changelog"
 task :changelog do
   sh "github_changelog_generator payrollhero/dispatch-rider"
 end
-
-Jeweler::Tasks.new do |gem|
-  def get_version_without_constant
-    version_fn = 'lib/dispatch-rider/version.rb'
-    r = eval "module TempVersionModule; #{File.read(version_fn)}; end", binding, version_fn
-    Object.send(:remove_const, "TempVersionModule")
-    r
-  end
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "dispatch-rider"
-  gem.version = get_version_without_constant
-
-  gem.description = %q{Messaging system that is customizable based on which queueing system we are using.}
-  gem.summary = %q{Messaging system based on the reactor patter.
-    You can publish messages to a queue and then a demultiplexer runs an event loop which pops items from the queue and hands it over to a dispatcher.
-    The dispatcher hands over the message to the appropriate handler. You can choose your own queueing service.
-  }
-
-  gem.homepage = "https://github.com/payrollhero/dispatch-rider"
-  gem.license = "MIT"
-  gem.authors = ["Suman Mukherjee", "Dane Natoli", "Piotr Banasik", "Ronald Maravilla"]
-  gem.email = ["suman@payrollhero.com", "dnatoli@payrollhero.com", "piotr@payrollhero.com", "rmaravilla@payrollhero.com"]
-
-  gem.executables = []
-
-  gem.files = FileList[
-    'bin/*',
-    'lib/**/*',
-    'lib/tasks/**/*.rake',
-  ]
-
-  # dependencies defined in Gemfile
-end
-
-Jeweler::RubygemsDotOrgTasks.new
