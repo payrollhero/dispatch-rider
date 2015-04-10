@@ -1,8 +1,8 @@
 # Change Log
 
-## [Unreleased](https://github.com/payrollhero/dispatch-rider/tree/HEAD)
+## [v1.4.1](https://github.com/payrollhero/dispatch-rider/tree/v1.4.1) (2015-04-10)
 
-[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.4.0...HEAD)
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.4.0...v1.4.1)
 
 **Merged pull requests:**
 
