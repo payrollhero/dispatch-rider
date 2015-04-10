@@ -1,0 +1,50 @@
+# Older version
+Style/EmptyLinesAroundBody:
+  Enabled: false
+
+# Newer version (3 for the 1 above)
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+Style/EmptyLinesAroundMethodBody:
+  Enabled: false
+
+# Other
+
+Style/StringLiterals:
+  Enabled: false
+  
+Style/FileName:
+  Enabled: false
+
+Style/RedundantException:
+  Enabled: false
+
+Style/SignalException:
+  Enabled: false
+
+# PH Coding Rules
+Style/Blocks:
+  Enabled: false
+
+Style/CollectionMethods:
+  PreferredMethods:
+    detect: find
+
+# Github's PR width is 120 characters
+Metrics/LineLength:
+  Max: 120
+  AllowURI: true
+
+# Align with the style guide, we don't prefer anything
+Style/CollectionMethods:
+  Enabled: false
+
+Metrics/AbcSize:
+  Description: A calculated magnitude based on number of assignments, branches, and
+    conditions.
+  Enabled: true
+  Max: 30
