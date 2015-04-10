@@ -364,12 +364,14 @@ somewhere in your shell init. (ie .zshrc or simillar)
 ```bash
 vim lib/dispatch-rider/version.rb
 # set the new version
-rake changelog
 rake gemspec
-# commit any changed files (should be only changelog, version and the gemspec)
+# commit any changed files (should be only version and the gemspec)
 # name your commit with the version number eg: "1.8.0"
 rake release
 # to push the gem to rubygems.org
+rake changelog
+# commit the changed changelog
+# name your commit with the version again eg: "changelog for 1.8.0"
 ```
 
 ## Contributing
