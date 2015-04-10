@@ -14,8 +14,8 @@ gem 'github_changelog_generator'
 gem 'yard'
 
 # Testing
-gem "rspec", "~> 2.0"
-gem 'rspec-its', "~> 1.0"
+gem "rspec", "~> 3.0"
+gem 'rspec-its'
 
 # CI
 gem "travis-lint"

@@ -7,20 +7,20 @@ describe DispatchRider::Registrars::Base do
 
   describe "#initialize" do
     it "assigns store" do
-      subject.store.should be_empty
+      expect(subject.store).to be_empty
     end
   end
 
   describe "#register" do
     it "registers the value" do
-      subject.should_receive(:value).with(:foo, {}).and_return("bar")
+      expect(subject).to receive(:value).with(:foo, {}).and_return("bar")
       subject.register(:foo)
-      subject.fetch(:foo).should eq('bar')
+      expect(subject.fetch(:foo)).to eq('bar')
     end
 
     it "should return the registrar" do
-      subject.should_receive(:value).with(:foo, {}).and_return("bar")
-      subject.register(:foo).should eq(subject)
+      expect(subject).to receive(:value).with(:foo, {}).and_return("bar")
+      expect(subject.register(:foo)).to eq(subject)
     end
 
     context "when there is a missing constant while registering" do
