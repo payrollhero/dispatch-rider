@@ -257,7 +257,7 @@ class ReadNews < DispatchRider::Handlers::Base
       puts headline
     end
   end
-  
+
   def retry_timeout
     10.minutes
   end
@@ -277,7 +277,7 @@ extend_timeout will tell the queue you wish to hold this item longer.
 class LongRunning < DispatchRider::Handlers::Base
   def process(body)
     my_loop.each do |item|
-      
+
       #... do some work ...
       extend_timeout(1.hour)
     end
@@ -343,6 +343,20 @@ or set it up in the config ...
 DispatchRider.config do |config|
   config.error_handler = DispatchRider::AirbrakeErrorHandler
 end
+```
+## Deployment
+
+In order to deploy a new version of the gem into the wild:
+
+
+```bash
+vim lib/dispatch-rider/version.rb
+# set the new version
+rake changelog
+rake gemspec
+# commit any changed files (should be only changelog, version and the gemspec)
+rake release
+# to push the gem to rubygems.org
 ```
 
 ## Contributing
