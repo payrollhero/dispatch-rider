@@ -1,5 +1,17 @@
 # Change Log
 
+## [v1.4.2](https://github.com/payrollhero/dispatch-rider/tree/v1.4.2) (2015-04-10)
+
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.4.1...v1.4.2)
+
+**Closed issues:**
+
+- Convert away from jeweler [\#54](https://github.com/payrollhero/dispatch-rider/issues/54)
+
+**Merged pull requests:**
+
+- Switched away from jeweler [\#55](https://github.com/payrollhero/dispatch-rider/pull/55) ([piotrb](https://github.com/piotrb))
+
 ## [v1.4.1](https://github.com/payrollhero/dispatch-rider/tree/v1.4.1) (2015-04-10)
 
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.4.0...v1.4.1)
