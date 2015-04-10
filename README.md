@@ -372,7 +372,7 @@ rake release
 
 ### Licence
 
-Copyright (c) 2013 Suman Mukherjee
+Copyright (c) 2015 PayrollHero Pte. Ltd.
 
 MIT License
 
