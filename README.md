@@ -355,6 +355,7 @@ vim lib/dispatch-rider/version.rb
 rake changelog
 rake gemspec
 # commit any changed files (should be only changelog, version and the gemspec)
+# name your commit with the version number eg: "1.8.0"
 rake release
 # to push the gem to rubygems.org
 ```
