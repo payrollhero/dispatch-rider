@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem "activesupport"
 gem "activemodel"
 gem "daemons"
+gem "retries"
 
 group :development do
   gem "bundler"

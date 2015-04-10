@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Suman Mukherjee", "Dane Natoli", "Piotr Banasik", "Ronald Maravilla"]
-  s.date = "2015-03-10"
+  s.date = "2015-04-10"
   s.description = "Messaging system that is customizable based on which queueing system we are using."
   s.email = ["suman@payrollhero.com", "dnatoli@payrollhero.com", "piotr@payrollhero.com", "rmaravilla@payrollhero.com"]
   s.extra_rdoc_files = [
@@ -92,32 +92,38 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<activesupport>, [">= 0"])
       s.add_runtime_dependency(%q<activemodel>, [">= 0"])
       s.add_runtime_dependency(%q<daemons>, [">= 0"])
+      s.add_runtime_dependency(%q<retries>, [">= 0"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])
       s.add_development_dependency(%q<rake>, [">= 0"])
       s.add_development_dependency(%q<travis-lint>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.0"])
+      s.add_development_dependency(%q<rspec-its>, ["~> 1.0"])
       s.add_development_dependency(%q<byebug>, [">= 0"])
     else
       s.add_dependency(%q<activesupport>, [">= 0"])
       s.add_dependency(%q<activemodel>, [">= 0"])
       s.add_dependency(%q<daemons>, [">= 0"])
+      s.add_dependency(%q<retries>, [">= 0"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<travis-lint>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.0"])
+      s.add_dependency(%q<rspec-its>, ["~> 1.0"])
       s.add_dependency(%q<byebug>, [">= 0"])
     end
   else
     s.add_dependency(%q<activesupport>, [">= 0"])
     s.add_dependency(%q<activemodel>, [">= 0"])
     s.add_dependency(%q<daemons>, [">= 0"])
+    s.add_dependency(%q<retries>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<travis-lint>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.0"])
+    s.add_dependency(%q<rspec-its>, ["~> 1.0"])
     s.add_dependency(%q<byebug>, [">= 0"])
   end
 end
