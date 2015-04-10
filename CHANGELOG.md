@@ -6,6 +6,8 @@
 
 **Merged pull requests:**
 
+- Cleanup [\#53](https://github.com/payrollhero/dispatch-rider/pull/53) ([piotrb](https://github.com/piotrb))
+
 - Adding retries when publishing messages via SNS. [\#52](https://github.com/payrollhero/dispatch-rider/pull/52) ([vincentpaca](https://github.com/vincentpaca))
 
 - Fix Rspec warnings: deprecated use of "its" \(use a separate gem instead\)... [\#48](https://github.com/payrollhero/dispatch-rider/pull/48) ([mykola-kyryk](https://github.com/mykola-kyryk))
