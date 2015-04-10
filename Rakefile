@@ -11,6 +11,10 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
+task :changelog do
+  sh "github_changelog_generator payrollhero/dispatch-rider"
+end
+
 Jeweler::Tasks.new do |gem|
   def get_version_without_constant
     version_fn = 'lib/dispatch-rider/version.rb'

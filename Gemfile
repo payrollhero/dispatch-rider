@@ -10,6 +10,7 @@ group :development do
   gem "jeweler", "~> 1.8.4"
   gem "rake"
   gem "travis-lint"
+  gem "github_changelog_generator"
 end
 
 group :development, :test do
