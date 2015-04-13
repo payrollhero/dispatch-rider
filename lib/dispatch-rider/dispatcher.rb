@@ -9,6 +9,8 @@ module DispatchRider
   class Dispatcher
     extend Forwardable
 
+    include Callbacks::Support
+
     attr_reader :handler_registrar
 
     def_delegators :handler_registrar, :register, :fetch, :unregister
@@ -24,15 +26,6 @@ module DispatchRider
       true # success => true (delete message)
     end
 
-    private
-
-    def config
-      DispatchRider.config
-    end
-
-    def callbacks
-      @callbacks ||= Callbacks::Access.new(config.callbacks)
-    end
 
   end
 end

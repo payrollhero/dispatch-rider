@@ -1,5 +1,6 @@
 module DispatchRider
   class Runner
+    include Callbacks::Support
 
     def self.run
       new.process
@@ -22,17 +23,8 @@ module DispatchRider
 
     private
 
-    def config
-      DispatchRider.config
-    end
-
-    def callbacks
-      @callbacks ||= Callbacks::Access.new(config.callbacks)
-    end
-
-    def logger
-      config.logger
-    end
+    delegate :config, to: :DispatchRider
+    delegate :logger, to: :config
 
     def ready
       logger.info "Creating subscriber..."
