@@ -22,7 +22,7 @@ describe DispatchRider::Publisher::Base do
 
   describe ".default_publisher" do
     example do
-      described_class.default_publisher.should be_a(DispatchRider::Publisher)
+      expect(described_class.default_publisher).to be_a(DispatchRider::Publisher)
     end
   end
 
@@ -49,7 +49,7 @@ describe DispatchRider::Publisher::Base do
       end
 
       example do
-        DummyPublisher.default_publisher.should_receive(:publish).with(message)
+        expect(DummyPublisher.default_publisher).to receive(:publish).with(message)
         DummyPublisher.publish({"bla" => "WOOOOOOOO!"})
       end
     end
@@ -70,7 +70,7 @@ describe DispatchRider::Publisher::Base do
       let(:publisher) { double(:publisher) }
 
       example do
-        publisher.should_receive(:publish).with(message)
+        expect(publisher).to receive(:publish).with(message)
         DummyCustomPublisher.publish({"bla" => "RAAAAAWWWWW!"}, publisher)
       end
     end

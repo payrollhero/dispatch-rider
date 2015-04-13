@@ -13,7 +13,7 @@ describe DispatchRider::QueueServices::AwsSqs do
 
   before do
     AWS.config(stub_requests: true)
-    AWS::SQS::Client.any_instance.stub(:client_request).and_return(fake_response)
+    allow_any_instance_of(AWS::SQS::Client).to receive(:client_request).and_return(fake_response)
   end
 
   subject(:aws_sqs_queue) do
@@ -26,14 +26,14 @@ describe DispatchRider::QueueServices::AwsSqs do
       context "when the name of the queue is passed in the options" do
         it "should return an instance representing the aws sqs queue" do
           aws_sqs_queue.assign_storage(:name => 'normal_priority')
-          aws_sqs_queue.queue.url.should eq('the.queue.url')
+          expect(aws_sqs_queue.queue.url).to eq('the.queue.url')
         end
       end
 
       context "when the url of the queue is passed in the options" do
         it "should return an instance representing the aws sqs queue" do
           aws_sqs_queue.assign_storage(:url => 'https://sqs.us-east-1.amazonaws.com/12345/QueueName')
-          aws_sqs_queue.queue.url.should eq('the.queue.url')
+          expect(aws_sqs_queue.queue.url).to eq('the.queue.url')
         end
       end
 
@@ -48,7 +48,7 @@ describe DispatchRider::QueueServices::AwsSqs do
   describe "#insert" do
     it "should insert an item into the queue" do
       obj = {'subject' => 'foo', 'body' => 'bar'}.to_json
-      aws_sqs_queue.queue.should_receive(:send_message).with(obj)
+      expect(aws_sqs_queue.queue).to receive(:send_message).with(obj)
       aws_sqs_queue.insert(obj)
     end
   end
@@ -84,8 +84,8 @@ describe DispatchRider::QueueServices::AwsSqs do
       context "when the block runs faster than the timeout" do
         it "should yield the first item in the queue" do
           aws_sqs_queue.pop do |message|
-            message.subject.should eq('foo')
-            message.body.should eq({'bar' => 'baz'})
+            expect(message.subject).to eq('foo')
+            expect(message.body).to eq({'bar' => 'baz'})
           end
         end
       end
@@ -117,7 +117,7 @@ describe DispatchRider::QueueServices::AwsSqs do
     end
 
   end
-  
+
   describe "received message methods" do
     let(:response_attributes) {{
         "SenderId" => "123456789012",
@@ -133,17 +133,17 @@ describe DispatchRider::QueueServices::AwsSqs do
         :receipt_handle => "HANDLE",
         :attributes => response_attributes,
       } }
-      
+
       before :each do
         response = AWS::SQS::Client.new.stub_for(:receive_message)
         response.data[:messages] = [response_message]
         AWS::SQS::Client::V20121105.any_instance.stub(:receive_message).and_return(response)
         AWS::SQS::Queue.any_instance.stub(:verify_receive_message_checksum).and_return([])
       end
-      
+
     it "should set the visibility timeout when extend is called" do
-      AWS::SQS::ReceivedMessage.any_instance.should_receive(:visibility_timeout=).with(10)
-      AWS::SQS::ReceivedMessage.any_instance.should_receive(:visibility_timeout=).with(0)
+      expect_any_instance_of(AWS::SQS::ReceivedMessage).to receive(:visibility_timeout=).with(10)
+      expect_any_instance_of(AWS::SQS::ReceivedMessage).to receive(:visibility_timeout=).with(0)
       aws_sqs_queue.pop do |message|
         message.extend_timeout(10)
         message.total_timeout.should eq(10)

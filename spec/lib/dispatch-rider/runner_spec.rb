@@ -12,11 +12,11 @@ describe DispatchRider::Runner do
     end
 
     example do
-      subscriber.should_receive(:new).once.and_return(subscriber)
-      subscriber.should_receive(:register_queue).once
-      subscriber.should_receive(:setup_demultiplexer).once
-      subscriber.should_receive(:process).once
-      subscriber.stub(:register_handler)
+      expect(subscriber).to receive(:new).once.and_return(subscriber)
+      expect(subscriber).to receive(:register_queue).once
+      expect(subscriber).to receive(:setup_demultiplexer).once
+      expect(subscriber).to receive(:process).once
+      allow(subscriber).to receive(:register_handler)
 
       described_class.run
     end
