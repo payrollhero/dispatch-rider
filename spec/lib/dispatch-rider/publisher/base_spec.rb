@@ -50,7 +50,19 @@ describe DispatchRider::Publisher::Base do
 
       example do
         expect(DummyPublisher.default_publisher).to receive(:publish).with(message)
-        DummyPublisher.publish({"bla" => "WOOOOOOOO!"})
+        DummyPublisher.publish "bla" => "WOOOOOOOO!"
+      end
+    end
+
+    describe "calls the publish callback" do
+      let(:publish_callback) { double :callback }
+
+      before { DispatchRider.config.callbacks.for(:publish) << publish_callback }
+      after { DispatchRider.config.callbacks.for(:publish).delete publish_callback }
+
+      example do
+        publish_callback.should_receive(:call).with(any_args, "bla" => "WOOOOOOOO!")
+        DummyPublisher.publish "bla" => "WOOOOOOOO!"
       end
     end
 
