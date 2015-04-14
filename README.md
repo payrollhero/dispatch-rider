@@ -266,21 +266,22 @@ This callback is called when the message is being published.
 
 Block Arguments:
 
-* body [Hash] -- message body that is about to be sent
+* message: `[DispatchRider::Message]` -- message that is about to be sent
+* destinations: `[Array<Symbol>]` -- list of destinations to sent to
 
 ```ruby
 DispatchRider.config do |config|
-  config.before(:publish) do |body|
+  config.before(:publish) do |message:, destinations:|
     # your code here
   end
 
-  config.around(:publish) do |job, body|
+  config.around(:publish) do |job, message:, destinations:|
     # your code here
     job.call
     # your code here
   end
 
-  config.after(:publish) do |body|
+  config.after(:publish) do |message:, destinations:|
     # your code here
   end
 end
@@ -318,7 +319,7 @@ This callback is called when executing a single message.
 
 Block Arguments:
 
-* message [DispatchRider::Message] -- the message received from `DispatchRider` queue
+* message `[DispatchRider::Message]` -- the message received from `DispatchRider` queue
 
 ```ruby
 DispatchRider.config do |config|
