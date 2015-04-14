@@ -19,7 +19,7 @@ module DispatchRider
       def publish(options)
         channels(options[:to]).each do |channel|
           with_retries(max_retries: 10, rescue: AWS::Errors::MissingCredentialsError) do
-            channel.publish(serialize(message(options[:message])))
+            channel.publish(serialize(options[:message]))
           end
         end
       end
