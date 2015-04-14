@@ -3,8 +3,6 @@ require 'securerandom'
 module DispatchRider
   # Main template for a dispatch rider publisher.
   class Publisher::Base
-    include Callbacks::Support
-
     class << self
       # @param [Symbol] subject
       def subject(subject)
@@ -33,10 +31,7 @@ module DispatchRider
     # @param [Hash] body
     def publish(body)
       raise ArgumentError, 'body should be a hash' unless body.kind_of?(Hash)
-
-      callbacks.invoke(:publish, body) do
-        publisher.publish(destinations: destinations, message: { subject: subject, body: body })
-      end
+      publisher.publish(destinations: destinations, message: { subject: subject, body: body })
     end
 
     private
@@ -52,6 +47,5 @@ module DispatchRider
     def subject
       self.class.instance_variable_get(:@subject)
     end
-
   end
 end

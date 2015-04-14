@@ -1,10 +1,12 @@
 require "active_support/core_ext/hash/indifferent_access"
 require_relative "publisher/configuration_support"
 
-# This class takes care of the publishing side of the messaging system.
 module DispatchRider
+  # This class takes care of the publishing side of the messaging system.
   class Publisher
     extend ConfigurationSupport
+
+    include Callbacks::Support
 
     attr_reader :service_channel_mapper, :notification_service_registrar, :publishing_destination_registrar, :sns_channel_registrar
 
@@ -33,11 +35,15 @@ module DispatchRider
       self
     end
 
-    def publish(opts = {})
-      options = opts.dup
+    # @param [Hash] original_options
+    def publish(original_options = {})
+      options = original_options.dup
       add_message_id(options[:message])
-      service_channel_mapper.map(options.delete(:destinations)).each do |(service, channels)|
-        notification_service_registrar.fetch(service).publish(options.merge(:to => channels))
+
+      callbacks.invoke(:publish, options[:message][:body]) do
+        service_channel_mapper.map(options.delete(:destinations)).each do |(service, channels)|
+          notification_service_registrar.fetch(service).publish(options.merge to: channels)
+        end
       end
     end
 

@@ -54,18 +54,6 @@ describe DispatchRider::Publisher::Base do
       end
     end
 
-    describe "calls the publish callback" do
-      let(:publish_callback) { double :callback }
-
-      before { DispatchRider.config.callbacks.for(:publish) << publish_callback }
-      after { DispatchRider.config.callbacks.for(:publish).delete publish_callback }
-
-      example do
-        publish_callback.should_receive(:call).with(any_args, "bla" => "WOOOOOOOO!")
-        DummyPublisher.publish "bla" => "WOOOOOOOO!"
-      end
-    end
-
     context "in a derived class with publish implemented and a custom publisher" do
       let(:message) do
         {
