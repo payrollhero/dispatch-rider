@@ -1,10 +1,12 @@
 require "active_support/core_ext/hash/indifferent_access"
 require_relative "publisher/configuration_support"
 
-# This class takes care of the publishing side of the messaging system.
 module DispatchRider
+  # This class takes care of the publishing side of the messaging system.
   class Publisher
     extend ConfigurationSupport
+
+    include Callbacks::Support
 
     attr_reader :service_channel_mapper, :notification_service_registrar, :publishing_destination_registrar, :sns_channel_registrar
 
@@ -33,18 +35,27 @@ module DispatchRider
       self
     end
 
-    def publish(opts = {})
-      options = opts.dup
-      add_message_id(options[:message])
-      service_channel_mapper.map(options.delete(:destinations)).each do |(service, channels)|
-        notification_service_registrar.fetch(service).publish(options.merge(:to => channels))
+    # @param [Hash] original_options should contain `:destinations` and `:message` keys
+    def publish(original_options = {})
+      options = build_publish_options(original_options)
+
+      callbacks.invoke(:publish, options) do
+        service_channel_mapper.map(options.delete(:destinations)).each do |(service, channels)|
+          notification_service_registrar.fetch(service).publish(options.merge to: channels)
+        end
       end
     end
 
     private
 
-    def add_message_id(message)
-      message[:body][:guid] = generate_new_message_id
+    def build_publish_options(message:, destinations:)
+      { message: build_message(message), destinations: destinations }
+    end
+
+    def build_message(attributes)
+      DispatchRider::Message.new(attributes).tap do |message|
+        message.body[:guid] = generate_new_message_id
+      end
     end
 
     def generate_new_message_id

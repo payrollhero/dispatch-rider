@@ -1,11 +1,15 @@
 module DispatchRider
   module Callbacks
+    # Storage for callbacks.
     class Storage
 
       def initialize
-        @callbacks = {}
+        @callbacks = Hash.new { |storage, key| storage[key] = [] }
       end
 
+      # @param [Symbol] event name of the event
+      # @param [#call] block_param block passed as a parameter
+      # @param [Proc] &block
       def before(event, block_param = nil, &block)
         around(event) do |job, *args|
           (block_param || block).call(*args)
@@ -13,6 +17,9 @@ module DispatchRider
         end
       end
 
+      # @param [Symbol] event name of the event
+      # @param [#call] block_param block passed as a parameter
+      # @param [Proc] &block
       def after(event, block_param = nil, &block)
         around(event) do |job, *args|
           begin
@@ -23,13 +30,16 @@ module DispatchRider
         end
       end
 
+      # @param [Symbol] event name of the event
+      # @param [#call] block_param block passed as a parameter
+      # @param [Proc] &block
       def around(event, block_param = nil, &block)
-        @callbacks[event] ||= []
         @callbacks[event] << (block_param || block)
       end
 
+      # @param [Symbol] event name of the event
       def for(event)
-        @callbacks[event] || []
+        @callbacks[event]
       end
 
     end

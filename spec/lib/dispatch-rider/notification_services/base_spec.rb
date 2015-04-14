@@ -56,10 +56,4 @@ describe DispatchRider::NotificationServices::Base do
       subject.channels(:foo).should eq([channel])
     end
   end
-
-  describe "#message_builder" do
-    it "should return the message builder class" do
-      subject.message_builder.should eq(DispatchRider::Message)
-    end
-  end
 end

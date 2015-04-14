@@ -2,9 +2,7 @@ require 'spec_helper'
 
 describe DispatchRider::Publisher do
 
-  subject do
-    described_class.new
-  end
+  subject(:publisher) { described_class.new }
 
   describe "#initialize" do
     it "assigns the notification service registrar" do
@@ -125,6 +123,36 @@ describe DispatchRider::Publisher do
         },
       }
       expect(data).to eq(expected_message)
+    end
+
+    describe "calls publish callback" do
+      describe "calls the publish callback" do
+        let(:publish_callback) { double :callback }
+        let(:expected_message) {
+          DispatchRider::Message.new(
+            subject: "bar_handler",
+            body: {
+              "bar" => "baz",
+              guid: "test-mode-not-random-guid"
+            }
+          )
+        }
+
+        before { DispatchRider.config.callbacks.for(:publish) << publish_callback }
+        after { DispatchRider.config.callbacks.for(:publish).delete publish_callback }
+
+        example do
+          publish_callback.should_receive(:call).with any_args, # first argument is the inner job
+                                                      destinations: [:fs_foo],
+                                                      message: expected_message
+
+          publisher.publish destinations: [:fs_foo],
+                            message: {
+                              subject: "bar_handler",
+                              body: { "bar" => "baz" }
+                            }
+        end
+      end
     end
   end
 end

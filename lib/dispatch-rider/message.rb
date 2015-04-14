@@ -18,11 +18,11 @@ module DispatchRider
     end
 
     def attributes
-      {:subject => subject, :body => body}
+      { subject: subject, body: body }
     end
 
-    def to_json
-      attributes.to_json
+    def as_json(*)
+      attributes
     end
 
     def ==(other)

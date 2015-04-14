@@ -1,5 +1,6 @@
 module DispatchRider
   module Callbacks
+    # Provides access for invoking callbacks.
     class Access
       attr_reader :callbacks
 
@@ -7,15 +8,18 @@ module DispatchRider
         @callbacks = callbacks
       end
 
+      # Executes the passed block wrapped in the event's callbacks.
+      # @param [Symbol] event
+      # @param [Array] args
+      # @param [Proc] block
       def invoke(event, *args, &block)
-        action_proc = block
+        stack_of_callbacks = callbacks.for(event).reverse
 
-        callbacks.for(event).reverse.each do |filter_block|
-          current_action = action_proc
-          action_proc = proc { filter_block.call(current_action, *args) }
-        end
+        block_with_callbacks = stack_of_callbacks.reduce(block) { |inner_block, outer_block|
+          -> { outer_block.call(inner_block, *args) }
+        }
 
-        action_proc.call
+        block_with_callbacks.call
       end
 
     end

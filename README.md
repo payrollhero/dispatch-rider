@@ -230,16 +230,114 @@ Options:
 
 ### Callbacks
 
-Dispatch rider supports injecting callbacks in a few parts of the
-lifecycle of the process.
+Dispatch rider supports injecting callbacks in a few parts of the lifecycle of the process. Each
+callback can have hooks plugged into it at `before`, `after` and `around` the execution.
 
-```
-  :initialize       - when the runner is being initialized
-  :process          - when the runner is running its event loop
-  :dispatch_message - around the execution of a single message (the block is passed the job )
+#### On initialize `:initialize`
+
+This callback is called when the runner is being initialized.
+
+Block Arguments:
+
+* _None_
+
+
+```ruby
+DispatchRider.config do |config|
+  config.before(:initialize) do
+    # your code here
+  end
+
+  config.around(:initialize) do |job|
+    # your code here
+    job.call
+    # your code here
+  end
+
+  config.after(:initialize) do
+    # your code here
+  end
+end
 ```
 
-Each callback can have hooks plugged into it at `before`, `after` and `around` the execution.
+#### On publish `:publish`
+
+This callback is called when the message is being published.
+
+Block Arguments:
+
+* message: `[DispatchRider::Message]` -- message that is about to be sent
+* destinations: `[Array<Symbol>]` -- list of destinations to sent to
+
+```ruby
+DispatchRider.config do |config|
+  config.before(:publish) do |message:, destinations:|
+    # your code here
+  end
+
+  config.around(:publish) do |job, message:, destinations:|
+    # your code here
+    job.call
+    # your code here
+  end
+
+  config.after(:publish) do |message:, destinations:|
+    # your code here
+  end
+end
+```
+
+#### On process `:process`
+
+This callback is called when the runner is running its event loop.
+
+Block Arguments:
+
+* _None_
+
+```ruby
+DispatchRider.config do |config|
+  config.before(:process) do
+    # your code here
+  end
+
+  config.around(:process) do |job|
+    # your code here
+    job.call
+    # your code here
+  end
+
+  config.after(:process) do
+    # your code here
+  end
+end
+```
+
+#### On dispatch message `:dispatch_message`
+
+This callback is called when executing a single message.
+
+Block Arguments:
+
+* message `[DispatchRider::Message]` -- the message received from `DispatchRider` queue
+
+```ruby
+DispatchRider.config do |config|
+  config.before(:dispatch_message) do |message|
+    # your code here
+  end
+
+  config.around(:dispatch_message) do |job, message|
+    # your code here
+    job.call
+    # your code here
+  end
+
+  config.after(:dispatch_message) do |message|
+    # your code here
+  end
+end
+```
 
 ### Manual Setup
 

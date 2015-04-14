@@ -50,7 +50,7 @@ describe DispatchRider::Publisher::Base do
 
       example do
         expect(DummyPublisher.default_publisher).to receive(:publish).with(message)
-        DummyPublisher.publish({"bla" => "WOOOOOOOO!"})
+        DummyPublisher.publish "bla" => "WOOOOOOOO!"
       end
     end
 
