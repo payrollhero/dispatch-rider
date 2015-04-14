@@ -39,8 +39,8 @@ Gem::Specification.new do |gem|
   gem.test_files = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
 
-  gem.add_runtime_dependency 'activesupport', "~> 4", ">= 3.2.0"
-  gem.add_runtime_dependency 'activemodel', "~> 4", ">= 3.2.0"
+  gem.add_runtime_dependency 'activesupport', ">= 3.2.0"
+  gem.add_runtime_dependency 'activemodel', ">= 3.2.0"
   gem.add_runtime_dependency 'daemons', "~> 1.2"
   gem.add_runtime_dependency 'retries', "~> 0.0", ">= 0.0.5"
 end
