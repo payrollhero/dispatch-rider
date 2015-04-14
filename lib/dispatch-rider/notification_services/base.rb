@@ -30,7 +30,7 @@ module DispatchRider
 
       def publish(options)
         channels(options[:to]).each do |channel|
-          channel.publish(serialize(message(options[:message])))
+          channel.publish(serialize(options[:message]))
         end
       end
 
@@ -42,15 +42,7 @@ module DispatchRider
         raise NotImplementedError
       end
 
-      def message_builder
-        DispatchRider::Message
-      end
-
       private
-
-      def message(attrs)
-        message_builder.new(attrs)
-      end
 
       def serialize(item)
         item.to_json

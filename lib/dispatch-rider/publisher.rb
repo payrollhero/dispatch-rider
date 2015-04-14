@@ -35,12 +35,11 @@ module DispatchRider
       self
     end
 
-    # @param [Hash] original_options
+    # @param [Hash] original_options should contain `:destinations` and `:message` keys
     def publish(original_options = {})
-      options = original_options.dup
-      add_message_id(options[:message])
+      options = build_publish_options(original_options)
 
-      callbacks.invoke(:publish, options[:message][:body]) do
+      callbacks.invoke(:publish, options) do
         service_channel_mapper.map(options.delete(:destinations)).each do |(service, channels)|
           notification_service_registrar.fetch(service).publish(options.merge to: channels)
         end
@@ -49,8 +48,14 @@ module DispatchRider
 
     private
 
-    def add_message_id(message)
-      message[:body][:guid] = generate_new_message_id
+    def build_publish_options(message:, destinations:)
+      { message: build_message(message), destinations: destinations }
+    end
+
+    def build_message(attributes)
+      DispatchRider::Message.new(attributes).tap do |message|
+        message.body[:guid] = generate_new_message_id
+      end
     end
 
     def generate_new_message_id
