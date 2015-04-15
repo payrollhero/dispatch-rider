@@ -28,10 +28,8 @@ module DispatchRider
         raise NotImplementedError
       end
 
-      def publish(options)
-        channels(options[:to]).each do |channel|
-          channel.publish(serialize(options[:message]))
-        end
+      def publish(to:, message:)
+        channels(to).each { |channel| publish_to_channel channel, message: message }
       end
 
       def channels(names)
@@ -40,6 +38,10 @@ module DispatchRider
 
       def channel(name)
         raise NotImplementedError
+      end
+
+      def publish_to_channel(channel, message:)
+        channel.publish(serialize(message))
       end
 
       private
