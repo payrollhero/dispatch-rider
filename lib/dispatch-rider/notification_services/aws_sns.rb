@@ -16,12 +16,8 @@ module DispatchRider
         Registrars::SnsChannel
       end
 
-      def publish(options)
-        channels(options[:to]).each do |channel|
-          with_retries(max_retries: 10, rescue: AWS::Errors::MissingCredentialsError) do
-            channel.publish(serialize(options[:message]))
-          end
-        end
+      def publish_to_channel(channel, message:)
+        with_retries(max_retries: 10, rescue: AWS::Errors::MissingCredentialsError) { super }
       end
 
       # not really happy with this, but the notification service registrar system is way too rigid to do this cleaner

@@ -39,10 +39,28 @@ describe DispatchRider::NotificationServices::Base do
       subject.notifier.topics['arn:aws:sns:us-east-1:123:PlanOfAttack'] = channel
     end
 
+    let(:message) { DispatchRider::Message.new(subject: :test_handler, body: { "bar" => "baz" }) }
+
     it "publishes the message to the channels" do
-      catch :published do
-        subject.publish(:to => :foo, :message => {:subject => :test_handler, :body => {"bar" => "baz"}})
-      end.should eq('baz')
+      catch(:published) { subject.publish to: :foo, message: message }.should eq("baz")
+    end
+  end
+
+  describe "#publish_to_channel" do
+    let(:channel) { double(:channel) }
+
+    let(:message) { DispatchRider::Message.new(subject: :test_handler, body: { "bar" => "baz" }) }
+
+    # @note: This is tested this way cause you don't really wanna post a message to the actual service.
+    it "publishes the message to the channels" do
+      expect(channel).to receive(:publish).with(kind_of String) { |serialized_message|
+        expect(JSON.parse(serialized_message)).to eq(
+          "subject" => "test_handler",
+          "body" => { "bar" => "baz" }
+        )
+      }
+
+      subject.publish_to_channel(channel, message: message)
     end
   end
 
