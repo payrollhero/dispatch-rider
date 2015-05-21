@@ -54,7 +54,7 @@ module DispatchRider
 
     def build_message(attributes)
       DispatchRider::Message.new(attributes).tap do |message|
-        message.body[:guid] = generate_new_message_id
+        message.body[:guid] ||= generate_new_message_id
       end
     end
 
