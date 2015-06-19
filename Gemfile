@@ -23,3 +23,4 @@ gem "travis-lint"
 # Dev/Debugging
 gem "byebug", platform: :ruby_20, require: !ENV['CI']
 gem "aws-sdk", "~> 1"
+gem "pry"
