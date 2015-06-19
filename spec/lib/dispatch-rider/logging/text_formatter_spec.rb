@@ -54,5 +54,4 @@ describe DispatchRider::Logging::TextFormatter do
       end
     end
   end
-
 end

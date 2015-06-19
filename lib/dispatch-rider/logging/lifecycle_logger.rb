@@ -11,16 +11,14 @@ module DispatchRider
         end
 
         def wrap_handling(message)
-          begin
-            log_start(message)
-            yield
-            log_success(message)
-          rescue => exception
-            log_fail(message, exception)
-            raise exception
-          ensure
-            log_complete(message)
-          end
+          log_start(message)
+          yield
+          log_success(message)
+        rescue => exception
+          log_fail(message, exception)
+          raise exception
+        ensure
+          log_complete(message)
         end
 
         private
