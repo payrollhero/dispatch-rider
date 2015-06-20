@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe DispatchRider::Logging::JsonFormatter do
-  let(:message) { DispatchRider::Message.new(subject: 'test', body: {key: 'value'}) }
+  let(:message) { DispatchRider::Message.new(subject: 'test', body: { key: 'value' }) }
   let(:guid) { 123 }
   let(:object_id) { 456 }
   let(:exception) { StandardError.new }
