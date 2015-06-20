@@ -6,7 +6,7 @@ module DispatchRider
       def format_error_handler_fail(message, exception)
         as_json do
           {
-            message: "Failed error handling",
+            phase: :failed,
           }.merge exception_info_fragment(message, exception)
         end
       end
@@ -14,7 +14,7 @@ module DispatchRider
       def format_got_stop(message, reason)
         as_json do
           {
-            message: "Got stop",
+            phase: :stop,
             reason: reason,
           }.merge message_info_fragment(message)
         end
@@ -24,21 +24,23 @@ module DispatchRider
         as_json do
           case kind
           when :start
-            { message: "Starting execution" }.merge message_info_fragment(message)
+            message_info_fragment(message)
           when :success
-            { message: "Succeeded execution" }.merge message_info_fragment(message)
+            message_info_fragment(message)
           when :fail
-            { message: "Failed execution" }.merge exception_info_fragment(message, exception)
+            exception_info_fragment(message, exception)
           when :complete
-            { message: "Completed execution", duration: format_duration(duration) }.merge message_info_fragment(message)
-          end
+            { duration: format_duration(duration) }.merge message_info_fragment(message)
+          end.merge({ phase: kind })
         end
       end
 
       private
 
       def as_json
-        JSON.generate stringify_values!(yield)
+        hash = yield
+        stringify_values!(hash)
+        JSON.generate hash
       end
 
       def stringify_values!(hash)
