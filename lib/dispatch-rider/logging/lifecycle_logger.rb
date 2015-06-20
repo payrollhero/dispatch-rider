@@ -12,23 +12,24 @@ module DispatchRider
 
         def wrap_handling(message)
           log_start(message)
+          start_time = Time.now
           yield
           log_success(message)
         rescue => exception
           log_fail(message, exception)
           raise exception
         ensure
-          log_complete(message)
+          log_complete(message, Time.now - start_time)
         end
 
         private
 
-        def log_complete(message)
-          logger.info formatter.format_handling :complete, message
+        def log_complete(message, duration)
+          logger.info formatter.format_handling :complete, message, duration: duration
         end
 
         def log_fail(message, exception)
-          logger.error formatter.format_handling :fail, message, exception
+          logger.error formatter.format_handling :fail, message, exception: exception
         end
 
         def log_success(message)
