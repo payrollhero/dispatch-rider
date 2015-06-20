@@ -2,7 +2,7 @@ require 'json'
 
 module DispatchRider
   module Logging
-    class JsonFormatter
+    class JsonFormatter < BaseFormatter
       def format_error_handler_fail(message, exception)
         as_json do
           {
@@ -20,7 +20,7 @@ module DispatchRider
         end
       end
 
-      def format_handling(kind, message, exception = nil)
+      def format_handling(kind, message, exception: nil, duration: nil)
         as_json do
           case kind
           when :start
@@ -30,7 +30,7 @@ module DispatchRider
           when :fail
             { message: "Failed execution" }.merge exception_info_fragment(message, exception)
           when :complete
-            { message: "Completed execution" }.merge message_info_fragment(message)
+            { message: "Completed execution", duration: format_duration(duration) }.merge message_info_fragment(message)
           end
         end
       end
@@ -38,7 +38,17 @@ module DispatchRider
       private
 
       def as_json
-        JSON.generate yield
+        JSON.generate stringify_values!(yield)
+      end
+
+      def stringify_values!(hash)
+        hash.each do |key, value|
+          if hash[key].is_a? Hash
+            stringify_values!(hash[key])
+          else
+            hash[key] = value.to_s
+          end
+        end
       end
 
       def message_info_fragment(message)
@@ -48,13 +58,6 @@ module DispatchRider
           subject: message.subject,
           body: message_info_arguments(message),
         }
-      end
-
-      def message_info_arguments(message)
-        message.body.dup.tap do |m|
-          m.delete('guid')
-          m.delete('object_id')
-        end
       end
 
       def exception_info_fragment(message, exception)

@@ -1,6 +1,6 @@
 module DispatchRider
   module Logging
-    class TextFormatter
+    class TextFormatter < BaseFormatter
 
       def format_error_handler_fail(message, exception)
         "Failed error handling of: #{exception_info_fragment(message, exception)}"
@@ -10,7 +10,7 @@ module DispatchRider
         "Got stop #{reason ? '(' + reason + ') ' : ' ' }while executing: #{message_info_fragment(message)}"
       end
 
-      def format_handling(kind, message, exception = nil)
+      def format_handling(kind, message, exception: nil, duration: nil)
         case kind
         when :start
           "Starting execution of: #{message_info_fragment(message)}"
@@ -19,7 +19,7 @@ module DispatchRider
         when :fail
           "Failed execution of: #{exception_info_fragment(message, exception)}"
         when :complete
-          "Completed execution of: #{message_info_fragment(message)}"
+          "Completed execution of: #{message_info_fragment(message)} in #{format_duration(duration)} seconds"
         end
       end
 
@@ -29,16 +29,9 @@ module DispatchRider
         "(#{message.guid}): #{message.subject} : #{message_info_arguments(message).inspect}"
       end
 
-      def message_info_arguments(message)
-        message.body.dup.tap { |m|
-          m.delete('guid')
-        }
-      end
-
       def exception_info_fragment(message, exception)
         "(#{message.object_id}): #{message.subject} with #{exception.class}: #{exception.message}"
       end
-
     end
   end
 end

@@ -61,15 +61,15 @@ describe DispatchRider::Logging::JsonFormatter do
     end
 
     context "complete" do
-      let(:formatted_message) { result_object.merge("message" => "Completed execution") }
-      let(:result_message) { JSON.parse subject.format_handling(:complete, message) }
+      let(:formatted_message) { result_object.merge("message" => "Completed execution", "duration" => "2.00") }
+      let(:result_message) { JSON.parse subject.format_handling(:complete, message, duration: 2.0) }
 
       example { expect(result_message).to eq(formatted_message) }
     end
 
     context "fail" do
       let(:formatted_message) { result_object.merge("message" => "Failed execution").merge(result_exception) }
-      let(:result_message) { JSON.parse subject.format_handling(:fail, message, exception) }
+      let(:result_message) { JSON.parse subject.format_handling(:fail, message, exception: exception) }
 
       example { expect(formatted_message).to eq(formatted_message) }
     end

@@ -47,7 +47,7 @@ describe DispatchRider::Logging::LifecycleLogger do
       end
 
       it "logs complete" do
-        expect(subject).to receive(:log_complete).with(message)
+        expect(subject).to receive(:log_complete).with(message, an_instance_of(Float))
       end
     end
 
@@ -66,7 +66,7 @@ describe DispatchRider::Logging::LifecycleLogger do
       end
 
       it "logs complete" do
-        expect(subject).to receive(:log_complete).with(message)
+        expect(subject).to receive(:log_complete).with(message, an_instance_of(Float))
       end
     end
   end

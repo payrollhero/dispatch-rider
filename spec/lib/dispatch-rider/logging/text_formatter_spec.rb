@@ -41,16 +41,16 @@ describe DispatchRider::Logging::TextFormatter do
     end
 
     context "complete" do
-      let(:formatted_message) { "Completed execution of: string to log" }
+      let(:formatted_message) { "Completed execution of: string to log in 2.12 seconds" }
       example do
-        expect(subject.format_handling(:complete, message)).to eq(formatted_message)
+        expect(subject.format_handling(:complete, message, duration: 2.12)).to eq(formatted_message)
       end
     end
 
     context "fail" do
       let(:formatted_message) { "Failed execution of: string to log" }
       example do
-        expect(subject.format_handling(:fail, message, exception)).to eq(formatted_message)
+        expect(subject.format_handling(:fail, message, exception: exception)).to eq(formatted_message)
       end
     end
   end
