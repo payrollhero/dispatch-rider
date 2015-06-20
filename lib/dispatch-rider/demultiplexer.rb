@@ -29,9 +29,7 @@ module DispatchRider
 
     def stop(reason: nil)
       @continue = false
-      if @current_message
-        logger.info "Got stop #{reason ? '(' + reason + ') ' : ' ' }while executing: #{message_info_fragment(@current_message)}"
-      end
+      Logging::LifecycleLogger.log_got_stop reason, @current_message if @current_message
     end
 
     private
@@ -64,39 +62,17 @@ module DispatchRider
       end
     end
 
-    def message_info_fragment(message)
-      "(#{message.guid}): #{message.subject} : #{message_info_arguments(message).inspect}"
-    end
-
-    def message_info_arguments(message)
-      message.body.dup.tap { |m|
-        m.delete('guid')
-      }
-    end
-
     def handle_next_queue_item
       queue.pop do |message|
-        begin
-          logger.info "Starting execution of: #{message_info_fragment(message)}"
-          dispatch_message(message).tap {
-            logger.info "Succeded execution of: #{message_info_fragment(message)}"
-          }
-        ensure
-          logger.info "Completed execution of: #{message_info_fragment(message)}"
-        end
+        dispatch_message(message)
       end
-    end
-
-    def exception_info_fragment(message, exception)
-      "(#{message.object_id}): #{message.subject} with #{exception.class}: #{exception.message}"
     end
 
     def handle_message_error(message, exception)
       begin
-        logger.error "Failed execution of: #{exception_info_fragment(message, exception)}"
         error_handler.call(message, exception)
       rescue => error_handler_exception # the error handler crashed
-        logger.error "Failed error handling of: #{exception_info_fragment(message, error_handler_exception)}"
+        Logging::LifecycleLogger.log_error_handler_fail message, error_handler_exception
         raise error_handler_exception
       end
     end
