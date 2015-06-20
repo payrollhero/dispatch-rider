@@ -1,15 +1,15 @@
 module DispatchRider
   module Logging
     class BaseFormatter
-      def format_error_handler_fail(message, exception)
+      def format_error_handler_fail(_message, _exception)
         raise NotImplementedError
       end
 
-      def format_got_stop(message, reason)
+      def format_got_stop(_message, _reason)
         raise NotImplementedError
       end
 
-      def format_handling(kind, message, exception: nil, duration: nil)
+      def format_handling(_kind, _message, _exception: nil, _duration: nil)
         raise NotImplementedError
       end
 
@@ -23,7 +23,7 @@ module DispatchRider
       end
 
       def format_duration(duration)
-        '%.2f' % duration
+        format '%.2f', duration
       end
     end
   end
