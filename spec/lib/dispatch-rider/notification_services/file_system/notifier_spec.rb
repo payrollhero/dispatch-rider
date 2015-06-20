@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe DispatchRider::NotificationServices::FileSystem::Notifier do
-
   subject { described_class.new({}) }
 
   describe "#channel" do
@@ -9,6 +8,5 @@ describe DispatchRider::NotificationServices::FileSystem::Notifier do
       expect(subject.channel("tmp/some/path")).to be_a(DispatchRider::NotificationServices::FileSystem::Channel)
     end
   end
-
 end
 

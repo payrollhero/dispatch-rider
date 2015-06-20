@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe DispatchRider::Publisher::ConfigurationSupport do
 
-  subject{ Object.new.extend(described_class) }
+  subject { Object.new.extend(described_class) }
 
   describe ".configuration" do
     example do

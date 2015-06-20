@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe DispatchRider::NotificationServices::FileSystem do
-
   describe "#notifier_builder" do
     it "returns the notifier builder" do
       expect(subject.notifier_builder).to eq(DispatchRider::NotificationServices::FileSystem::Notifier)

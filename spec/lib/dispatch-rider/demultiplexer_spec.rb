@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DispatchRider::Demultiplexer, :nodb => true do
+describe DispatchRider::Demultiplexer, nodb: true do
   class TestHandler < DispatchRider::Handlers::Base
     def process(options)
       raise "OMG!!!" if options["raise_exception"]
@@ -17,7 +17,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
     DispatchRider::QueueServices::Simple.new
   end
 
-  let(:message){ DispatchRider::Message.new(:subject => "test_handler", :body => {}) }
+  let(:message) { DispatchRider::Message.new(subject: "test_handler", body: {}) }
 
   let(:demultiplexer_thread) do
     demultiplexer
@@ -28,7 +28,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
     thread
   end
 
-  let(:error_handler){ ->(message, exception){ raise exception }}
+  let(:error_handler) { ->(_message, exception) { raise exception } }
 
   subject(:demultiplexer) { DispatchRider::Demultiplexer.new(queue, dispatcher, error_handler) }
 
@@ -92,7 +92,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
 
     context "when the queue crashes" do
       before do
-        allow(queue).to receive(:pop){ raise "OMG!!!"}
+        allow(queue).to receive(:pop) { raise "OMG!!!" }
       end
 
       it "should call the error handler" do

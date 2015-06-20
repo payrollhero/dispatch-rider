@@ -31,13 +31,13 @@ describe DispatchRider::Publisher::Configuration do
     }
   end
 
-  subject{ described_class.new(configuration_hash) }
+  subject { described_class.new(configuration_hash) }
 
   describe "#notification services" do
     let(:file_system) do
       DispatchRider::Publisher::Configuration::NotificationService.new(
         "file_system",
-        { "default_folder" => "tmp/dispatch_rider" }
+        "default_folder" => "tmp/dispatch_rider"
       )
     end
 
@@ -88,13 +88,13 @@ describe DispatchRider::Publisher::Configuration do
 
   describe "#clear" do
     example do
-      expect{
+      expect {
         subject.clear
       }.to change(subject.notification_services, :count).by(-2)
     end
 
     example do
-      expect{
+      expect {
         subject.clear
       }.to change(subject.destinations, :count).by(-2)
     end

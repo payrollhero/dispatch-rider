@@ -8,18 +8,18 @@ describe DispatchRider::Dispatcher, :nodb => true do
   end
 
   class HandlerThatReturnsFalse < DispatchRider::Handlers::Base
-    def process(params)
+    def process(_params)
       false
     end
   end
 
   describe "#dispatch" do
-    let(:message){ DispatchRider::Message.new(:subject => "handle_something", :body => { :do_throw_something => true }) }
+    let(:message) { DispatchRider::Message.new(subject: "handle_something", body: { do_throw_something: true }) }
 
     describe "callbacks" do
       let(:dummy) { double(:dummy) }
       let(:storage) { DispatchRider::Callbacks::Storage.new }
-      let(:message){ DispatchRider::Message.new(:subject => "handle_something", :body => { :do_throw_something => true }) }
+      let(:message) { DispatchRider::Message.new(subject: "handle_something", body: { do_throw_something: true }) }
 
       before do
         allow(DispatchRider.config).to receive(:callbacks) { storage }
@@ -55,7 +55,9 @@ describe DispatchRider::Dispatcher, :nodb => true do
     end
 
     context "when the handler returns false" do
-      let(:message){ DispatchRider::Message.new(:subject => "handler_that_returns_false", :body => { :do_throw_something => true }) }
+      let(:message) do
+        DispatchRider::Message.new(subject: "handler_that_returns_false", body: { do_throw_something: true })
+      end
 
       before :each do
         subject.register('handler_that_returns_false')

@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe DispatchRider::Callbacks::Access do
   describe "#invoke" do
-
     let(:callback_a1) { proc { |x| x.call } }
     let(:callback_a2) { proc { |x| x.call } }
     let(:callback_a3) { proc { |x| x.call } }
@@ -12,7 +11,7 @@ describe DispatchRider::Callbacks::Access do
     let(:callbacks_b) { [callback_b1] }
 
     let(:storage) { DispatchRider::Callbacks::Storage.new }
-    let(:action) { proc { } }
+    let(:action) { proc {} }
 
     subject { described_class.new(storage) }
 
@@ -58,5 +57,4 @@ describe DispatchRider::Callbacks::Access do
       subject.invoke(:event3, &action)
     end
   end
-
 end

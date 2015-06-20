@@ -1,11 +1,9 @@
 require 'spec_helper'
 
 describe DispatchRider::Callbacks::Storage do
-
-  subject{ described_class.new }
+  subject { described_class.new }
 
   describe "adding callbacks" do
-
     let!(:log) { [] }
     let(:actual) { proc { log << :actual } }
 
@@ -36,8 +34,5 @@ describe DispatchRider::Callbacks::Storage do
         expect(log).to eq [:actual, :after]
       end
     end
-
   end
-
-
 end

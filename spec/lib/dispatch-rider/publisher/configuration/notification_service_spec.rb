@@ -8,7 +8,7 @@ describe DispatchRider::Publisher::Configuration::NotificationService do
     }
   end
 
-  subject{ described_class.new("file_system", options) }
+  subject { described_class.new("file_system", options) }
 
   describe "#name" do
     describe '#name' do
@@ -25,34 +25,34 @@ describe DispatchRider::Publisher::Configuration::NotificationService do
   end
 
   describe "#==" do
-    let(:other){ described_class.new(name, other_options) }
+    let(:other) { described_class.new(name, other_options) }
 
     context "two notification services with the same name and options" do
-      let(:name){ subject.name }
-      let(:other_options){ options }
+      let(:name) { subject.name }
+      let(:other_options) { options }
 
-      it{ is_expected.to eq other }
+      it { is_expected.to eq other }
     end
 
     context "two notification services with different names but the same options" do
-      let(:name){ "aws_sns" }
-      let(:other_options){ options }
+      let(:name) { "aws_sns" }
+      let(:other_options) { options }
 
-      it{ is_expected.not_to eq other }
+      it { is_expected.not_to eq other }
     end
 
     context "two notificaiton services with the same name but different options" do
-      let(:name){ subject.name }
-      let(:other_options){ { "topic" => "employee_updates" } }
+      let(:name) { subject.name }
+      let(:other_options) { { "topic" => "employee_updates" } }
 
-      it{ is_expected.not_to eq other }
+      it { is_expected.not_to eq other }
     end
 
     context "two notification services with different names and options" do
-      let(:name){ "aws_sns" }
-      let(:other_options){ { "topic" => "employee_updates" } }
+      let(:name) { "aws_sns" }
+      let(:other_options) { { "topic" => "employee_updates" } }
 
-      it{ is_expected.not_to eq other }
+      it { is_expected.not_to eq other }
     end
   end
 

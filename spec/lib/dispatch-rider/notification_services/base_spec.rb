@@ -12,15 +12,16 @@ describe DispatchRider::NotificationServices::Base do
   end
 
   before :each do
-    allow_any_instance_of(DispatchRider::NotificationServices::Base).to receive(:notifier_builder).and_return(OpenStruct)
-    allow_any_instance_of(DispatchRider::NotificationServices::Base).to receive(:channel_registrar_builder).and_return(DispatchRider::Registrars::SnsChannel)
-    allow_any_instance_of(DispatchRider::NotificationServices::Base).to receive(:channel) do |name|
+    allow_any_instance_of(described_class).to receive(:notifier_builder).and_return(OpenStruct)
+    channel = DispatchRider::Registrars::SnsChannel
+    allow_any_instance_of(described_class).to receive(:channel_registrar_builder).and_return(channel)
+    allow_any_instance_of(described_class).to receive(:channel) do |name|
       subject.notifier.topics[subject.fetch(name)] if name == :foo
     end
   end
 
   subject do
-    DispatchRider::NotificationServices::Base.new({:topics => {}})
+    DispatchRider::NotificationServices::Base.new(topics: {})
   end
 
   describe "#initialize" do
@@ -50,15 +51,19 @@ describe DispatchRider::NotificationServices::Base do
     let(:channel) { double(:channel) }
 
     let(:message) { DispatchRider::Message.new(subject: :test_handler, body: { "bar" => "baz" }) }
+    let(:expected_message) do
+      {
+        "subject" => "test_handler",
+        "body" => { "bar" => "baz" }
+      }
+    end
 
     # @note: This is tested this way cause you don't really wanna post a message to the actual service.
     it "publishes the message to the channels" do
       expect(channel).to receive(:publish).with(kind_of String) { |serialized_message|
-        expect(JSON.parse(serialized_message)).to eq(
-          "subject" => "test_handler",
-          "body" => { "bar" => "baz" }
-        )
-      }
+                           parsed_message = JSON.parse(serialized_message)
+                           expect(parsed_message).to eq(expected_message)
+                         }
 
       subject.publish_to_channel(channel, message: message)
     end

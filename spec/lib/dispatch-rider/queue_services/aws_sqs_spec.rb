@@ -47,7 +47,7 @@ describe DispatchRider::QueueServices::AwsSqs do
 
   describe "#insert" do
     it "should insert an item into the queue" do
-      obj = {'subject' => 'foo', 'body' => 'bar'}.to_json
+      obj = { 'subject' => 'foo', 'body' => 'bar' }.to_json
       expect(aws_sqs_queue.queue).to receive(:send_message).with(obj)
       aws_sqs_queue.insert(obj)
     end
@@ -66,11 +66,11 @@ describe DispatchRider::QueueServices::AwsSqs do
 
       let(:response_message) do
         {
-          :message_id => 12345,
-          :md5_of_body => "mmmddd555",
-          :body => {:subject => "foo", :body => {:bar => "baz"}}.to_json,
-          :receipt_handle => "HANDLE",
-          :attributes => response_attributes,
+          message_id: 12345,
+          md5_of_body: "mmmddd555",
+          body: { subject: "foo", body: { bar: "baz" } }.to_json,
+          receipt_handle: "HANDLE",
+          attributes: response_attributes,
         }
       end
 
@@ -85,7 +85,7 @@ describe DispatchRider::QueueServices::AwsSqs do
         it "should yield the first item in the queue" do
           aws_sqs_queue.pop do |message|
             expect(message.subject).to eq('foo')
-            expect(message.body).to eq({'bar' => 'baz'})
+            expect(message.body).to eq('bar' => 'baz')
           end
         end
       end
@@ -119,27 +119,31 @@ describe DispatchRider::QueueServices::AwsSqs do
   end
 
   describe "received message methods" do
-    let(:response_attributes) {{
+    let(:response_attributes) do
+      {
         "SenderId" => "123456789012",
         "SentTimestamp" => Time.now.to_i.to_s,
         "ApproximateReceivedCount" => "12",
         "ApproximateFirstReceiveTimestamp" => (Time.now + 12).to_i.to_s,
-      }}
+      }
+    end
 
-      let(:response_message) { {
-        :message_id => 12345,
-        :md5_of_body => "mmmddd555",
-        :body => {:subject => "foo", :body => {:bar => "baz"}}.to_json,
-        :receipt_handle => "HANDLE",
-        :attributes => response_attributes,
-      } }
+    let(:response_message) do
+      {
+        message_id: 12345,
+        md5_of_body: "mmmddd555",
+        body: { subject: "foo", body: { bar: "baz" } }.to_json,
+        receipt_handle: "HANDLE",
+        attributes: response_attributes,
+      }
+    end
 
-      before :each do
-        response = AWS::SQS::Client.new.stub_for(:receive_message)
-        response.data[:messages] = [response_message]
-        allow_any_instance_of(AWS::SQS::Client::V20121105).to receive(:receive_message).and_return(response)
-        allow_any_instance_of(AWS::SQS::Queue).to receive(:verify_receive_message_checksum).and_return([])
-      end
+    before :each do
+      response = AWS::SQS::Client.new.stub_for(:receive_message)
+      response.data[:messages] = [response_message]
+      allow_any_instance_of(AWS::SQS::Client::V20121105).to receive(:receive_message).and_return(response)
+      allow_any_instance_of(AWS::SQS::Queue).to receive(:verify_receive_message_checksum).and_return([])
+    end
 
     it "should set the visibility timeout when extend is called" do
       expect_any_instance_of(AWS::SQS::ReceivedMessage).to receive(:visibility_timeout=).with(10)
@@ -155,7 +159,7 @@ describe DispatchRider::QueueServices::AwsSqs do
 
   describe "#construct_message_from" do
     context "when the item is directly published to AWS::SQS" do
-      let(:sqs_message){ OpenStruct.new(:body => {'subject' => 'foo', 'body' => 'bar'}.to_json) }
+      let(:sqs_message) { OpenStruct.new(body: { 'subject' => 'foo', 'body' => 'bar' }.to_json) }
 
       it "should return a message" do
         result = aws_sqs_queue.construct_message_from(sqs_message)
@@ -165,7 +169,11 @@ describe DispatchRider::QueueServices::AwsSqs do
     end
 
     context "when the item is published through AWS::SNS" do
-      let(:sqs_message){ OpenStruct.new(:body => {"Type" => "Notification", "Message" => {'subject' => 'foo', 'body' => 'bar'}.to_json}.to_json) }
+      let(:sqs_message) do
+        message = { 'subject' => 'foo', 'body' => 'bar' }
+        body = { "Type" => "Notification", "Message" => message.to_json }.to_json
+        OpenStruct.new(body: body)
+      end
 
       it "should return a message" do
         result = aws_sqs_queue.construct_message_from(sqs_message)
@@ -176,7 +184,7 @@ describe DispatchRider::QueueServices::AwsSqs do
   end
 
   describe "#delete" do
-    let(:item_in_queue){ Object.new }
+    let(:item_in_queue) { Object.new }
 
     it "should delete the first message from the queue" do
       expect(item_in_queue).to receive(:delete)

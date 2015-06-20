@@ -7,11 +7,12 @@ describe DispatchRider::QueueServices::FileSystem do
     DispatchRider::QueueServices::FileSystem.new(:path => queue_path)
   end
 
-  before { file_system_queue.send(:queue).send(:file_paths).each{|file| File.unlink(file)} }
+  before { file_system_queue.send(:queue).send(:file_paths).each { |file| File.unlink(file) } }
 
   describe "#assign_storage" do
     it "should return an empty array" do
-      expect(file_system_queue.assign_storage({:path => queue_path})).to be_a DispatchRider::QueueServices::FileSystem::Queue
+      expected_type = DispatchRider::QueueServices::FileSystem::Queue
+      expect(file_system_queue.assign_storage(path: queue_path)).to be_a expected_type
     end
   end
 
@@ -50,12 +51,12 @@ describe DispatchRider::QueueServices::FileSystem do
       expect(result.body).to eq('bar')
     end
   end
-  
+
   describe "#put_back" do
     before :each do
       file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
     end
-    
+
     it "should remove and re-add the item" do
       file = file_system_queue.raw_head
       expect(file_system_queue).to be_empty

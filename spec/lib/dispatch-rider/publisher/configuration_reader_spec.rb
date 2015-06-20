@@ -28,7 +28,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
 
     describe "notification_services parsing" do
 
-      let(:configuration){ DispatchRider::Publisher::Configuration.new(configuration_hash) }
+      let(:configuration) { DispatchRider::Publisher::Configuration.new(configuration_hash) }
 
       context "when notification_services has no items in it" do
 
@@ -72,7 +72,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
 
         it "calls register_notification_service with :file_system and {}, as well as :foo, {bar: '123'}" do
           expect(publisher).to receive(:register_notification_service).with("file_system", {})
-          expect(publisher).to receive(:register_notification_service).with("foo", {"bar" => "123"})
+          expect(publisher).to receive(:register_notification_service).with("foo", "bar" => "123")
           subject.load_config(configuration, publisher)
         end
       end
@@ -81,7 +81,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
 
     describe "destinations" do
 
-      let(:configuration){ DispatchRider::Publisher::Configuration.new(configuration_hash) }
+      let(:configuration) { DispatchRider::Publisher::Configuration.new(configuration_hash) }
 
       context "when destinations has no items in it" do
 
@@ -104,7 +104,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
         let :configuration_hash do
           {
             destinations: {
-              out1:{
+              out1: {
                 service: :file_system,
                 channel: :foo,
                 options: {
@@ -116,7 +116,8 @@ describe DispatchRider::Publisher::ConfigurationReader do
         end
 
         it "should call register_destination with the right parameters" do
-          expect(publisher).to receive(:register_destination).exactly(1).times.with("out1", :file_system, :foo, "path" => "tmp/test/channel")
+          params = ["out1", :file_system, :foo, "path" => "tmp/test/channel"]
+          expect(publisher).to receive(:register_destination).exactly(1).times.with(*params)
           subject.load_config(configuration, publisher)
         end
 

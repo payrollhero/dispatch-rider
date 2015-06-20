@@ -16,7 +16,7 @@ describe DispatchRider::QueueServices::Base do
     subject(:simple_queue) { DispatchRider::QueueServices::Simple.new }
 
     it "should push the serialized object to the queue" do
-      simple_queue.push(DispatchRider::Message.new(:subject => "foo", :body => "bar"))
+      simple_queue.push(DispatchRider::Message.new(subject: "foo", body: "bar"))
       result = JSON.parse(simple_queue.queue.first)
       expect(result['subject']).to eq('foo')
       expect(result['body']).to eq('bar')
@@ -25,7 +25,9 @@ describe DispatchRider::QueueServices::Base do
 
   describe "#insert" do
     it "should raise an exception" do
-      expect { base_queue.insert(DispatchRider::Message.new(:subject => "foo", :body => "bar")) }.to raise_exception(NotImplementedError)
+      expect {
+        base_queue.insert(DispatchRider::Message.new(subject: "foo", body: "bar"))
+      }.to raise_exception(NotImplementedError)
     end
   end
 
@@ -33,25 +35,25 @@ describe DispatchRider::QueueServices::Base do
     subject(:simple_queue) { DispatchRider::QueueServices::Simple.new }
 
     before :each do
-      simple_queue.queue.push(DispatchRider::Message.new(:subject => "foo", :body => "bar").to_json)
+      simple_queue.queue.push(DispatchRider::Message.new(subject: "foo", body: "bar").to_json)
     end
 
     context "when the block passed to process the popped message returns true" do
       it "should return the first message in the queue" do
-        response = simple_queue.pop { |msg| true }
-        expect(response).to eq(DispatchRider::Message.new(:subject => 'foo', :body => 'bar'))
+        response = simple_queue.pop { |_msg| true }
+        expect(response).to eq(DispatchRider::Message.new(subject: 'foo', body: 'bar'))
       end
     end
 
     context "when the block passed to process the popped message returns false" do
       it "should return the first message in the queue" do
-        result = simple_queue.pop { |msg| false }
-        expect(result).to eq(DispatchRider::Message.new(:subject => 'foo', :body => 'bar'))
+        result = simple_queue.pop { |_msg| false }
+        expect(result).to eq(DispatchRider::Message.new(subject: 'foo', body: 'bar'))
       end
 
       it "should not remove the first message from the queue" do
         simple_queue.pop do |msg|
-          msg.body = {:bar => "baz"}
+          msg.body = { bar: "baz" }
           false
         end
         expect(simple_queue).not_to be_empty
@@ -65,7 +67,7 @@ describe DispatchRider::QueueServices::Base do
 
       it "should return nil" do
         result = simple_queue.pop do |msg|
-          msg.body = {:bar => "baz"}
+          msg.body = { bar: "baz" }
           true
         end
         expect(result).to be_nil
@@ -79,7 +81,7 @@ describe DispatchRider::QueueServices::Base do
     end
 
     context "when there is no new item" do
-      let(:new_item){ nil }
+      let(:new_item) { nil }
 
       it "should raise an exception" do
         expect(base_queue.head).to be_nil
@@ -91,8 +93,8 @@ describe DispatchRider::QueueServices::Base do
         allow(base_queue).to receive(:construct_message_from) { |item| item.message }
       end
 
-      let(:new_item){ OpenStruct.new(:message => new_message) }
-      let(:new_message){ :the_message }
+      let(:new_item) { OpenStruct.new(message: new_message) }
+      let(:new_message) { :the_message }
 
       it "should return the expected message" do
         received_head = base_queue.head
@@ -110,13 +112,17 @@ describe DispatchRider::QueueServices::Base do
 
   describe "#construct_message_from" do
     it "should raise an exception" do
-      expect { base_queue.construct_message_from({:subject => 'foo', :body => {:bar => 'baz'}}.to_json) }.to raise_exception(NotImplementedError)
+      expect {
+        base_queue.construct_message_from({ subject: 'foo', body: { bar: 'baz' } }.to_json)
+      }.to raise_exception(NotImplementedError)
     end
   end
 
   describe "#delete" do
     it "should raise an exception" do
-      expect { base_queue.delete({:subject => 'foo', :body => {:bar => 'baz'}}.to_json) }.to raise_exception(NotImplementedError)
+      expect {
+        base_queue.delete({ subject: 'foo', body: { bar: 'baz' } }.to_json)
+      }.to raise_exception(NotImplementedError)
     end
   end
 
@@ -137,7 +143,7 @@ describe DispatchRider::QueueServices::Base do
 
     context "when the queue is not empty" do
       before :each do
-        base_queue.queue << {:subject => 'foo', :body => 'bar'}.to_json
+        base_queue.queue << { subject: 'foo', body: 'bar' }.to_json
       end
 
       it "should return false" do

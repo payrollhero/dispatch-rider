@@ -17,6 +17,7 @@ RSpec.configure do |config|
 end
 
 # Airbrake dummy module
-module Airbrake; end
+module Airbrake
+end
 
 require 'dispatch-rider'

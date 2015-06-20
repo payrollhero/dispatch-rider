@@ -3,13 +3,14 @@ require "spec_helper"
 describe DispatchRider::Subscriber do
 
   before do
-    allow(DispatchRider::Handlers::Base).to receive(:subclasses){ Set.new }
+    allow(DispatchRider::Handlers::Base).to receive(:subclasses) { Set.new }
 
-    stub_const("FooBar", Class.new(DispatchRider::Handlers::Base) {
-      def process(options)
+    konst = Class.new(DispatchRider::Handlers::Base) do
+      def process(_options)
         throw :process_was_called
       end
-    })
+    end
+    stub_const("FooBar", konst)
   end
 
   describe "#initialize" do
@@ -28,14 +29,20 @@ describe DispatchRider::Subscriber do
   describe "#register_handler" do
     it "should register a handler" do
       subject.register_handler(:foo_bar)
-      expect { subject.dispatcher.dispatch(DispatchRider::Message.new(:subject => :foo_bar, :body => {'foo' => 'bar'})) }.to throw_symbol(:process_was_called)
+      expect {
+        message = DispatchRider::Message.new(subject: :foo_bar, body: { 'foo' => 'bar' })
+        subject.dispatcher.dispatch(message)
+      }.to throw_symbol(:process_was_called)
     end
   end
 
   describe "#register_handlers" do
     it "should register all the handlers" do
       subject.register_handlers(:foo_bar)
-      expect { subject.dispatcher.dispatch(DispatchRider::Message.new(:subject => :foo_bar, :body => {'foo' => 'bar'})) }.to throw_symbol(:process_was_called)
+      expect {
+        message = DispatchRider::Message.new(subject: :foo_bar, body: { 'foo' => 'bar' })
+        subject.dispatcher.dispatch(message)
+      }.to throw_symbol(:process_was_called)
     end
   end
 
@@ -63,7 +70,8 @@ describe DispatchRider::Subscriber do
 
     describe "processing" do
       before do
-        subject.queue_service_registrar.fetch(:simple).push(DispatchRider::Message.new(subject: :foo_bar, body: {'baz' => 'blah'}))
+        message = DispatchRider::Message.new(subject: :foo_bar, body: { 'baz' => 'blah' })
+        subject.queue_service_registrar.fetch(:simple).push(message)
       end
 
       it "should process the queue" do
@@ -73,18 +81,20 @@ describe DispatchRider::Subscriber do
 
     # kills travis sometimes so leaving it here as tested documentation
     describe "process termination", if: false do
-      before { allow(subject.demultiplexer).to receive(:stop){ throw :got_stopped } }
+      before { allow(subject.demultiplexer).to receive(:stop) { throw :got_stopped } }
 
       context "when process quits" do
         before do
-          stub_const("Quiter", Class.new(DispatchRider::Handlers::Base) {
-            def process(options)
+          konst = Class.new(DispatchRider::Handlers::Base) do
+            def process(_options)
               Process.kill("QUIT", 0)
             end
-          })
+          end
+          stub_const("Quiter", konst)
 
           subject.register_handler(:quiter)
-          subject.queue_service_registrar.fetch(:simple).push(DispatchRider::Message.new(subject: :quiter, body: {}))
+          message = DispatchRider::Message.new(subject: :quiter, body: {})
+          subject.queue_service_registrar.fetch(:simple).push(message)
         end
 
         example { expect { subject.process }.to throw_symbol(:got_stopped) }
@@ -92,13 +102,15 @@ describe DispatchRider::Subscriber do
 
       context "when process terminates" do
         before do
-          stub_const("Terminator", Class.new(DispatchRider::Handlers::Base) {
-            def process(options)
+          konst = Class.new(DispatchRider::Handlers::Base) do
+            def process(_options)
               Process.kill("TERM", 0)
             end
-          })
+          end
+          stub_const("Terminator", konst)
           subject.register_handler(:terminator)
-          subject.queue_service_registrar.fetch(:simple).push(DispatchRider::Message.new(subject: :terminator, body: {}))
+          message = DispatchRider::Message.new(subject: :terminator, body: {})
+          subject.queue_service_registrar.fetch(:simple).push(message)
         end
 
         example { expect { subject.process }.to throw_symbol(:got_stopped) }
@@ -106,13 +118,15 @@ describe DispatchRider::Subscriber do
 
       context "when process is interupted" do
         before do
-          stub_const("Interupter", Class.new(DispatchRider::Handlers::Base) {
-            def process(options)
+          konst = Class.new(DispatchRider::Handlers::Base) do
+            def process(_options)
               Process.kill("INT", 0)
             end
-          })
+          end
+          stub_const("Interupter", konst)
           subject.register_handler(:interupter)
-          subject.queue_service_registrar.fetch(:simple).push(DispatchRider::Message.new(subject: :interupter, body: {}))
+          message = DispatchRider::Message.new(subject: :interupter, body: {})
+          subject.queue_service_registrar.fetch(:simple).push(message)
         end
 
         example { expect { subject.process }.to throw_symbol(:got_stopped) }
@@ -121,15 +135,17 @@ describe DispatchRider::Subscriber do
       context "when process is interupted twice" do
         before do
           allow(subject.demultiplexer).to receive(:stop) # do nothing just ignore the interuption
-          allow(subject).to receive(:exit){ throw :got_forcefully_stopped }
+          allow(subject).to receive(:exit) { throw :got_forcefully_stopped }
 
-          stub_const("TwiceInterupter", Class.new(DispatchRider::Handlers::Base) {
+          konst = Class.new(DispatchRider::Handlers::Base) do
             def process(options)
               2.times { Process.kill("INT", 0) }
             end
-          })
+          end
+          stub_const("TwiceInterupter", konst)
           subject.register_handler(:twice_interupter)
-          subject.queue_service_registrar.fetch(:simple).push(DispatchRider::Message.new(subject: :twice_interupter, body: {}))
+          message = DispatchRider::Message.new(subject: :twice_interupter, body: {})
+          subject.queue_service_registrar.fetch(:simple).push(message)
         end
 
         example { expect { subject.process }.to throw_symbol(:got_forcefully_stopped) }

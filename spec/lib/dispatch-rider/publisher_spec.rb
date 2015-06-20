@@ -84,7 +84,14 @@ describe DispatchRider::Publisher do
     end
 
     it "returns the publisher" do
-      expect(subject.register_destination(:sns_foo, :aws_sns, :foo, account: 123, region: "us-east-1", topic: "PlanOfAttack")).to eq(subject)
+      result = subject.register_destination(:sns_foo,
+                                            :aws_sns,
+                                            :foo,
+                                            account: 123,
+                                            region: "us-east-1",
+                                            topic: "PlanOfAttack"
+      )
+      expect(result).to eq(subject)
     end
   end
 
@@ -110,7 +117,7 @@ describe DispatchRider::Publisher do
     it "publishes the message to the notification service" do
       existing = Dir['tmp/test_queue/*']
       expect {
-        subject.publish(:destinations => [:fs_foo], :message => {:subject => "bar_handler", :body => {"bar" => "baz"}})
+        subject.publish(:destinations => [:fs_foo], message: { subject: "bar_handler", body: { "bar" => "baz" } })
       }.to change { Dir['tmp/test_queue/*'].length }.by(1)
       new_job = Dir['tmp/test_queue/*'] - existing
       data = JSON.load(File.read(new_job.first))
@@ -143,8 +150,8 @@ describe DispatchRider::Publisher do
 
         example do
           expect(publish_callback).to receive(:call).with any_args, # first argument is the inner job
-                                                      destinations: [:fs_foo],
-                                                      message: expected_message
+                                                          destinations: [:fs_foo],
+                                                          message: expected_message
 
           publisher.publish destinations: [:fs_foo],
                             message: {
