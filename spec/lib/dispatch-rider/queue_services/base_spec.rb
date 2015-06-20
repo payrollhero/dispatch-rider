@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe DispatchRider::QueueServices::Base do
   subject(:base_queue) do
-    DispatchRider::QueueServices::Base.any_instance.stub(:assign_storage).and_return([])
+    allow_any_instance_of(DispatchRider::QueueServices::Base).to receive(:assign_storage).and_return([])
     DispatchRider::QueueServices::Base.new
   end
 
   describe "#initialize" do
     it "should initiate a queue" do
-      base_queue.queue.should eq([])
+      expect(base_queue.queue).to eq([])
     end
   end
 
@@ -16,16 +16,18 @@ describe DispatchRider::QueueServices::Base do
     subject(:simple_queue) { DispatchRider::QueueServices::Simple.new }
 
     it "should push the serialized object to the queue" do
-      simple_queue.push(DispatchRider::Message.new(:subject => "foo", :body => "bar"))
+      simple_queue.push(DispatchRider::Message.new(subject: "foo", body: "bar"))
       result = JSON.parse(simple_queue.queue.first)
-      result['subject'].should eq('foo')
-      result['body'].should eq('bar')
+      expect(result['subject']).to eq('foo')
+      expect(result['body']).to eq('bar')
     end
   end
 
   describe "#insert" do
     it "should raise an exception" do
-      expect { base_queue.insert(DispatchRider::Message.new(:subject => "foo", :body => "bar")) }.to raise_exception(NotImplementedError)
+      expect {
+        base_queue.insert(DispatchRider::Message.new(subject: "foo", body: "bar"))
+      }.to raise_exception(NotImplementedError)
     end
   end
 
@@ -33,26 +35,28 @@ describe DispatchRider::QueueServices::Base do
     subject(:simple_queue) { DispatchRider::QueueServices::Simple.new }
 
     before :each do
-      simple_queue.queue.push(DispatchRider::Message.new(:subject => "foo", :body => "bar").to_json)
+      simple_queue.queue.push(DispatchRider::Message.new(subject: "foo", body: "bar").to_json)
     end
 
     context "when the block passed to process the popped message returns true" do
       it "should return the first message in the queue" do
-        simple_queue.pop {|msg| true}.should eq(DispatchRider::Message.new(:subject => 'foo', :body => 'bar'))
+        response = simple_queue.pop { |_msg| true }
+        expect(response).to eq(DispatchRider::Message.new(subject: 'foo', body: 'bar'))
       end
     end
 
     context "when the block passed to process the popped message returns false" do
       it "should return the first message in the queue" do
-        simple_queue.pop {|msg| false}.should eq(DispatchRider::Message.new(:subject => 'foo', :body => 'bar'))
+        result = simple_queue.pop { |_msg| false }
+        expect(result).to eq(DispatchRider::Message.new(subject: 'foo', body: 'bar'))
       end
 
       it "should not remove the first message from the queue" do
         simple_queue.pop do |msg|
-          msg.body = {:bar => "baz"}
+          msg.body = { bar: "baz" }
           false
         end
-        simple_queue.should_not be_empty
+        expect(simple_queue).not_to be_empty
       end
     end
 
@@ -62,35 +66,40 @@ describe DispatchRider::QueueServices::Base do
       end
 
       it "should return nil" do
-        simple_queue.pop do |msg|
-          msg.body = {:bar => "baz"}
+        result = simple_queue.pop do |msg|
+          msg.body = { bar: "baz" }
           true
-        end.should be_nil
+        end
+        expect(result).to be_nil
       end
     end
   end
 
   describe "#head" do
-    before { base_queue.stub(:raw_head).and_return(new_item) }
+    before do
+      allow(base_queue).to receive(:raw_head) { new_item }
+    end
 
     context "when there is no new item" do
-      let(:new_item){ nil }
+      let(:new_item) { nil }
 
       it "should raise an exception" do
-        base_queue.head.should be_nil
+        expect(base_queue.head).to be_nil
       end
     end
 
     context "when a new item exists" do
-      before { base_queue.stub(:construct_message_from){|item| item.message} }
+      before do
+        allow(base_queue).to receive(:construct_message_from) { |item| item.message }
+      end
 
-      let(:new_item){ OpenStruct.new(:message => new_message) }
-      let(:new_message){ :the_message }
+      let(:new_item) { OpenStruct.new(message: new_message) }
+      let(:new_message) { :the_message }
 
       it "should return the expected message" do
         received_head = base_queue.head
-        received_head.item.should == new_item
-        received_head.to_sym == new_message
+        expect(received_head.item).to eq new_item
+        expect(received_head.to_sym).to eq new_message
       end
     end
   end
@@ -103,19 +112,23 @@ describe DispatchRider::QueueServices::Base do
 
   describe "#construct_message_from" do
     it "should raise an exception" do
-      expect { base_queue.construct_message_from({:subject => 'foo', :body => {:bar => 'baz'}}.to_json) }.to raise_exception(NotImplementedError)
+      expect {
+        base_queue.construct_message_from({ subject: 'foo', body: { bar: 'baz' } }.to_json)
+      }.to raise_exception(NotImplementedError)
     end
   end
 
   describe "#delete" do
     it "should raise an exception" do
-      expect { base_queue.delete({:subject => 'foo', :body => {:bar => 'baz'}}.to_json) }.to raise_exception(NotImplementedError)
+      expect {
+        base_queue.delete({ subject: 'foo', body: { bar: 'baz' } }.to_json)
+      }.to raise_exception(NotImplementedError)
     end
   end
 
   describe "#empty?" do
     before :each do
-      base_queue.stub(:size) { base_queue.queue.size }
+      allow(base_queue).to receive(:size) { base_queue.queue.size }
     end
 
     context "when the queue is empty" do
@@ -124,17 +137,17 @@ describe DispatchRider::QueueServices::Base do
       end
 
       it "should return true" do
-        base_queue.should be_empty
+        expect(base_queue).to be_empty
       end
     end
 
     context "when the queue is not empty" do
       before :each do
-        base_queue.queue << {:subject => 'foo', :body => 'bar'}.to_json
+        base_queue.queue << { subject: 'foo', body: 'bar' }.to_json
       end
 
       it "should return false" do
-        base_queue.should_not be_empty
+        expect(base_queue).not_to be_empty
       end
     end
   end

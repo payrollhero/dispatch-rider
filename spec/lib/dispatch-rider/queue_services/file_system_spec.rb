@@ -7,11 +7,12 @@ describe DispatchRider::QueueServices::FileSystem do
     DispatchRider::QueueServices::FileSystem.new(:path => queue_path)
   end
 
-  before { file_system_queue.send(:queue).send(:file_paths).each{|file| File.unlink(file)} }
+  before { file_system_queue.send(:queue).send(:file_paths).each { |file| File.unlink(file) } }
 
   describe "#assign_storage" do
     it "should return an empty array" do
-      file_system_queue.assign_storage({:path => queue_path}).should be_a DispatchRider::QueueServices::FileSystem::Queue
+      expected_type = DispatchRider::QueueServices::FileSystem::Queue
+      expect(file_system_queue.assign_storage(path: queue_path)).to be_a expected_type
     end
   end
 
@@ -19,8 +20,8 @@ describe DispatchRider::QueueServices::FileSystem do
     it "should insert a serialized object into the queue" do
       file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
       result = JSON.parse(file_system_queue.queue.pop.read)
-      result['subject'].should eq('foo')
-      result['body'].should eq('bar')
+      expect(result['subject']).to eq('foo')
+      expect(result['body']).to eq('bar')
     end
   end
 
@@ -31,8 +32,8 @@ describe DispatchRider::QueueServices::FileSystem do
 
     it "should return the first item from the queue" do
       result = JSON.parse(file_system_queue.raw_head.read)
-      result['subject'].should eq('foo')
-      result['body'].should eq('bar')
+      expect(result['subject']).to eq('foo')
+      expect(result['body']).to eq('bar')
     end
   end
 
@@ -46,21 +47,21 @@ describe DispatchRider::QueueServices::FileSystem do
 
     it "should return the item casted as a message" do
       result = file_system_queue.construct_message_from(new_file)
-      result.subject.should eq('foo')
-      result.body.should eq('bar')
+      expect(result.subject).to eq('foo')
+      expect(result.body).to eq('bar')
     end
   end
-  
+
   describe "#put_back" do
     before :each do
       file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
     end
-    
+
     it "should remove and re-add the item" do
       file = file_system_queue.raw_head
-      file_system_queue.should be_empty
+      expect(file_system_queue).to be_empty
       file_system_queue.put_back(file)
-      file_system_queue.size.should eq(1)
+      expect(file_system_queue.size).to eq(1)
     end
   end
 
@@ -72,7 +73,7 @@ describe DispatchRider::QueueServices::FileSystem do
     it "should remove the item from the queue" do
       file = File.new(Dir["#{queue_path}/*.ready"].first, "w")
       file_system_queue.delete(file)
-      file_system_queue.should be_empty
+      expect(file_system_queue).to be_empty
     end
   end
 
@@ -82,7 +83,7 @@ describe DispatchRider::QueueServices::FileSystem do
     end
 
     it "should return the size of the queue" do
-      file_system_queue.size.should eq(1)
+      expect(file_system_queue.size).to eq(1)
     end
   end
 end

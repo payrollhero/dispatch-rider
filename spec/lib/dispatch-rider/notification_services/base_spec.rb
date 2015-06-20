@@ -12,24 +12,25 @@ describe DispatchRider::NotificationServices::Base do
   end
 
   before :each do
-    DispatchRider::NotificationServices::Base.any_instance.stub(:notifier_builder).and_return(OpenStruct)
-    DispatchRider::NotificationServices::Base.any_instance.stub(:channel_registrar_builder).and_return(DispatchRider::Registrars::SnsChannel)
-    DispatchRider::NotificationServices::Base.any_instance.stub(:channel) do |name|
+    allow_any_instance_of(described_class).to receive(:notifier_builder).and_return(OpenStruct)
+    channel = DispatchRider::Registrars::SnsChannel
+    allow_any_instance_of(described_class).to receive(:channel_registrar_builder).and_return(channel)
+    allow_any_instance_of(described_class).to receive(:channel) do |name|
       subject.notifier.topics[subject.fetch(name)] if name == :foo
     end
   end
 
   subject do
-    DispatchRider::NotificationServices::Base.new({:topics => {}})
+    DispatchRider::NotificationServices::Base.new(topics: {})
   end
 
   describe "#initialize" do
     it "assigns the notifier" do
-      subject.notifier.should respond_to(:topics)
+      expect(subject.notifier).to respond_to(:topics)
     end
 
     it "assigns the channel registrar" do
-      subject.channel_registrar.store.should be_empty
+      expect(subject.channel_registrar.store).to be_empty
     end
   end
 
@@ -42,7 +43,7 @@ describe DispatchRider::NotificationServices::Base do
     let(:message) { DispatchRider::Message.new(subject: :test_handler, body: { "bar" => "baz" }) }
 
     it "publishes the message to the channels" do
-      catch(:published) { subject.publish to: :foo, message: message }.should eq("baz")
+      expect(catch(:published) { subject.publish to: :foo, message: message }).to eq("baz")
     end
   end
 
@@ -50,15 +51,19 @@ describe DispatchRider::NotificationServices::Base do
     let(:channel) { double(:channel) }
 
     let(:message) { DispatchRider::Message.new(subject: :test_handler, body: { "bar" => "baz" }) }
+    let(:expected_message) do
+      {
+        "subject" => "test_handler",
+        "body" => { "bar" => "baz" }
+      }
+    end
 
     # @note: This is tested this way cause you don't really wanna post a message to the actual service.
     it "publishes the message to the channels" do
       expect(channel).to receive(:publish).with(kind_of String) { |serialized_message|
-        expect(JSON.parse(serialized_message)).to eq(
-          "subject" => "test_handler",
-          "body" => { "bar" => "baz" }
-        )
-      }
+                           parsed_message = JSON.parse(serialized_message)
+                           expect(parsed_message).to eq(expected_message)
+                         }
 
       subject.publish_to_channel(channel, message: message)
     end
@@ -71,7 +76,7 @@ describe DispatchRider::NotificationServices::Base do
     end
 
     it "returns an array of channels" do
-      subject.channels(:foo).should eq([channel])
+      expect(subject.channels(:foo)).to eq([channel])
     end
   end
 end

@@ -7,7 +7,7 @@ describe DispatchRider::QueueServices::Simple do
 
   describe "#assign_storage" do
     it "should return an empty array" do
-      simple_queue.assign_storage({}).should eq([])
+      expect(simple_queue.assign_storage({})).to eq([])
     end
   end
 
@@ -15,8 +15,8 @@ describe DispatchRider::QueueServices::Simple do
     it "should insert a serialized object into the queue" do
       simple_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
       result = JSON.parse(simple_queue.queue.pop)
-      result['subject'].should eq('foo')
-      result['body'].should eq('bar')
+      expect(result['subject']).to eq('foo')
+      expect(result['body']).to eq('bar')
     end
   end
 
@@ -27,16 +27,16 @@ describe DispatchRider::QueueServices::Simple do
 
     it "should return the first item from the queue" do
       result = JSON.parse(simple_queue.raw_head)
-      result['subject'].should eq('foo')
-      result['body'].should eq('bar')
+      expect(result['subject']).to eq('foo')
+      expect(result['body']).to eq('bar')
     end
   end
 
   describe "#construct_message_from" do
     it "should return the item casted as a message" do
       result = simple_queue.construct_message_from({'subject' => 'foo', 'body' => 'bar'}.to_json)
-      result.subject.should eq('foo')
-      result.body.should eq('bar')
+      expect(result.subject).to eq('foo')
+      expect(result.body).to eq('bar')
     end
   end
 
@@ -47,7 +47,7 @@ describe DispatchRider::QueueServices::Simple do
 
     it "should remove the item from the queue" do
       simple_queue.delete({'subject' => 'foo', 'body' => 'bar'}.to_json)
-      simple_queue.should be_empty
+      expect(simple_queue).to be_empty
     end
   end
 
@@ -57,7 +57,7 @@ describe DispatchRider::QueueServices::Simple do
     end
 
     it "should return the size of the queue" do
-      simple_queue.size.should eq(1)
+      expect(simple_queue.size).to eq(1)
     end
   end
 end

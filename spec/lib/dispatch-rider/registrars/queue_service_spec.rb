@@ -7,7 +7,7 @@ describe DispatchRider::Registrars::QueueService do
 
   describe "#value" do
     it "returns the value for the key/value pair while registering a queue service" do
-      subject.value(:simple).should be_a(DispatchRider::QueueServices::Simple)
+      expect(subject.value(:simple)).to be_a(DispatchRider::QueueServices::Simple)
     end
   end
 end

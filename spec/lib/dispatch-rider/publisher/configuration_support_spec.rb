@@ -2,17 +2,17 @@ require 'spec_helper'
 
 describe DispatchRider::Publisher::ConfigurationSupport do
 
-  subject{ Object.new.extend(described_class) }
+  subject { Object.new.extend(described_class) }
 
   describe ".configuration" do
     example do
-      subject.configuration.should be_a(DispatchRider::Publisher::Configuration)
+      expect(subject.configuration).to be_a(DispatchRider::Publisher::Configuration)
     end
   end
 
   describe ".config" do
     example do
-      subject.method(:config).should == subject.method(:configuration)
+      expect(subject.method(:config)).to eq(subject.method(:configuration))
     end
   end
 
@@ -57,13 +57,13 @@ describe DispatchRider::Publisher::ConfigurationSupport do
       end
 
       it "sets the configuration's notification services correctly" do
-        subject.configuration.notification_services.count.should == 1
-        subject.configuration.notification_services.should =~ [notification_service]
+        expect(subject.configuration.notification_services.count).to eq(1)
+        expect(subject.configuration.notification_services).to match_array([notification_service])
       end
 
       it "sets the configuration's destinations correctly" do
-        subject.configuration.destinations.count.should == 1
-        subject.configuration.destinations.should =~ [destination]
+        expect(subject.configuration.destinations.count).to eq(1)
+        expect(subject.configuration.destinations).to match_array([destination])
       end
     end
 
@@ -75,13 +75,13 @@ describe DispatchRider::Publisher::ConfigurationSupport do
       end
 
       it "sets the configuration's notification services correctly" do
-        subject.configuration.notification_services.count.should == 1
-        subject.configuration.notification_services.should =~ [notification_service]
+        expect(subject.configuration.notification_services.count).to eq(1)
+        expect(subject.configuration.notification_services).to match_array([notification_service])
       end
 
       it "sets the configuration's destinations correctly" do
-        subject.configuration.destinations.count.should == 1
-        subject.configuration.destinations.should =~ [destination]
+        expect(subject.configuration.destinations.count).to eq(1)
+        expect(subject.configuration.destinations).to match_array([destination])
       end
     end
   end

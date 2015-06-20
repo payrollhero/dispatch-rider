@@ -6,15 +6,15 @@ describe DispatchRider::Publisher do
 
   describe "#initialize" do
     it "assigns the notification service registrar" do
-      subject.notification_service_registrar.store.should be_empty
+      expect(subject.notification_service_registrar.store).to be_empty
     end
 
     it "assigns a publishing destination registrar" do
-      subject.publishing_destination_registrar.store.should be_empty
+      expect(subject.publishing_destination_registrar.store).to be_empty
     end
 
     it "assigns a service channel mapper" do
-      subject.service_channel_mapper.destination_registrar.store.should be_empty
+      expect(subject.service_channel_mapper.destination_registrar.store).to be_empty
     end
 
     # this case is broken because its playing chicken and the egg with the expectation
@@ -45,12 +45,12 @@ describe DispatchRider::Publisher do
     it "registers a notification service" do
       subject.register_notification_service(:aws_sns)
       result = subject.notification_service_registrar.fetch(:aws_sns)
-      result.notifier.should respond_to(:topics)
-      result.channel_registrar.store.should be_empty
+      expect(result.notifier).to respond_to(:topics)
+      expect(result.channel_registrar.store).to be_empty
     end
 
     it "returns the publisher" do
-      subject.register_notification_service(:aws_sns).should eq(subject)
+      expect(subject.register_notification_service(:aws_sns)).to eq(subject)
     end
   end
 
@@ -63,11 +63,11 @@ describe DispatchRider::Publisher do
 
     it "registers a channel for the notification service" do
       subject.register_channel(:aws_sns, :foo, account: 123, region: "us-east-1", topic: "PlanOfAttack")
-      notification_service.channel_registrar.fetch(:foo).should eq('arn:aws:sns:us-east-1:123:PlanOfAttack')
+      expect(notification_service.channel_registrar.fetch(:foo)).to eq('arn:aws:sns:us-east-1:123:PlanOfAttack')
     end
 
     it "returns the publisher" do
-      subject.register_channel(:aws_sns, :foo).should eq(subject)
+      expect(subject.register_channel(:aws_sns, :foo)).to eq(subject)
     end
   end
 
@@ -79,12 +79,19 @@ describe DispatchRider::Publisher do
     it "registers the destination to be published to" do
       subject.register_destination(:sns_foo, :aws_sns, :foo, account: 123, region: "us-east-1", topic: "PlanOfAttack")
       result = subject.publishing_destination_registrar.fetch(:sns_foo)
-      result.service.should eq(:aws_sns)
-      result.channel.should eq(:foo)
+      expect(result.service).to eq(:aws_sns)
+      expect(result.channel).to eq(:foo)
     end
 
     it "returns the publisher" do
-      subject.register_destination(:sns_foo, :aws_sns, :foo, account: 123, region: "us-east-1", topic: "PlanOfAttack").should eq(subject)
+      result = subject.register_destination(:sns_foo,
+                                            :aws_sns,
+                                            :foo,
+                                            account: 123,
+                                            region: "us-east-1",
+                                            topic: "PlanOfAttack"
+      )
+      expect(result).to eq(subject)
     end
   end
 
@@ -110,7 +117,7 @@ describe DispatchRider::Publisher do
     it "publishes the message to the notification service" do
       existing = Dir['tmp/test_queue/*']
       expect {
-        subject.publish(:destinations => [:fs_foo], :message => {:subject => "bar_handler", :body => {"bar" => "baz"}})
+        subject.publish(:destinations => [:fs_foo], message: { subject: "bar_handler", body: { "bar" => "baz" } })
       }.to change { Dir['tmp/test_queue/*'].length }.by(1)
       new_job = Dir['tmp/test_queue/*'] - existing
       data = JSON.load(File.read(new_job.first))
@@ -142,9 +149,9 @@ describe DispatchRider::Publisher do
         after { DispatchRider.config.callbacks.for(:publish).delete publish_callback }
 
         example do
-          publish_callback.should_receive(:call).with any_args, # first argument is the inner job
-                                                      destinations: [:fs_foo],
-                                                      message: expected_message
+          expect(publish_callback).to receive(:call).with any_args, # first argument is the inner job
+                                                          destinations: [:fs_foo],
+                                                          message: expected_message
 
           publisher.publish destinations: [:fs_foo],
                             message: {

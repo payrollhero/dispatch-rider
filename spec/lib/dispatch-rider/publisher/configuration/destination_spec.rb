@@ -1,8 +1,6 @@
 require 'spec_helper'
-require 'rspec/its'
 
 describe DispatchRider::Publisher::Configuration::Destination do
-
   let(:attributes) do
     {
       "service" => "aws_sns",
@@ -19,43 +17,55 @@ describe DispatchRider::Publisher::Configuration::Destination do
     }
   end
 
-  subject{ described_class.new("employee", attributes) }
+  subject { described_class.new("employee", attributes) }
 
   describe "#name" do
-    its(:name) { is_expected.to eq("employee") }
+    describe '#name' do
+      subject { super().name }
+      it { is_expected.to eq("employee") }
+    end
   end
 
   describe "#service" do
-    its(:service) { is_expected.to eq("aws_sns") }
+    describe '#service' do
+      subject { super().service }
+      it { is_expected.to eq("aws_sns") }
+    end
   end
 
   describe "#channel" do
-    its(:channel) { is_expected.to eq("employee_updates") }
+    describe '#channel' do
+      subject { super().channel }
+      it { is_expected.to eq("employee_updates") }
+    end
   end
 
   describe "#options" do
-    its(:options) { is_expected.to eq(options) }
+    describe '#options' do
+      subject { super().options }
+      it { is_expected.to eq(options) }
+    end
   end
 
   describe "#==" do
-    let(:other){ described_class.new(name, other_attributes) }
+    let(:other) { described_class.new(name, other_attributes) }
 
     context "when the destinations' name, service, channel and options are the same" do
-      let(:name){ subject.name }
-      let(:other_attributes){ attributes }
+      let(:name) { subject.name }
+      let(:other_attributes) { attributes }
 
-      it{ should eq other }
+      it { is_expected.to eq other }
     end
 
     context "when the destinations' name is different" do
-      let(:name){ "account" }
-      let(:other_attributes){ attributes }
+      let(:name) { "account" }
+      let(:other_attributes) { attributes }
 
-      it{ should_not eq other }
+      it { is_expected.not_to eq other }
     end
 
     context "when the destinations' service is different" do
-      let(:name){ subject.name }
+      let(:name) { subject.name }
 
       let(:other_attributes) do
         {
@@ -65,11 +75,11 @@ describe DispatchRider::Publisher::Configuration::Destination do
         }
       end
 
-      it{ should_not eq other }
+      it { is_expected.not_to eq other }
     end
 
     context "when the destinations' channel is different" do
-      let(:name){ subject.name }
+      let(:name) { subject.name }
 
       let(:other_attributes) do
         {
@@ -79,11 +89,11 @@ describe DispatchRider::Publisher::Configuration::Destination do
         }
       end
 
-      it{ should_not eq other }
+      it { is_expected.not_to eq other }
     end
 
     context "when the destinations' options are different" do
-      let(:name){ subject.name }
+      let(:name) { subject.name }
 
       let(:other_attributes) do
         {
@@ -93,8 +103,7 @@ describe DispatchRider::Publisher::Configuration::Destination do
         }
       end
 
-      it{ should_not eq other }
+      it { is_expected.not_to eq other }
     end
   end
-
 end

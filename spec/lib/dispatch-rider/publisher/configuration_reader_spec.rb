@@ -11,7 +11,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
     subject { described_class }
 
     it "responds to :load_config" do
-      subject.should respond_to :load_config
+      expect(subject).to respond_to :load_config
     end
 
     it "requires 2 paramaters" do
@@ -28,7 +28,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
 
     describe "notification_services parsing" do
 
-      let(:configuration){ DispatchRider::Publisher::Configuration.new(configuration_hash) }
+      let(:configuration) { DispatchRider::Publisher::Configuration.new(configuration_hash) }
 
       context "when notification_services has no items in it" do
 
@@ -40,7 +40,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
         end
 
         it "doesn't call register_notification_service" do
-          publisher.should_not_receive(:register_notification_service)
+          expect(publisher).not_to receive(:register_notification_service)
           subject.load_config(configuration, publisher)
         end
       end
@@ -55,7 +55,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
         end
 
         it "calls register_notification_service with :file_system and {}" do
-          publisher.should_receive(:register_notification_service).with("file_system", {})
+          expect(publisher).to receive(:register_notification_service).with("file_system", {})
           subject.load_config(configuration, publisher)
         end
       end
@@ -71,8 +71,8 @@ describe DispatchRider::Publisher::ConfigurationReader do
         end
 
         it "calls register_notification_service with :file_system and {}, as well as :foo, {bar: '123'}" do
-          publisher.should_receive(:register_notification_service).with("file_system", {})
-          publisher.should_receive(:register_notification_service).with("foo", {"bar" => "123"})
+          expect(publisher).to receive(:register_notification_service).with("file_system", {})
+          expect(publisher).to receive(:register_notification_service).with("foo", "bar" => "123")
           subject.load_config(configuration, publisher)
         end
       end
@@ -81,7 +81,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
 
     describe "destinations" do
 
-      let(:configuration){ DispatchRider::Publisher::Configuration.new(configuration_hash) }
+      let(:configuration) { DispatchRider::Publisher::Configuration.new(configuration_hash) }
 
       context "when destinations has no items in it" do
 
@@ -93,7 +93,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
         end
 
         it "doesn't call register_destination" do
-          publisher.should_not_receive(:register_destination)
+          expect(publisher).not_to receive(:register_destination)
           subject.load_config(configuration, publisher)
         end
 
@@ -104,7 +104,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
         let :configuration_hash do
           {
             destinations: {
-              out1:{
+              out1: {
                 service: :file_system,
                 channel: :foo,
                 options: {
@@ -116,7 +116,8 @@ describe DispatchRider::Publisher::ConfigurationReader do
         end
 
         it "should call register_destination with the right parameters" do
-          publisher.should_receive(:register_destination).exactly(1).times.with("out1", :file_system, :foo, "path" => "tmp/test/channel")
+          params = ["out1", :file_system, :foo, "path" => "tmp/test/channel"]
+          expect(publisher).to receive(:register_destination).exactly(1).times.with(*params)
           subject.load_config(configuration, publisher)
         end
 

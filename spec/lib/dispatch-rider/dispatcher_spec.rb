@@ -8,21 +8,21 @@ describe DispatchRider::Dispatcher, :nodb => true do
   end
 
   class HandlerThatReturnsFalse < DispatchRider::Handlers::Base
-    def process(params)
+    def process(_params)
       false
     end
   end
 
   describe "#dispatch" do
-    let(:message){ DispatchRider::Message.new(:subject => "handle_something", :body => { :do_throw_something => true }) }
+    let(:message) { DispatchRider::Message.new(subject: "handle_something", body: { do_throw_something: true }) }
 
     describe "callbacks" do
       let(:dummy) { double(:dummy) }
       let(:storage) { DispatchRider::Callbacks::Storage.new }
-      let(:message){ DispatchRider::Message.new(:subject => "handle_something", :body => { :do_throw_something => true }) }
+      let(:message) { DispatchRider::Message.new(subject: "handle_something", body: { do_throw_something: true }) }
 
       before do
-        DispatchRider.config.stub(:callbacks) { storage }
+        allow(DispatchRider.config).to receive(:callbacks) { storage }
         storage.around(:dispatch_message) do |block, message|
           begin
             dummy.before
@@ -35,9 +35,9 @@ describe DispatchRider::Dispatcher, :nodb => true do
         subject.register('handle_something')
       end
       example do
-        dummy.should_receive(:before).once
-        dummy.should_receive(:after).once
-        dummy.should_receive(:log).with(message).once
+        expect(dummy).to receive(:before).once
+        expect(dummy).to receive(:after).once
+        expect(dummy).to receive(:log).with(message).once
         catch(:something) do
           subject.dispatch(message)
         end
@@ -55,7 +55,9 @@ describe DispatchRider::Dispatcher, :nodb => true do
     end
 
     context "when the handler returns false" do
-      let(:message){ DispatchRider::Message.new(:subject => "handler_that_returns_false", :body => { :do_throw_something => true }) }
+      let(:message) do
+        DispatchRider::Message.new(subject: "handler_that_returns_false", body: { do_throw_something: true })
+      end
 
       before :each do
         subject.register('handler_that_returns_false')

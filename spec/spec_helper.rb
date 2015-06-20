@@ -6,6 +6,7 @@ require 'rake'
 require 'tempfile'
 
 RSpec.configure do |config|
+  config.raise_errors_for_deprecations!
   config.mock_with :rspec
   config.order = 'random'
   config.color = true
@@ -16,6 +17,7 @@ RSpec.configure do |config|
 end
 
 # Airbrake dummy module
-module Airbrake; end
+module Airbrake
+end
 
 require 'dispatch-rider'

@@ -10,7 +10,7 @@ describe DispatchRider::Registrars::Handler do
 
   describe "#value" do
     it "returns the value for the key/value pair while registering a handler" do
-      subject.value(:custom_test_handler).should eq(CustomTestHandler)
+      expect(subject.value(:custom_test_handler)).to eq(CustomTestHandler)
     end
   end
 end

@@ -4,13 +4,13 @@ describe DispatchRider do
 
   describe ".configuration" do
     example do
-      described_class.configuration.should be_a(DispatchRider::Configuration)
+      expect(described_class.configuration).to be_a(DispatchRider::Configuration)
     end
   end
 
   describe ".config" do
     example do
-      described_class.config.should be_a(DispatchRider::Configuration)
+      expect(described_class.config).to be_a(DispatchRider::Configuration)
     end
   end
 
@@ -20,7 +20,7 @@ describe DispatchRider do
         config.queue_kind = :test_queue
       end
 
-      described_class.config.queue_kind.should == :test_queue
+      expect(described_class.config.queue_kind).to eq(:test_queue)
     end
   end
 
