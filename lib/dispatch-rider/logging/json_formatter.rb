@@ -1,8 +1,12 @@
 require 'json'
 
+# JSON Log Formatter
 module DispatchRider
   module Logging
     class JsonFormatter < BaseFormatter
+      # @param [DispatchRider::QueueServices::ReceivedMessage] message
+      # @param [Exception] exception
+      # @return [String] JSON representation of the log item
       def format_error_handler_fail(message, exception)
         as_json do
           {
@@ -11,6 +15,9 @@ module DispatchRider
         end
       end
 
+      # @param [DispatchRider::QueueServices::ReceivedMessage] message
+      # @param [String] reason
+      # @return [String] JSON representation of the log item
       def format_got_stop(message, reason)
         as_json do
           {
@@ -20,6 +27,11 @@ module DispatchRider
         end
       end
 
+      # @param [Symbol] kind of log action. one of: :start, :success, :fail, :complete
+      # @param [DispatchRider::QueueServices::ReceivedMessage] message
+      # @param [Exception] exception
+      # @param [Float] Job execution duration
+      # @return [String] JSON representation of the log item
       def format_handling(kind, message, exception: nil, duration: nil)
         as_json do
           case kind
