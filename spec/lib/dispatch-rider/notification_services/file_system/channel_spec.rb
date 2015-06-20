@@ -22,7 +22,7 @@ describe DispatchRider::NotificationServices::FileSystem::Channel do
     it "writes the message to the file" do
       subject.publish(message)
 
-      published_message.should == message
+      expect(published_message).to eq(message)
     end
   end
 end

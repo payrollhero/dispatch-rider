@@ -5,13 +5,13 @@ describe DispatchRider::NotificationServices::AwsSns do
 
   describe "#notifier_builder" do
     it "returns the notifier builder" do
-      subject.notifier_builder.should eq(AWS::SNS)
+      expect(subject.notifier_builder).to eq(AWS::SNS)
     end
   end
 
   describe "#channel_registrar_builder" do
     it "returns the channel registrar builder" do
-      subject.channel_registrar_builder.should eq(DispatchRider::Registrars::SnsChannel)
+      expect(subject.channel_registrar_builder).to eq(DispatchRider::Registrars::SnsChannel)
     end
   end
 
@@ -33,13 +33,13 @@ describe DispatchRider::NotificationServices::AwsSns do
   end
 
   describe "#channel" do
-    before { subject.stub(:channel_registrar).and_return(foo: amazon_resource_name) }
+    before { allow(subject).to receive(:channel_registrar).and_return(foo: amazon_resource_name) }
 
     let(:topics){ double :sns_topics }
     let(:topic){ double :sns_topic }
 
     it "returns the channel" do
-      subject.channel(:foo).arn.should == amazon_resource_name
+      expect(subject.channel(:foo).arn).to eq(amazon_resource_name)
     end
   end
 end

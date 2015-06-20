@@ -8,7 +8,7 @@ describe DispatchRider::Registrars::SnsChannel do
     let(:channel_options){ {account: account, region: region, topic: topic_name} }
 
     it "returns the value for the key/value pair while registering an amazon sns channel" do
-      subject.value(:foo, channel_options).should eq("arn:aws:sns:us-west-2:123456789012:GeneralTopic")
+      expect(subject.value(:foo, channel_options)).to eq("arn:aws:sns:us-west-2:123456789012:GeneralTopic")
     end
   end
 end

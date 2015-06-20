@@ -25,7 +25,7 @@ describe DispatchRider::Registrars::Base do
 
     context "when there is a missing constant while registering" do
       it "raises an exception" do
-        subject.should_receive(:value).with(:foo, {}) { 'bar'.camelize.constantize }
+        expect(subject).to receive(:value).with(:foo, {}) { 'bar'.camelize.constantize }
         expect { subject.register(:foo) }.to raise_exception(DispatchRider::NotFound)
       end
     end
@@ -33,7 +33,7 @@ describe DispatchRider::Registrars::Base do
 
   describe "#unregister" do
     before :each do
-      subject.stub(:value).and_return('bar')
+      allow(subject).to receive(:value).and_return('bar')
       subject.register(:foo)
     end
 
@@ -43,19 +43,19 @@ describe DispatchRider::Registrars::Base do
     end
 
     it "returns the registrar" do
-      subject.unregister(:foo).should eq(subject)
+      expect(subject.unregister(:foo)).to eq(subject)
     end
   end
 
   describe "#fetch" do
     context "when a key/value pair is registered" do
       before :each do
-        subject.stub(:value).and_return('bar')
+        allow(subject).to receive(:value).and_return('bar')
         subject.register(:foo)
       end
 
       it "return the value for the key" do
-        subject.fetch(:foo).should eq('bar')
+        expect(subject.fetch(:foo)).to eq('bar')
       end
     end
 

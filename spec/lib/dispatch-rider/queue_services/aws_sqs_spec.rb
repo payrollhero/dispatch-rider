@@ -77,8 +77,8 @@ describe DispatchRider::QueueServices::AwsSqs do
       before :each do
         response = AWS::SQS::Client.new.stub_for(:receive_message)
         response.data[:messages] = [response_message]
-        AWS::SQS::Client::V20121105.any_instance.stub(:receive_message).and_return(response)
-        AWS::SQS::Queue.any_instance.stub(:verify_receive_message_checksum).and_return([])
+        allow_any_instance_of(AWS::SQS::Client::V20121105).to receive(:receive_message).and_return(response)
+        allow_any_instance_of(AWS::SQS::Queue).to receive(:verify_receive_message_checksum).and_return([])
       end
 
       context "when the block runs faster than the timeout" do
@@ -106,7 +106,7 @@ describe DispatchRider::QueueServices::AwsSqs do
 
     context "when the sqs queue is empty" do
       before :each do
-        aws_sqs_queue.queue.stub(:receive_message).and_return(nil)
+        allow(aws_sqs_queue.queue).to receive(:receive_message).and_return(nil)
       end
 
       it "should not yield" do
@@ -137,8 +137,8 @@ describe DispatchRider::QueueServices::AwsSqs do
       before :each do
         response = AWS::SQS::Client.new.stub_for(:receive_message)
         response.data[:messages] = [response_message]
-        AWS::SQS::Client::V20121105.any_instance.stub(:receive_message).and_return(response)
-        AWS::SQS::Queue.any_instance.stub(:verify_receive_message_checksum).and_return([])
+        allow_any_instance_of(AWS::SQS::Client::V20121105).to receive(:receive_message).and_return(response)
+        allow_any_instance_of(AWS::SQS::Queue).to receive(:verify_receive_message_checksum).and_return([])
       end
 
     it "should set the visibility timeout when extend is called" do
@@ -146,9 +146,9 @@ describe DispatchRider::QueueServices::AwsSqs do
       expect_any_instance_of(AWS::SQS::ReceivedMessage).to receive(:visibility_timeout=).with(0)
       aws_sqs_queue.pop do |message|
         message.extend_timeout(10)
-        message.total_timeout.should eq(10)
+        expect(message.total_timeout).to eq(10)
         message.return_to_queue
-        message.total_timeout.should eq(10)
+        expect(message.total_timeout).to eq(10)
       end
     end
   end
@@ -159,8 +159,8 @@ describe DispatchRider::QueueServices::AwsSqs do
 
       it "should return a message" do
         result = aws_sqs_queue.construct_message_from(sqs_message)
-        result.subject.should eq('foo')
-        result.body.should eq('bar')
+        expect(result.subject).to eq('foo')
+        expect(result.body).to eq('bar')
       end
     end
 
@@ -169,8 +169,8 @@ describe DispatchRider::QueueServices::AwsSqs do
 
       it "should return a message" do
         result = aws_sqs_queue.construct_message_from(sqs_message)
-        result.subject.should eq('foo')
-        result.body.should eq('bar')
+        expect(result.subject).to eq('foo')
+        expect(result.body).to eq('bar')
       end
     end
   end
@@ -179,14 +179,14 @@ describe DispatchRider::QueueServices::AwsSqs do
     let(:item_in_queue){ Object.new }
 
     it "should delete the first message from the queue" do
-      item_in_queue.should_receive(:delete)
+      expect(item_in_queue).to receive(:delete)
       aws_sqs_queue.delete(item_in_queue)
     end
   end
 
   describe "#size" do
     it "should return the size of the aws queue" do
-      aws_sqs_queue.queue.should_receive(:approximate_number_of_messages)
+      expect(aws_sqs_queue.queue).to receive(:approximate_number_of_messages)
       aws_sqs_queue.size
     end
   end

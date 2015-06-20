@@ -46,8 +46,8 @@ describe DispatchRider::Publisher::Configuration do
     end
 
     it "contains both notification services" do
-      subject.notification_services.count.should == 2
-      subject.notification_services.should =~ [file_system, sns]
+      expect(subject.notification_services.count).to eq(2)
+      expect(subject.notification_services).to match_array([file_system, sns])
     end
   end
 
@@ -81,8 +81,8 @@ describe DispatchRider::Publisher::Configuration do
     end
 
     it "contains both destinations" do
-      subject.destinations.count.should == 2
-      subject.destinations.should =~ [employee_updates, account_updates]
+      expect(subject.destinations.count).to eq(2)
+      expect(subject.destinations).to match_array([employee_updates, account_updates])
     end
   end
 
@@ -136,13 +136,13 @@ describe DispatchRider::Publisher::Configuration do
     end
 
     it "replaces the current notification services with the new notification service" do
-      subject.notification_services.count.should == 1
-      subject.notification_services.should =~ [notification_service]
+      expect(subject.notification_services.count).to eq(1)
+      expect(subject.notification_services).to match_array([notification_service])
     end
 
     it "replaces the current destinations with the new destination" do
-      subject.destinations.count.should == 1
-      subject.destinations.should =~ [destination]
+      expect(subject.destinations.count).to eq(1)
+      expect(subject.destinations).to match_array([destination])
     end
   end
 

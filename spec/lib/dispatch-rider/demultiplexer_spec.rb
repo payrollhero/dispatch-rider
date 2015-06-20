@@ -34,11 +34,11 @@ describe DispatchRider::Demultiplexer, :nodb => true do
 
   describe "#initialize" do
     it "should assign the queue" do
-      demultiplexer.queue.should be_empty
+      expect(demultiplexer.queue).to be_empty
     end
 
     it "should assign the dispatcher" do
-      demultiplexer.dispatcher.fetch(:test_handler).should eq(TestHandler)
+      expect(demultiplexer.dispatcher.fetch(:test_handler)).to eq(TestHandler)
     end
   end
 
@@ -55,7 +55,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
       end
 
       it "should be sending the message to the dispatcher" do
-        demultiplexer.should_receive(:dispatch_message).with(message).at_least(:once)
+        expect(demultiplexer).to receive(:dispatch_message).with(message).at_least(:once)
         demultiplexer_thread.run
         sleep 0.01 # give it a chance to process the job async before killing the demux
       end
@@ -63,7 +63,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
       # THIS ALSO TESTS THAT THE JOB IS NOT RUN MULTIPLE TIMES
       # IF THIS FAILS, BE CAREFUL NOT TO INTRODUCE BUGS
       it "should call the correct handler" do
-        TestHandler.any_instance.should_receive(:process).with(message.body).at_least(1).times
+        expect_any_instance_of(TestHandler).to receive(:process).with(message.body).at_least(1).times
         demultiplexer_thread.run
         sleep 0.01 # give it a chance to process the job async before killing the demux
       end
@@ -71,7 +71,7 @@ describe DispatchRider::Demultiplexer, :nodb => true do
 
     context "when the queue is empty" do
       it "should not be sending any message to the dispatcher" do
-        demultiplexer.should_receive(:dispatch_message).exactly(0).times
+        expect(demultiplexer).to receive(:dispatch_message).exactly(0).times
         demultiplexer_thread.run
       end
     end
@@ -83,8 +83,8 @@ describe DispatchRider::Demultiplexer, :nodb => true do
       end
 
       it "should call the error handler" do
-        error_handler.should_receive(:call).at_least(:once).and_return(true)
-        queue.should_not_receive(:delete)
+        expect(error_handler).to receive(:call).at_least(:once).and_return(true)
+        expect(queue).not_to receive(:delete)
         demultiplexer_thread.run
         sleep 0.01 # give it a chance to process the job async before killing the demux
       end
@@ -92,11 +92,11 @@ describe DispatchRider::Demultiplexer, :nodb => true do
 
     context "when the queue crashes" do
       before do
-        queue.stub(:pop){ raise "OMG!!!"}
+        allow(queue).to receive(:pop){ raise "OMG!!!"}
       end
 
       it "should call the error handler" do
-        error_handler.should_receive(:call).once
+        expect(error_handler).to receive(:call).once
         demultiplexer_thread.run
 
         sleep 0.01 # give it a chance to process the job async before killing the demux
@@ -107,10 +107,10 @@ describe DispatchRider::Demultiplexer, :nodb => true do
   describe ".stop" do
     it "should stop the demultiplexer" do
       demultiplexer_thread.run
-      demultiplexer_thread.should be_alive # looper should be looping
+      expect(demultiplexer_thread).to be_alive # looper should be looping
       demultiplexer_thread[:demultiplexer].stop
       demultiplexer_thread.join
-      demultiplexer_thread.should_not be_alive # looper should close the loop
+      expect(demultiplexer_thread).not_to be_alive # looper should close the loop
     end
   end
 

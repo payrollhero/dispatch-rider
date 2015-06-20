@@ -6,7 +6,7 @@ describe DispatchRider::NotificationServices::FileSystem::Notifier do
 
   describe "#channel" do
     it "returns a channel object" do
-      subject.channel("tmp/some/path").should be_a(DispatchRider::NotificationServices::FileSystem::Channel)
+      expect(subject.channel("tmp/some/path")).to be_a(DispatchRider::NotificationServices::FileSystem::Channel)
     end
   end
 

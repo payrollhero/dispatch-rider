@@ -12,9 +12,9 @@ describe DispatchRider::NotificationServices::Base do
   end
 
   before :each do
-    DispatchRider::NotificationServices::Base.any_instance.stub(:notifier_builder).and_return(OpenStruct)
-    DispatchRider::NotificationServices::Base.any_instance.stub(:channel_registrar_builder).and_return(DispatchRider::Registrars::SnsChannel)
-    DispatchRider::NotificationServices::Base.any_instance.stub(:channel) do |name|
+    allow_any_instance_of(DispatchRider::NotificationServices::Base).to receive(:notifier_builder).and_return(OpenStruct)
+    allow_any_instance_of(DispatchRider::NotificationServices::Base).to receive(:channel_registrar_builder).and_return(DispatchRider::Registrars::SnsChannel)
+    allow_any_instance_of(DispatchRider::NotificationServices::Base).to receive(:channel) do |name|
       subject.notifier.topics[subject.fetch(name)] if name == :foo
     end
   end
@@ -25,11 +25,11 @@ describe DispatchRider::NotificationServices::Base do
 
   describe "#initialize" do
     it "assigns the notifier" do
-      subject.notifier.should respond_to(:topics)
+      expect(subject.notifier).to respond_to(:topics)
     end
 
     it "assigns the channel registrar" do
-      subject.channel_registrar.store.should be_empty
+      expect(subject.channel_registrar.store).to be_empty
     end
   end
 
@@ -42,7 +42,7 @@ describe DispatchRider::NotificationServices::Base do
     let(:message) { DispatchRider::Message.new(subject: :test_handler, body: { "bar" => "baz" }) }
 
     it "publishes the message to the channels" do
-      catch(:published) { subject.publish to: :foo, message: message }.should eq("baz")
+      expect(catch(:published) { subject.publish to: :foo, message: message }).to eq("baz")
     end
   end
 
@@ -71,7 +71,7 @@ describe DispatchRider::NotificationServices::Base do
     end
 
     it "returns an array of channels" do
-      subject.channels(:foo).should eq([channel])
+      expect(subject.channels(:foo)).to eq([channel])
     end
   end
 end

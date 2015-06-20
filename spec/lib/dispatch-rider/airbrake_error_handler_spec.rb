@@ -7,7 +7,7 @@ describe DispatchRider::AirbrakeErrorHandler do
     let(:exception){ Exception.new("Something went terribly wrong") }
 
     example do
-      Airbrake.should_receive(:notify).with(exception, controller: "DispatchRider", action: "TestMessage", parameters: { subject: "TestMessage", body: "foo" }, cgi_data: anything)
+      expect(Airbrake).to receive(:notify).with(exception, controller: "DispatchRider", action: "TestMessage", parameters: { subject: "TestMessage", body: "foo" }, cgi_data: anything)
 
       described_class.call(message, exception)
     end

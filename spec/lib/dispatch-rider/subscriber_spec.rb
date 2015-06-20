@@ -3,7 +3,7 @@ require "spec_helper"
 describe DispatchRider::Subscriber do
 
   before do
-    DispatchRider::Handlers::Base.stub(:subclasses){ Set.new }
+    allow(DispatchRider::Handlers::Base).to receive(:subclasses){ Set.new }
 
     stub_const("FooBar", Class.new(DispatchRider::Handlers::Base) {
       def process(options)
@@ -14,14 +14,14 @@ describe DispatchRider::Subscriber do
 
   describe "#initialize" do
     it "should assign a new queue service registrar" do
-      subject.queue_service_registrar.store.should be_empty
+      expect(subject.queue_service_registrar.store).to be_empty
     end
   end
 
   describe "#register_queue" do
     it "should register a queue service with the queue service registrar" do
       subject.register_queue(:simple)
-      subject.queue_service_registrar.fetch(:simple).should be_empty
+      expect(subject.queue_service_registrar.fetch(:simple)).to be_empty
     end
   end
 
@@ -48,8 +48,8 @@ describe DispatchRider::Subscriber do
 
       it "should assign a demultiplexer" do
         subject.setup_demultiplexer(:simple)
-        subject.demultiplexer.queue.should be_empty
-        subject.demultiplexer.dispatcher.fetch(:foo_bar).should eq(FooBar)
+        expect(subject.demultiplexer.queue).to be_empty
+        expect(subject.demultiplexer.dispatcher.fetch(:foo_bar)).to eq(FooBar)
       end
     end
   end
@@ -73,7 +73,7 @@ describe DispatchRider::Subscriber do
 
     # kills travis sometimes so leaving it here as tested documentation
     describe "process termination", if: false do
-      before { subject.demultiplexer.stub(:stop){ throw :got_stopped } }
+      before { allow(subject.demultiplexer).to receive(:stop){ throw :got_stopped } }
 
       context "when process quits" do
         before do
@@ -120,8 +120,8 @@ describe DispatchRider::Subscriber do
 
       context "when process is interupted twice" do
         before do
-          subject.demultiplexer.stub(:stop) # do nothing just ignore the interuption
-          subject.stub(:exit){ throw :got_forcefully_stopped }
+          allow(subject.demultiplexer).to receive(:stop) # do nothing just ignore the interuption
+          allow(subject).to receive(:exit){ throw :got_forcefully_stopped }
 
           stub_const("TwiceInterupter", Class.new(DispatchRider::Handlers::Base) {
             def process(options)

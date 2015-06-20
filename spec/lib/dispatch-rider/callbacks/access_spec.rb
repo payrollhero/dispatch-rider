@@ -26,34 +26,34 @@ describe DispatchRider::Callbacks::Access do
     end
 
     example "a bunch of handlers" do
-      callback_a1.should_receive(:call).once.and_call_original
-      callback_a2.should_receive(:call).once.and_call_original
-      callback_a3.should_receive(:call).once.and_call_original
-      callback_b1.should_not_receive(:call)
+      expect(callback_a1).to receive(:call).once.and_call_original
+      expect(callback_a2).to receive(:call).once.and_call_original
+      expect(callback_a3).to receive(:call).once.and_call_original
+      expect(callback_b1).not_to receive(:call)
 
-      action.should_receive(:call).once.and_call_original
+      expect(action).to receive(:call).once.and_call_original
 
       subject.invoke(:event1, &action)
     end
 
     example "single handler" do
-      callback_a1.should_not_receive(:call)
-      callback_a2.should_not_receive(:call)
-      callback_a3.should_not_receive(:call)
-      callback_b1.should_receive(:call).once.and_call_original
+      expect(callback_a1).not_to receive(:call)
+      expect(callback_a2).not_to receive(:call)
+      expect(callback_a3).not_to receive(:call)
+      expect(callback_b1).to receive(:call).once.and_call_original
 
-      action.should_receive(:call).once.and_call_original
+      expect(action).to receive(:call).once.and_call_original
 
       subject.invoke(:event2, &action)
     end
 
     example "no handlers" do
-      callback_a1.should_not_receive(:call)
-      callback_a2.should_not_receive(:call)
-      callback_a3.should_not_receive(:call)
-      callback_b1.should_not_receive(:call)
+      expect(callback_a1).not_to receive(:call)
+      expect(callback_a2).not_to receive(:call)
+      expect(callback_a3).not_to receive(:call)
+      expect(callback_b1).not_to receive(:call)
 
-      action.should_receive(:call).once.and_call_original
+      expect(action).to receive(:call).once.and_call_original
 
       subject.invoke(:event3, &action)
     end

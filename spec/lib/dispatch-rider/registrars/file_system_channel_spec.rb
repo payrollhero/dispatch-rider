@@ -6,7 +6,7 @@ describe DispatchRider::Registrars::FileSystemChannel do
     let(:channel_options){ {path: path} }
 
     it "returns the expanded path from the options" do
-      subject.value(:foo, channel_options).should eq("/foo/bar")
+      expect(subject.value(:foo, channel_options)).to eq("/foo/bar")
     end
   end
 end

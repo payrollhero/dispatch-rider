@@ -22,7 +22,7 @@ describe DispatchRider::Dispatcher, :nodb => true do
       let(:message){ DispatchRider::Message.new(:subject => "handle_something", :body => { :do_throw_something => true }) }
 
       before do
-        DispatchRider.config.stub(:callbacks) { storage }
+        allow(DispatchRider.config).to receive(:callbacks) { storage }
         storage.around(:dispatch_message) do |block, message|
           begin
             dummy.before
@@ -35,9 +35,9 @@ describe DispatchRider::Dispatcher, :nodb => true do
         subject.register('handle_something')
       end
       example do
-        dummy.should_receive(:before).once
-        dummy.should_receive(:after).once
-        dummy.should_receive(:log).with(message).once
+        expect(dummy).to receive(:before).once
+        expect(dummy).to receive(:after).once
+        expect(dummy).to receive(:log).with(message).once
         catch(:something) do
           subject.dispatch(message)
         end

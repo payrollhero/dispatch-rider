@@ -49,7 +49,7 @@ describe DispatchRider::Handlers::Base do
       end
 
       example do
-        handler.do_process(message).should == "good job"
+        expect(handler.do_process(message)).to eq("good job")
       end
     end
     
@@ -57,7 +57,7 @@ describe DispatchRider::Handlers::Base do
       let(:handler) { ProcessWithImmediateRetry.new }
       
       example do
-        message.should_receive(:return_to_queue)
+        expect(message).to receive(:return_to_queue)
         
         expect {
           handler.do_process(message)
@@ -69,7 +69,7 @@ describe DispatchRider::Handlers::Base do
       let(:handler) { ProcessWithTenSecondRetry.new }
       
       example do
-        message.should_receive(:extend_timeout).with(10*60)
+        expect(message).to receive(:extend_timeout).with(10*60)
         
         expect {
           handler.do_process(message)
