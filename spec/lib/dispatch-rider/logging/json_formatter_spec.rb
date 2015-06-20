@@ -1,19 +1,12 @@
 require 'spec_helper'
 
 describe DispatchRider::Logging::JsonFormatter do
-  let(:fs_message) { DispatchRider::Message.new(subject: 'test', body: { key: 'value' }) }
+  let(:fs_message) { DispatchRider::Message.new(subject: 'test', body: { 'key' => 'value', 'guid' => 123 }) }
   let(:item) { nil }
   let(:queue) { nil }
   let(:message) { DispatchRider::QueueServices::FileSystem::FsReceivedMessage.new(fs_message, item, queue) }
-  let(:guid) { 123 }
-  let(:object_id) { 456 }
   let(:exception) { StandardError.new }
   let(:reason) { "Stop reason" }
-
-  before do
-    allow(message).to receive(:guid).and_return(guid)
-    allow(message).to receive(:object_id).and_return(object_id)
-  end
 
   let(:result_object) do
     {
