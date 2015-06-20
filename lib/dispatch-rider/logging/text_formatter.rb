@@ -30,7 +30,7 @@ module DispatchRider
       end
 
       def exception_info_fragment(message, exception)
-        "(#{message.object_id}): #{message.subject} with #{exception.class}: #{exception.message}"
+        "(#{message.guid}): #{message.subject} with #{exception.class}: #{exception.message}"
       end
     end
   end

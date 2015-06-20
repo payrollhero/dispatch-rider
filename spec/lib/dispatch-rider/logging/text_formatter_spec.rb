@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 describe DispatchRider::Logging::TextFormatter do
-  let(:message) { DispatchRider::Message.new(subject: 'test', body: 'test_handler') }
+  let(:fs_message) { DispatchRider::Message.new(subject: 'test', body: { key: 'value' }) }
+  let(:item) { nil }
+  let(:queue) { nil }
+  let(:message) { DispatchRider::QueueServices::FileSystem::FsReceivedMessage.new(fs_message, item, queue) }
+
   let(:string_to_log) { "string to log" }
   let(:exception) { StandardError.new }
   let(:reason) { "Stop reason" }

@@ -38,25 +38,12 @@ module DispatchRider
       private
 
       def as_json
-        hash = yield
-        stringify_values!(hash)
-        JSON.generate hash
-      end
-
-      def stringify_values!(hash)
-        hash.each do |key, value|
-          if hash[key].is_a? Hash
-            stringify_values!(hash[key])
-          else
-            hash[key] = value.to_s
-          end
-        end
+        JSON.generate yield
       end
 
       def message_info_fragment(message)
         {
           guid: message.guid.to_s,
-          object_id: message.object_id.to_s,
           subject: message.subject,
           body: message_info_arguments(message),
         }
