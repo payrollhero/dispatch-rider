@@ -1,5 +1,37 @@
 # Change Log
 
+## [v1.6.0](https://github.com/payrollhero/dispatch-rider/tree/v1.6.0) (2015-06-20)
+
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.5.3...v1.6.0)
+
+**Closed issues:**
+
+- ActiveJob Support [\#50](https://github.com/payrollhero/dispatch-rider/issues/50)
+
+**Merged pull requests:**
+
+- Adding "long polling" to filesystem queue driver [\#64](https://github.com/payrollhero/dispatch-rider/pull/64) ([piotrb](https://github.com/piotrb))
+
+- Rspec upgrade [\#63](https://github.com/payrollhero/dispatch-rider/pull/63) ([piotrb](https://github.com/piotrb))
+
+- Add JSON log formatter [\#62](https://github.com/payrollhero/dispatch-rider/pull/62) ([mykola-kyryk](https://github.com/mykola-kyryk))
+
+- Extract logging from Demultiplexer into a separate module. Add log fo… [\#61](https://github.com/payrollhero/dispatch-rider/pull/61) ([mykola-kyryk](https://github.com/mykola-kyryk))
+
+## [v1.5.3](https://github.com/payrollhero/dispatch-rider/tree/v1.5.3) (2015-05-21)
+
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.4.2...v1.5.3)
+
+**Merged pull requests:**
+
+- Allow setting of message guid [\#59](https://github.com/payrollhero/dispatch-rider/pull/59) ([more-ron](https://github.com/more-ron))
+
+- Make the overriden function "publish to channel" be the only thing overriden [\#58](https://github.com/payrollhero/dispatch-rider/pull/58) ([more-ron](https://github.com/more-ron))
+
+- Add publishing callbacks [\#57](https://github.com/payrollhero/dispatch-rider/pull/57) ([more-ron](https://github.com/more-ron))
+
+- Updating rspec and some of the depracations [\#56](https://github.com/payrollhero/dispatch-rider/pull/56) ([piotrb](https://github.com/piotrb))
+
 ## [v1.4.2](https://github.com/payrollhero/dispatch-rider/tree/v1.4.2) (2015-04-10)
 
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.4.1...v1.4.2)
@@ -266,8 +298,6 @@
 
 - Added process naming to dispatcher. [\#23](https://github.com/payrollhero/dispatch-rider/pull/23) ([link664](https://github.com/link664))
 
-- Fail job after running error handler. [\#27](https://github.com/payrollhero/dispatch-rider/pull/27) ([link664](https://github.com/link664))
-
 ## [v0.0.5](https://github.com/payrollhero/dispatch-rider/tree/v0.0.5) (2013-08-20)
 
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/2013-06-06-13-08-PST...v0.0.5)
@@ -313,10 +343,6 @@
 - Make configuration hash indifferent [\#17](https://github.com/payrollhero/dispatch-rider/pull/17) ([more-ron](https://github.com/more-ron))
 
 - Fix double serialize on file system bug [\#15](https://github.com/payrollhero/dispatch-rider/pull/15) ([more-ron](https://github.com/more-ron))
-
-- Add publisher configure method [\#16](https://github.com/payrollhero/dispatch-rider/pull/16) ([more-ron](https://github.com/more-ron))
-
--  Initial implementation of hash based configuration to satisfy issue \#10 [\#11](https://github.com/payrollhero/dispatch-rider/pull/11) ([jimbomt](https://github.com/jimbomt))
 
 ## [2013-05-28-15-13+08-00](https://github.com/payrollhero/dispatch-rider/tree/2013-05-28-15-13+08-00) (2013-05-28)
 
