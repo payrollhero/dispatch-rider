@@ -15,13 +15,13 @@ module DispatchRider
         end
 
         def pop
-          file_path = file_paths.first
+          file_path = next_item(10)
           return nil unless file_path
           file_path_inflight = file_path.gsub(/\.ready$/, '.inflight')
           FileUtils.mv(file_path, file_path_inflight)
           File.new(file_path_inflight)
         end
-        
+
         def put_back(item)
           add(item)
           remove(item)
@@ -37,6 +37,17 @@ module DispatchRider
         end
 
         private
+
+        # Long polling next item fetcher
+        # allows to sleep between checks for a new file and not run the main loop as much
+        def next_item(timeout = 10.seconds)
+          Timeout.timeout(timeout) do
+            sleep 1 until file_paths.first
+            file_paths.first
+          end
+        rescue Timeout::Error
+          nil
+        end
 
         def file_paths
           Dir["#{@path}/*.ready"]
