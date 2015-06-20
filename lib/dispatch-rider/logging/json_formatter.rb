@@ -31,7 +31,7 @@ module DispatchRider
             exception_info_fragment(message, exception)
           when :complete
             { duration: format_duration(duration) }.merge message_info_fragment(message)
-          end.merge({ phase: kind })
+          end.merge(phase: kind)
         end
       end
 
