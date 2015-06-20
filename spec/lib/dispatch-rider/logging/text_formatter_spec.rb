@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe DispatchRider::Logging::TextFormatter do
   let(:fs_message) { DispatchRider::Message.new(subject: 'test', body: { 'key' => 'value', 'guid' => 123 }) }
-  let(:item) { nil }
-  let(:queue) { nil }
+  let(:item) { double }
+  let(:queue) { double }
   let(:message) { DispatchRider::QueueServices::FileSystem::FsReceivedMessage.new(fs_message, item, queue) }
 
   let(:string_to_log) { "string to log" }
