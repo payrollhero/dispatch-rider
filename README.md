@@ -212,6 +212,12 @@ DispatchRider.config do |config|
   end
 
   config.logger = Rails.logger
+  # Log Formatter
+  # Text Formatter (default)
+  # config.log_formatter = DispatchRider::Logging::TextFormatter.new
+  # JSON Formatter
+  # config.log_formatter = DispatchRider::Logging::JsonFormatter.new
+
   config.default_retry_timeout = 300
 
   config.error_handler = DispatchRider::DefaultErrorHandler # an object that responds to .call(message, exception)
@@ -226,7 +232,7 @@ end
 Options:
 
  * `logger` : what logger to use to send messages to (responds to the standard ruby Logger protocol), defaults to a new Logger sending messages to STDERR
-
+ * `log_formatter` : what log formatter to use with logger, defaults to DispatchRider::Logging::TextFormatter.new
 
 ### Callbacks
 
