@@ -14,7 +14,7 @@ module DispatchRider
       @logger = Logger.new(STDERR)
       @debug = false
 
-      @callbacks.around(:handle_message) do |job, message|
+      @callbacks.around(:dispatch_message) do |job, message|
         Logging::LifecycleLogger.wrap_handling(message) do
           job.call
         end
