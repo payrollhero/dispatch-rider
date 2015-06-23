@@ -20,6 +20,8 @@ RSpec.configure do |config|
     mocks.yield_receiver_to_any_instance_implementation_blocks = false
   end
 
+  config.include IntegrationSupport
+
   config.before do
     DispatchRider.config.logger = NullLogger.new
   end
