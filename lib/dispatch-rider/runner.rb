@@ -16,7 +16,7 @@ module DispatchRider
 
     def process
       callbacks.invoke(:process) do
-        puts "Running..."
+        logger.info "Running..."
         @subscriber.process
       end
     end
