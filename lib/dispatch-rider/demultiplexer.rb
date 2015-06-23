@@ -55,11 +55,15 @@ module DispatchRider
 
     def do_loop
       catch(:done) do
-        loop do
+        while keep_going?
           throw :done unless @continue
           yield
         end
       end
+    end
+
+    def keep_going?
+      true
     end
 
     def handle_next_queue_item
