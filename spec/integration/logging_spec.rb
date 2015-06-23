@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "Logging" do
-
   let(:publisher) { setup_publisher }
   let(:subscriber) { setup_subscriber }
 
@@ -125,5 +124,4 @@ describe "Logging" do
       expect(payload).to eq(expected3)
     end
   end
-
 end

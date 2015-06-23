@@ -19,7 +19,7 @@ module IntegrationSupport
   end
 
   def work_off_jobs(subscriber, fail_on_error: true)
-    subscriber.setup_demultiplexer(:file_system, ->(message, error) { raise error if fail_on_error })
+    subscriber.setup_demultiplexer(:file_system, ->(_message, error) { raise error if fail_on_error })
 
     class << subscriber.demultiplexer
       def keep_going?

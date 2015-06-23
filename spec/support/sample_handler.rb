@@ -1,5 +1,5 @@
 class SampleHandler < DispatchRider::Handlers::Base
-  def process(params)
-    #p params
+  def process(_params)
+    # do nothing
   end
 end
