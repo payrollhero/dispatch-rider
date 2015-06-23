@@ -11,6 +11,10 @@ describe DispatchRider::Runner do
       end
     end
 
+    after do
+      DispatchRider.clear_configuration!
+    end
+
     example do
       expect(subscriber).to receive(:new).once.and_return(subscriber)
       expect(subscriber).to receive(:register_queue).once

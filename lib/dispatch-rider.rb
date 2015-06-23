@@ -20,6 +20,10 @@ module DispatchRider
       @configuration ||= Configuration.new
     end
     alias_method :config, :configuration
+
+    def clear_configuration!
+      @configuration = nil
+    end
   end
 end
 

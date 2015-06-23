@@ -59,7 +59,6 @@ describe DispatchRider::Demultiplexer, nodb: true do
         demultiplexer_thread.run
         sleep 0.01 # give it a chance to process the job async before killing the demux
       end
-
       # THIS ALSO TESTS THAT THE JOB IS NOT RUN MULTIPLE TIMES
       # IF THIS FAILS, BE CAREFUL NOT TO INTRODUCE BUGS
       it "should call the correct handler" do

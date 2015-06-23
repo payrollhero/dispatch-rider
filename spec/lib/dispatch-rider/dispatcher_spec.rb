@@ -14,12 +14,18 @@ describe DispatchRider::Dispatcher, :nodb => true do
   end
 
   describe "#dispatch" do
-    let(:message) { DispatchRider::Message.new(subject: "handle_something", body: { do_throw_something: true }) }
+    let(:message_subject) { "handle_something" }
+    let(:message_body) { { do_throw_something: true } }
+    let(:fs_message) do
+      DispatchRider::Message.new(subject: message_subject, body: message_body.merge('guid' => 123))
+    end
+    let(:item) { double :item }
+    let(:queue) { double :queue }
+    let(:message) { DispatchRider::QueueServices::FileSystem::FsReceivedMessage.new(fs_message, item, queue) }
 
     describe "callbacks" do
       let(:dummy) { double(:dummy) }
       let(:storage) { DispatchRider::Callbacks::Storage.new }
-      let(:message) { DispatchRider::Message.new(subject: "handle_something", body: { do_throw_something: true }) }
 
       before do
         allow(DispatchRider.config).to receive(:callbacks) { storage }
@@ -55,9 +61,7 @@ describe DispatchRider::Dispatcher, :nodb => true do
     end
 
     context "when the handler returns false" do
-      let(:message) do
-        DispatchRider::Message.new(subject: "handler_that_returns_false", body: { do_throw_something: true })
-      end
+      let(:message_subject) { "handler_that_returns_false" }
 
       before :each do
         subject.register('handler_that_returns_false')

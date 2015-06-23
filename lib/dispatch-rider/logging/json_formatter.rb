@@ -34,20 +34,26 @@ module DispatchRider
       # @return [String] JSON representation of the log item
       def format_handling(kind, message, exception: nil, duration: nil)
         as_json do
-          case kind
-          when :start
-            message_info_fragment(message)
-          when :success
-            message_info_fragment(message)
-          when :fail
-            exception_info_fragment(message, exception)
-          when :complete
-            { duration: format_duration(duration) }.merge message_info_fragment(message)
-          end.merge(phase: kind)
+          fragment = case kind
+                     when :start
+                       message_info_fragment(message)
+                     when :success
+                       message_info_fragment(message)
+                     when :fail
+                       exception_info_fragment(message, exception)
+                     when :complete
+                       duration_fragment = { duration: format_duration(duration) }
+                       message_info_fragment(message).merge duration_fragment
+                     end
+          { phase: kind }.merge fragment
         end
       end
 
       private
+
+      def format_duration(duration)
+        duration
+      end
 
       def as_json
         JSON.generate yield

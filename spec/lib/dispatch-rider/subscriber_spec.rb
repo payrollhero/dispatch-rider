@@ -1,6 +1,14 @@
 require "spec_helper"
 
 describe DispatchRider::Subscriber do
+  let(:message_subject) { "handle_something" }
+  let(:message_body) { { do_throw_something: true } }
+  let(:fs_message) do
+    DispatchRider::Message.new(subject: message_subject, body: message_body.merge('guid' => 123))
+  end
+  let(:item) { double :item }
+  let(:queue) { double :queue }
+  let(:message) { DispatchRider::QueueServices::FileSystem::FsReceivedMessage.new(fs_message, item, queue) }
 
   before do
     allow(DispatchRider::Handlers::Base).to receive(:subclasses) { Set.new }
@@ -27,20 +35,19 @@ describe DispatchRider::Subscriber do
   end
 
   describe "#register_handler" do
+    let(:message_subject) { :foo_bar }
+    let(:message_body) { { 'foo' => 'bar' } }
+
     it "should register a handler" do
       subject.register_handler(:foo_bar)
       expect {
-        message = DispatchRider::Message.new(subject: :foo_bar, body: { 'foo' => 'bar' })
         subject.dispatcher.dispatch(message)
       }.to throw_symbol(:process_was_called)
     end
-  end
 
-  describe "#register_handlers" do
     it "should register all the handlers" do
       subject.register_handlers(:foo_bar)
       expect {
-        message = DispatchRider::Message.new(subject: :foo_bar, body: { 'foo' => 'bar' })
         subject.dispatcher.dispatch(message)
       }.to throw_symbol(:process_was_called)
     end
@@ -82,8 +89,10 @@ describe DispatchRider::Subscriber do
     # kills travis sometimes so leaving it here as tested documentation
     describe "process termination", if: false do
       before { allow(subject.demultiplexer).to receive(:stop) { throw :got_stopped } }
+      let(:message_body) { { 'foo' => 'bar' } }
 
       context "when process quits" do
+        let(:message_subject) { :quiter }
         before do
           konst = Class.new(DispatchRider::Handlers::Base) do
             def process(_options)
@@ -93,7 +102,6 @@ describe DispatchRider::Subscriber do
           stub_const("Quiter", konst)
 
           subject.register_handler(:quiter)
-          message = DispatchRider::Message.new(subject: :quiter, body: {})
           subject.queue_service_registrar.fetch(:simple).push(message)
         end
 
@@ -101,6 +109,7 @@ describe DispatchRider::Subscriber do
       end
 
       context "when process terminates" do
+        let(:message_subject) { :terminator }
         before do
           konst = Class.new(DispatchRider::Handlers::Base) do
             def process(_options)
@@ -109,7 +118,6 @@ describe DispatchRider::Subscriber do
           end
           stub_const("Terminator", konst)
           subject.register_handler(:terminator)
-          message = DispatchRider::Message.new(subject: :terminator, body: {})
           subject.queue_service_registrar.fetch(:simple).push(message)
         end
 
@@ -117,6 +125,7 @@ describe DispatchRider::Subscriber do
       end
 
       context "when process is interupted" do
+        let(:message_subject) { :interupter }
         before do
           konst = Class.new(DispatchRider::Handlers::Base) do
             def process(_options)
@@ -125,7 +134,6 @@ describe DispatchRider::Subscriber do
           end
           stub_const("Interupter", konst)
           subject.register_handler(:interupter)
-          message = DispatchRider::Message.new(subject: :interupter, body: {})
           subject.queue_service_registrar.fetch(:simple).push(message)
         end
 
@@ -133,6 +141,7 @@ describe DispatchRider::Subscriber do
       end
 
       context "when process is interupted twice" do
+        let(:message_subject) { :twice_interupter }
         before do
           allow(subject.demultiplexer).to receive(:stop) # do nothing just ignore the interuption
           allow(subject).to receive(:exit) { throw :got_forcefully_stopped }
@@ -144,7 +153,6 @@ describe DispatchRider::Subscriber do
           end
           stub_const("TwiceInterupter", konst)
           subject.register_handler(:twice_interupter)
-          message = DispatchRider::Message.new(subject: :twice_interupter, body: {})
           subject.queue_service_registrar.fetch(:simple).push(message)
         end
 

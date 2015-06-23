@@ -11,8 +11,8 @@ module DispatchRider
         end
 
         def wrap_handling(message)
-          log_start(message)
           start_time = Time.now
+          log_start(message)
           yield
           log_success(message)
         rescue => exception
