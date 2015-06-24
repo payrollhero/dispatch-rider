@@ -1,72 +1,62 @@
 require 'spec_helper'
 
-describe DispatchRider::Logging::LifecycleLogger do
+describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
   subject { DispatchRider::Logging::LifecycleLogger }
 
-  let(:message) { DispatchRider::Message.new(subject: 'test', body: 'test_handler') }
-  let(:string_to_log) { "string to log" }
-  let(:exception) { StandardError.new }
+  let(:queue) { double :queue }
+  let(:item) { double :item }
+  let(:fs_message) { DispatchRider::QueueServices::FileSystem::FsReceivedMessage.new(message, item, queue) }
+  let(:message) { DispatchRider::Message.new(subject: 'test', body: { 'guid' => '123', 'some' => 'key' }) }
+  let(:exception) { StandardError.new('something failed') }
   let(:reason) { "Stop reason" }
 
   let(:formatter) { DispatchRider.config.log_formatter }
-  let(:logger) { DispatchRider.config.logger }
+  let(:logger) { double :logger }
 
   before do
-    allow(formatter).to receive(:format_got_stop).and_return(string_to_log)
-    allow(formatter).to receive(:format_error_handler_fail).and_return(string_to_log)
-    allow(formatter).to receive(:format_handling).and_return(string_to_log)
+    DispatchRider.config.logger = logger
   end
 
-  context "log_error_handler_fail" do
-    after { subject.log_error_handler_fail message, exception }
-
-    it "calls logger with error" do
-      expect(logger).to receive(:error).with(string_to_log)
-    end
+  after do
+    DispatchRider.clear_configuration!
   end
 
-  context "log_got_stop" do
-    after { subject.log_got_stop reason, message }
-
-    it "calls logger with info" do
-      expect(logger).to receive(:info).with(string_to_log)
-    end
-  end
-
-  context "wrap_handling" do
-    context "block runs successfully" do
-      let(:block) { Proc.new { true } }
-      after { subject.wrap_handling(message, &block) }
-
-      it "logs start" do
-        expect(subject).to receive(:log_start).with(message)
-      end
-
-      it "logs success" do
-        expect(subject).to receive(:log_success).with(message)
-      end
-
-      it "logs complete" do
-        expect(subject).to receive(:log_complete).with(message, an_instance_of(Float))
+  context 'when log formatter is text based' do
+    describe "log_error_handler_fail" do
+      it "calls logger with error" do
+        expect(logger).to receive(:error).with("Failed error handling of: (123): test with StandardError: something failed")
+        subject.log_error_handler_fail fs_message, exception
       end
     end
 
-    context "block fails" do
-      let(:block) { Proc.new { raise exception } }
-      after do
-        expect { subject.wrap_handling(message, &block) }.to raise_error(exception)
+    describe "log_got_stop" do
+      it "calls logger with info" do
+        expect(logger).to receive(:info).with(%{Got stop (Stop reason) while executing: (123): test : {"some"=>"key"}})
+        subject.log_got_stop reason, fs_message
+      end
+    end
+
+    describe "wrap_handling" do
+      context 'succeeding the handler' do
+        example do
+          expect(logger).to receive(:info).with(%{Starting execution of: (123): test : {"some"=>"key"}})
+          expect(logger).to receive(:info).with(%{Succeeded execution of: (123): test : {"some"=>"key"}})
+          expect(logger).to receive(:info).with(/Completed execution of: \(123\): test : {"some"=>"key"} in \d+(?:.\d+)? seconds/)
+          expect {
+            subject.wrap_handling(fs_message) { true }
+          }.not_to raise_exception
+        end
       end
 
-      it "logs start" do
-        expect(subject).to receive(:log_start).with(message)
-      end
-
-      it "logs fail" do
-        expect(subject).to receive(:log_fail).with(message, exception)
-      end
-
-      it "logs complete" do
-        expect(subject).to receive(:log_complete).with(message, an_instance_of(Float))
+      context 'failing the handler' do
+        example do
+          expect(logger).to receive(:info).with(%{Starting execution of: (123): test : {"some"=>"key"}})
+          expect(logger).to receive(:error).with(%{Failed execution of: (123): test with RuntimeError: failed!})
+          expect(logger).to receive(:info).with(/Completed execution of: \(123\): test : {"some"=>"key"} in \d+(?:.\d+)? seconds/)
+          expect {
+            subject.wrap_handling(fs_message) { raise "failed!" }
+          }.to raise_exception "failed!"
+        end
       end
     end
   end

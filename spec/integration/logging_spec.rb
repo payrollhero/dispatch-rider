@@ -97,7 +97,7 @@ describe "Logging" do
         'guid' => 'test-mode-not-random-guid',
         'subject' => 'crashing_handler',
         'body' => {},
-        'expection' => {
+        'exception' => {
           'class' => 'RuntimeError',
           'message' => 'I crashed!',
         },

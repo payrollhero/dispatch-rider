@@ -11,6 +11,7 @@ module DispatchRider
       @callbacks = Callbacks::Storage.new
       @subscriber = DispatchRider::Subscriber
       @log_formatter = DispatchRider::Logging::TextFormatter.new
+      @additional_info_interjector = -> (_data) { }
       @logger = Logger.new(STDERR)
       @debug = false
 
