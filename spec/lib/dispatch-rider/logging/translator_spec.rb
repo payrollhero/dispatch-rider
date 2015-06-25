@@ -59,11 +59,7 @@ describe DispatchRider::Logging::Translator do
       end
       let(:kind) { :fail }
       let(:exception) do
-        begin
-          raise(ArgumentError, "Foo is not bar")
-        rescue ArgumentError => exception
-          exception
-        end
+        ArgumentError.new("Foo is not bar")
       end
 
       let(:expected_hash) do
@@ -115,11 +111,7 @@ describe DispatchRider::Logging::Translator do
       end
       let(:kind) { :error_handler_fail }
       let(:exception) do
-        begin
-          raise(ArgumentError, "Foo is not bar")
-        rescue ArgumentError => exception
-          exception
-        end
+        ArgumentError.new("Foo is not bar")
       end
 
       let(:expected_hash) do
