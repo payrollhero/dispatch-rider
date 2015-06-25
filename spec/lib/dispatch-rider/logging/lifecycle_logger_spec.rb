@@ -29,6 +29,7 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
         -> (message) do
           message[:employee_id] = 47
           message[:account_id] = 42
+          message
         end
       end
 

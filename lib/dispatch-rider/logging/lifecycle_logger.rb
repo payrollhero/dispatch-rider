@@ -1,24 +1,13 @@
 module DispatchRider
   module Logging
-
-    # Jobs:
-    #  - accept 3 public interfaces
-    #  - translate them to a universal logging hash
-    #  - apply additional logging data
-    #  - log it
     class LifecycleLogger
       class << self
         def log_error_handler_fail(message, exception)
-          log_data = translator.translate message, :error_handler_fail, exception: exception
-
-          additional_info_interjector.call(log_data)
-          logger.error formatter.format log_data
+          new(:error_handler_fail, message, exception: exception).log
         end
 
         def log_got_stop(reason, message)
-          log_data = translator.translate message, :stop, reason: reason
-          additional_info_interjector.call(log_data)
-          logger.info formatter.format log_data
+          new(:stop, message, reason: reason).log
         end
 
         def wrap_handling(message)
@@ -36,45 +25,71 @@ module DispatchRider
         private
 
         def log_complete(message, duration)
-          log_data = translator.translate message, :complete, duration: duration
-          additional_info_interjector.call(log_data)
-          logger.info formatter.format log_data
-        end
-
-        def translator
-          Translator
+          new(:complete, message, duration: duration).log
         end
 
         def log_fail(message, exception)
-          log_data = translator.translate message, :fail, exception: exception
-          additional_info_interjector.call(log_data)
-          logger.error formatter.format log_data
+          new(:fail, message, exception: exception).log
         end
 
         def log_success(message)
-          log_data = translator.translate message, :success
-          additional_info_interjector.call(log_data)
-          logger.info formatter.format log_data
+          new(:success, message).log
         end
 
         def log_start(message)
-          log_data = translator.translate message, :start
-          additional_info_interjector.call(log_data)
-          logger.info formatter.format log_data
-        end
-
-        def formatter
-          DispatchRider.config.log_formatter
-        end
-
-        def logger
-          DispatchRider.config.logger
-        end
-
-        def additional_info_interjector
-          DispatchRider.config.additional_info_interjector
+          new(:start, message).log
         end
       end
+
+      def initialize(kind, message, options = {})
+        @kind = kind
+        @message = message
+        @options = options
+      end
+
+      def log
+        logger.send(log_action, formatted_data)
+      end
+
+      private
+
+      attr_reader :kind, :message, :options
+
+      def formatter
+        DispatchRider.config.log_formatter
+      end
+
+      def logger
+        DispatchRider.config.logger
+      end
+
+      def additional_info_interjector
+        DispatchRider.config.additional_info_interjector
+      end
+
+      def translator
+        Translator
+      end
+
+      def translated_message
+        translator.translate(message, kind, options)
+      end
+
+      def interjected_message
+        additional_info_interjector.call(translated_message)
+      end
+
+      def formatted_data
+        formatter.format(interjected_message)
+      end
+
+      def log_action
+        case kind
+        when :fail, :error_handler_fail then :error
+        when :start, :stop, :complete, :success then :info
+        end
+      end
+
     end
   end
 end
