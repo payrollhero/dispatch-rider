@@ -3,7 +3,7 @@ module DispatchRider
     class Translator
 
       class BaseTranslator
-        def initialize(message, **_)
+        def initialize(message, **)
           @message = message
         end
 
