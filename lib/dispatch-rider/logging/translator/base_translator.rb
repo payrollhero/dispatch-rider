@@ -7,6 +7,10 @@ module DispatchRider
           @message = message
         end
 
+        def translate
+          raise NotImplementedError, 'Translators must implement #translate'
+        end
+
         private
 
         def message_info_fragment(message)

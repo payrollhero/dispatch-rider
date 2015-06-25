@@ -99,7 +99,7 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
         end
 
         let(:expected_complete_info) do
-          /{\"phase\"\:\"complete\",\"guid\"\:\"123\",\"subject\"\:\"test\",\"body\"\:{\"some\"\:\"key\"},\"duration\"\:\d+(?:.\d+)?,\"employee_id\"\:47,\"account_id\"\:42}/
+          /{"phase":"complete","guid":"123","subject":"test","body":{"some":"key"},"duration":\d+(?:.\d+)?,"employee_id":47,"account_id":42}/
         end
 
         context 'succeeding the handler' do

@@ -117,7 +117,7 @@ describe DispatchRider::Logging::Translator do
       let(:exception) do
         begin
           raise(ArgumentError, "Foo is not bar")
-        rescue Exception => exception
+        rescue ArgumentError => exception
           exception
         end
       end
