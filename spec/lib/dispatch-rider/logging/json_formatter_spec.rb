@@ -1,12 +1,7 @@
 require 'spec_helper'
 
 describe DispatchRider::Logging::JsonFormatter do
-
-  let(:data) do
-    {
-      :some => :data
-    }
-  end
+  let(:data) { {some: :data} }
 
   let(:formatted_data) { %{{"some":"data"}} }
 

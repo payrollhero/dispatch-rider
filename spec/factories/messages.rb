@@ -3,7 +3,7 @@ FactoryGirl.define do
     subject 'sample_handler'
     body(
       'key' => 'value',
-      'guid' =>  DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
+      'guid' => DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
     )
     initialize_with {  DispatchRider::Message.new(attributes) }
   end

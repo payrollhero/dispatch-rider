@@ -65,7 +65,9 @@ describe DispatchRider::Logging::TextFormatter do
       before { data[:exception] = { class: StandardError, message: 'Foo is not bar' } }
 
       example do
-        expect(format_result).to eq("Failed error handling of: (123): sample_handler with StandardError: Foo is not bar")
+        expect(format_result).to eq(
+          "Failed error handling of: (123): sample_handler with StandardError: Foo is not bar"
+        )
       end
     end
   end

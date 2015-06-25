@@ -63,8 +63,8 @@ module DispatchRider
         DispatchRider.config.logger
       end
 
-      def additional_info_interjector
-        DispatchRider.config.additional_info_interjector
+      def additional_info_injector
+        DispatchRider.config.additional_info_injector
       end
 
       def translator
@@ -76,7 +76,7 @@ module DispatchRider
       end
 
       def interjected_message
-        additional_info_interjector.call(translated_message)
+        additional_info_injector.call(translated_message)
       end
 
       def formatted_data

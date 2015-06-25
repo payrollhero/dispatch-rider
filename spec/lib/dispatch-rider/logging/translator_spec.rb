@@ -11,10 +11,6 @@ describe DispatchRider::Logging::Translator do
   let(:reason) { nil }
 
   describe '.translate' do
-    # subject(:result) do
-    #   described_class.translate(message: fs_message, kind: kind, exception: exception, duration: duration, reason: reason)
-    # end
-
     context 'when the job is starting' do
       subject(:result) do
         described_class.translate(fs_message, kind)
@@ -65,7 +61,7 @@ describe DispatchRider::Logging::Translator do
       let(:exception) do
         begin
           raise(ArgumentError, "Foo is not bar")
-        rescue Exception => exception
+        rescue ArgumentError => exception
           exception
         end
       end
@@ -168,6 +164,5 @@ describe DispatchRider::Logging::Translator do
         expect(result).to eq(expected_hash)
       end
     end
-
   end
 end

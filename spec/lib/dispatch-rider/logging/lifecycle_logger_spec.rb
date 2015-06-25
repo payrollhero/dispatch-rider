@@ -24,8 +24,8 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
   context 'when log formatter is json' do
     before { DispatchRider.config.log_formatter = DispatchRider::Logging::JsonFormatter.new }
 
-    context 'when additional_info_interjector is customized' do
-      let(:additional_info_interjector) do
+    context 'when additional_info_injector is customized' do
+      let(:additional_info_injector) do
         -> (message) do
           message[:employee_id] = 47
           message[:account_id] = 42
@@ -34,7 +34,7 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
       end
 
       before do
-        DispatchRider.config.additional_info_interjector = additional_info_interjector
+        DispatchRider.config.additional_info_injector = additional_info_injector
       end
 
       describe 'log_error_handler_fail' do
@@ -122,14 +122,17 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
 
       describe "log_error_handler_fail" do
         it "calls logger with error" do
-          expect(logger).to receive(:error).with("Failed error handling of: (123): test with StandardError: something failed")
+          expect(logger).to receive(:error).with(
+            "Failed error handling of: (123): test with StandardError: something failed"
+          )
           subject.log_error_handler_fail fs_message, exception
         end
       end
 
       describe "log_got_stop" do
         it "calls logger with info" do
-          expect(logger).to receive(:info).with(%{Got stop (Stop reason) while executing: (123): test : {"some"=>"key"}})
+          expect(logger).to receive(:info).with(
+            %{Got stop (Stop reason) while executing: (123): test : {"some"=>"key"}})
           subject.log_got_stop reason, fs_message
         end
       end
@@ -139,7 +142,9 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
           example do
             expect(logger).to receive(:info).with(%{Starting execution of: (123): test : {"some"=>"key"}})
             expect(logger).to receive(:info).with(%{Succeeded execution of: (123): test : {"some"=>"key"}})
-            expect(logger).to receive(:info).with(/Completed execution of: \(123\): test : {"some"=>"key"} in \d+(?:.\d+)? seconds/)
+            expect(logger).to receive(:info).with(
+              /Completed execution of: \(123\): test : {"some"=>"key"} in \d+(?:.\d+)? seconds/
+            )
             expect {
               subject.wrap_handling(fs_message) { true }
             }.not_to raise_exception
@@ -150,7 +155,9 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
           example do
             expect(logger).to receive(:info).with(%{Starting execution of: (123): test : {"some"=>"key"}})
             expect(logger).to receive(:error).with(%{Failed execution of: (123): test with RuntimeError: failed!})
-            expect(logger).to receive(:info).with(/Completed execution of: \(123\): test : {"some"=>"key"} in \d+(?:.\d+)? seconds/)
+            expect(logger).to receive(:info).with(
+              /Completed execution of: \(123\): test : {"some"=>"key"} in \d+(?:.\d+)? seconds/
+            )
             expect {
               subject.wrap_handling(fs_message) { raise "failed!" }
             }.to raise_exception "failed!"
