@@ -1,6 +1,16 @@
 module DispatchRider
   class Configuration
-    attr_accessor :handler_path, :error_handler, :queue_info, :queue_kind, :subscriber, :logger, :log_formatter, :debug
+    attr_accessor(
+      :handler_path,
+      :error_handler,
+      :queue_info,
+      :queue_kind,
+      :subscriber,
+      :logger,
+      :log_formatter,
+      :debug,
+      :additional_info_interjector
+    )
     attr_reader :callbacks
 
     def initialize

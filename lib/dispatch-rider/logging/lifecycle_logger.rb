@@ -10,11 +10,14 @@ module DispatchRider
       class << self
         def log_error_handler_fail(message, exception)
           log_data = translator.translate message, :error_handler_fail, exception: exception
+
+          additional_info_interjector.call(log_data)
           logger.error formatter.format log_data
         end
 
         def log_got_stop(reason, message)
           log_data = translator.translate message, :stop, reason: reason
+          additional_info_interjector.call(log_data)
           logger.info formatter.format log_data
         end
 
@@ -33,11 +36,8 @@ module DispatchRider
         private
 
         def log_complete(message, duration)
-          # 1. fetch log data
-          # 2. feed log_data into callback proc
-          # 3. in the callback proc, modify log_data with the additional params you wish to add
-          # 4. pass #3's modified log data into the formatter
           log_data = translator.translate message, :complete, duration: duration
+          additional_info_interjector.call(log_data)
           logger.info formatter.format log_data
         end
 
@@ -47,16 +47,19 @@ module DispatchRider
 
         def log_fail(message, exception)
           log_data = translator.translate message, :fail, exception: exception
+          additional_info_interjector.call(log_data)
           logger.error formatter.format log_data
         end
 
         def log_success(message)
           log_data = translator.translate message, :success
+          additional_info_interjector.call(log_data)
           logger.info formatter.format log_data
         end
 
         def log_start(message)
           log_data = translator.translate message, :start
+          additional_info_interjector.call(log_data)
           logger.info formatter.format log_data
         end
 
