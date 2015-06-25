@@ -10,6 +10,9 @@ require 'tempfile'
 require 'dispatch-rider'
 Dir['./spec/support/**/*.rb'].each { |fn| require(fn) }
 
+FactoryGirl.definition_file_paths = %w{spec/factories/}
+FactoryGirl.find_definitions
+
 RSpec.configure do |config|
   config.raise_errors_for_deprecations!
   config.mock_with :rspec
@@ -25,6 +28,8 @@ RSpec.configure do |config|
   config.before do
     DispatchRider.config.logger = NullLogger.new
   end
+
+  config.include FactoryGirl::Syntax::Methods
 end
 
 # Airbrake dummy module

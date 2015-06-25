@@ -15,6 +15,7 @@ gem 'yard'
 
 # Testing
 gem "rspec", "~> 3.3"
+gem "factory_girl"
 
 # CI
 gem "travis-lint"
