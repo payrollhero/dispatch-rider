@@ -448,6 +448,61 @@ DispatchRider.config do |config|
   config.error_handler = DispatchRider::AirbrakeErrorHandler
 end
 ```
+## Scheduling Job
+
+Scheduled jobs currently require `ActiveRecord`. Support for other ORM will be added in the future depending on demand.
+
+1. Add and run the DB migration below:
+  ```ruby
+  class CreateScheduledJobsTable < ActiveRecord::Migration
+    include DispatchRider::ScheduledJob::Migration
+
+    def change
+      create_scheduled_jobs_table
+    end
+  end
+  ```
+
+2. Schedule jobs:
+  ```ruby
+  # Use `#publish_later`
+  class NewsPublisher < DispatchRider::Publisher::Base
+    destinations :sns_message_queue
+    subject "read_news"
+
+    def self.midnight_publish(news)
+      new.publish_later("headlines" => news.headlines, at: Date.tomorrow.midnight)
+    end
+  end
+
+  # Or create a scheduled job manually
+  DispatchRider::ScheduledJob.create! scheduled_at: Date.tomorrow.midnight,
+                                      destinations: [:sns_message_queue],
+                                      message: {
+                                        subject: "read_news",
+                                        body: { "headlines" => news.headlines }
+                                      }
+  ```
+
+3. Run scheduled publishing.
+  ```ruby
+  # Run once
+
+  # Ideally run on a cron. Where the cron is responsible for the publishing
+  # frequency. Any jobs due at the time this is run by the cron  will be
+  # published.
+  DispatchRider::ScheduledJob.publish_due_jobs
+
+  # Loop. Warning: Loops are blocking. Run this on a separate thread if it's not
+  # the sole purpose of the app.
+
+  # publish every minute
+  DispatchRider::ScheduledJob.publish_due_jobs every: 1.minute
+
+  # publish every half an hour
+  DispatchRider::ScheduledJob.publish_due_jobs every: 30.minutes
+  ```
+
 ## Deployment
 
 In order to deploy a new version of the gem into the wild ...

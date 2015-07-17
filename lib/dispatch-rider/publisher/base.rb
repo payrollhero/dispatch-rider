@@ -30,8 +30,17 @@ module DispatchRider
 
     # @param [Hash] body
     def publish(body)
-      raise ArgumentError, 'body should be a hash' unless body.kind_of?(Hash)
+      validate_body(body)
       publisher.publish(destinations: destinations, message: { subject: subject, body: body })
+    end
+
+    # @param [Hash] body
+    # @param [Time] at
+    def publish_later(body, at:)
+      validate_body(body)
+      DispatchRider::ScheduledJob.create! scheduled_at: at,
+                                          destinations: destinations,
+                                          message: { subject: subject, body: body }
     end
 
     private
@@ -46,6 +55,10 @@ module DispatchRider
 
     def subject
       self.class.instance_variable_get(:@subject)
+    end
+
+    def validate_body(body)
+      raise ArgumentError, 'body should be a hash' unless body.is_a?(Hash)
     end
   end
 end
