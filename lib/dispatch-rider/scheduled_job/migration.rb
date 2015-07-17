@@ -9,6 +9,8 @@ module DispatchRider
         t.datetime :claim_expires_at
 
         t.index :scheduled_at
+        t.index :claim_id
+        t.index :claim_expires_at
       end
     end
   end
