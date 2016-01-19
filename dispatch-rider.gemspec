@@ -44,6 +44,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "activerecord", ">= 3.2.0"
   gem.add_runtime_dependency 'daemons', "~> 1.2"
   gem.add_runtime_dependency 'retries', "~> 0.0", ">= 0.0.5"
+  gem.add_runtime_dependency 'appsignal', '~> 1.0'
 
   gem.add_development_dependency "sqlite3"
 end

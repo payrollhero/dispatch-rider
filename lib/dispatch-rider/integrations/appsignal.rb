@@ -7,7 +7,11 @@ if defined? Appsignal
 
         def self.wrap_message(job, message)
           begin
-            ::Appsignal::Transaction.create(SecureRandom.uuid, ENV.to_hash)
+            ::Appsignal::Transaction.create(
+              SecureRandom.uuid,
+              Appsignal::Transaction::BACKGROUND_JOB,
+              Appsignal::Transaction::GenericRequest.new(ENV.to_hash)
+            )
 
             ::ActiveSupport::Notifications.instrument(
               'perform_job.dispatch-rider',
@@ -20,8 +24,8 @@ if defined? Appsignal
               job.call
             end
           rescue Exception => exception
-            unless ::Appsignal.is_ignored_exception?(exception)
-              ::Appsignal::Transaction.current.add_exception(exception)
+            unless ::Appsignal.is_ignored_error?(exception)
+              ::Appsignal::Transaction.current.add_error(exception)
             end
             raise exception
           ensure
