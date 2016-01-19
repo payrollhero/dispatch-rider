@@ -505,33 +505,7 @@ Scheduled jobs currently require `ActiveRecord`. Support for other ORM will be a
 
 ## Deployment
 
-In order to deploy a new version of the gem into the wild ...
-
-You will need to configure your github api token for the changelog.
-
-Generate a new token for changelogs [here](https://github.com/settings/tokens/new).
-
-add:
-
-```bash
-export CHANGELOG_GITHUB_TOKEN=YOUR_CHANGELOG_API_TOKEN
-```
-
-somewhere in your shell init. (ie .zshrc or simillar)
-
-
-```bash
-vim lib/dispatch-rider/version.rb
-# set the new version
-# commit the changed version file
-# name your commit with the version number eg: "1.8.0"
-rake release
-# to push the gem to rubygems.org
-rake changelog
-# commit the changed changelog
-# name your commit with the version again eg: "changelog for 1.8.0"
-git push
-```
+See `DEPLOYING.md`
 
 ## Contributing
 
