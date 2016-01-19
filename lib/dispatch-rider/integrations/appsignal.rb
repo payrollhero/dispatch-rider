@@ -25,7 +25,7 @@ if defined? Appsignal
             end
           rescue Exception => exception
             unless ::Appsignal.is_ignored_error?(exception)
-              ::Appsignal::Transaction.current.add_error(exception)
+              ::Appsignal::Transaction.current.add_exception(exception)
             end
             raise exception
           ensure
