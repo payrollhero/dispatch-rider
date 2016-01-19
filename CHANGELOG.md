@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.8.1](https://github.com/payrollhero/dispatch-rider/tree/v1.8.1) (2016-01-19)
+
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.8.0...v1.8.1)
+
+**Merged pull requests:**
+
+- Fixing class resolution [\#70](https://github.com/payrollhero/dispatch-rider/pull/70) ([piotrb](https://github.com/piotrb))
+
 ## [v1.8.0](https://github.com/payrollhero/dispatch-rider/tree/v1.8.0) (2016-01-19)
 
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.7.2...v1.8.0)
