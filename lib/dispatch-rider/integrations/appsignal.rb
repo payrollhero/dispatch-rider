@@ -29,7 +29,7 @@ if defined? Appsignal
             end
             raise exception
           ensure
-            ::Appsignal::Transaction.current.complete!
+            ::Appsignal::Transaction.complete_current!
           end
         end
 
