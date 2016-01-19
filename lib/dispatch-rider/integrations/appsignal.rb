@@ -9,8 +9,8 @@ if defined? Appsignal
           begin
             ::Appsignal::Transaction.create(
               SecureRandom.uuid,
-              Appsignal::Transaction::BACKGROUND_JOB,
-              Appsignal::Transaction::GenericRequest.new(ENV.to_hash)
+              ::Appsignal::Transaction::BACKGROUND_JOB,
+              ::Appsignal::Transaction::GenericRequest.new(ENV.to_hash)
             )
 
             ::ActiveSupport::Notifications.instrument(
