@@ -1,5 +1,39 @@
 # Change Log
 
+## [v1.8.0](https://github.com/payrollhero/dispatch-rider/tree/v1.8.0) (2016-01-19)
+
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.7.2...v1.8.0)
+
+**Merged pull requests:**
+
+- Added appsignal dependancy and upgraded to 1.0 support \(hopefully\) [\#69](https://github.com/payrollhero/dispatch-rider/pull/69) ([piotrb](https://github.com/piotrb))
+
+## [v1.7.2](https://github.com/payrollhero/dispatch-rider/tree/v1.7.2) (2015-08-13)
+
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.6.2...v1.7.2)
+
+**Merged pull requests:**
+
+- Scheduled Job [\#68](https://github.com/payrollhero/dispatch-rider/pull/68) ([more-ron](https://github.com/more-ron))
+
+## [v1.6.2](https://github.com/payrollhero/dispatch-rider/tree/v1.6.2) (2015-06-25)
+
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.6.1...v1.6.2)
+
+**Merged pull requests:**
+
+- Feature/additional logging support [\#67](https://github.com/payrollhero/dispatch-rider/pull/67) ([nicosuria](https://github.com/nicosuria))
+
+## [v1.6.1](https://github.com/payrollhero/dispatch-rider/tree/v1.6.1) (2015-06-24)
+
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.6.0...v1.6.1)
+
+**Merged pull requests:**
+
+- Fix callback hook for LifecycleLogger. Update specs to handle message… [\#66](https://github.com/payrollhero/dispatch-rider/pull/66) ([mykola-kyryk](https://github.com/mykola-kyryk))
+
+- Update README.md with log formatter options [\#65](https://github.com/payrollhero/dispatch-rider/pull/65) ([mykola-kyryk](https://github.com/mykola-kyryk))
+
 ## [v1.6.0](https://github.com/payrollhero/dispatch-rider/tree/v1.6.0) (2015-06-20)
 
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.5.3...v1.6.0)
@@ -358,7 +392,7 @@
 
 ## [2013-05-28](https://github.com/payrollhero/dispatch-rider/tree/2013-05-28) (2013-05-28)
 
-[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v0.0.2...2013-05-28)
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v0.0.3...2013-05-28)
 
 **Merged pull requests:**
 
@@ -366,13 +400,13 @@
 
 - Another stab at the initial implementation for issue \#10 [\#12](https://github.com/payrollhero/dispatch-rider/pull/12) ([piotrb](https://github.com/piotrb))
 
-## [v0.0.2](https://github.com/payrollhero/dispatch-rider/tree/v0.0.2) (2013-05-22)
-
-[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v0.0.3...v0.0.2)
-
 ## [v0.0.3](https://github.com/payrollhero/dispatch-rider/tree/v0.0.3) (2013-05-22)
 
-[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v0.0.1...v0.0.3)
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v0.0.2...v0.0.3)
+
+## [v0.0.2](https://github.com/payrollhero/dispatch-rider/tree/v0.0.2) (2013-05-22)
+
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v0.0.1...v0.0.2)
 
 **Merged pull requests:**
 
