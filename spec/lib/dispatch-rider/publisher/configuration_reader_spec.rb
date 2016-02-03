@@ -17,7 +17,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
     it "requires 2 paramaters" do
       expect {
         subject.load_config
-      }.to raise_exception(ArgumentError, /0 .+ 2/)
+      }.to raise_exception(ArgumentError)
     end
 
     it "deals with an empty configuration hash" do
