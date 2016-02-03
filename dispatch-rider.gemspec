@@ -46,7 +46,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'retries', '~> 0.0', '>= 0.0.5'
   gem.add_runtime_dependency 'appsignal', '~> 1.0'
 
-  gem.add_development_dependency 'bundler', '1.7.6'
+  gem.add_development_dependency 'bundler', '~> 1.0'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'sqlite3'
   gem.add_development_dependency 'rubygems-tasks'
