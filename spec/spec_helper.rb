@@ -1,15 +1,10 @@
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-$LOAD_PATH.unshift(File.dirname(__FILE__))
+require 'bundler'
 
-Bundler.require
-
-require 'aws'
-require 'rake'
-require 'tempfile'
-require "sqlite3"
-
+Bundler.setup
+Bundler.require(:default, :development)
 
 require 'dispatch-rider'
+
 Dir['./spec/support/**/*.rb'].each { |fn| require(fn) }
 
 FactoryGirl.definition_file_paths = %w{spec/factories/}
