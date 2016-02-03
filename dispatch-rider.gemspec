@@ -33,18 +33,27 @@ Gem::Specification.new do |gem|
     "piotr@payrollhero.com",
     "rmaravilla@payrollhero.com",
   ]
-  gem.homepage = "https://github.com/payrollhero/dispatch-rider"
+  gem.homepage = 'https://github.com/payrollhero/dispatch-rider'
   gem.files = `git ls-files`.split($/)
-  gem.executables = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.executables = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
 
-  gem.add_runtime_dependency 'activesupport', ">= 3.2.0"
-  gem.add_runtime_dependency 'activemodel', ">= 3.2.0"
-  gem.add_runtime_dependency "activerecord", ">= 3.2.0"
-  gem.add_runtime_dependency 'daemons', "~> 1.2"
-  gem.add_runtime_dependency 'retries', "~> 0.0", ">= 0.0.5"
+  gem.add_runtime_dependency 'activesupport', '>= 3.2.0'
+  gem.add_runtime_dependency 'activemodel', '>= 3.2.0'
+  gem.add_runtime_dependency 'activerecord', '>= 3.2.0'
+  gem.add_runtime_dependency 'daemons', '~> 1.2'
+  gem.add_runtime_dependency 'retries', '~> 0.0', '>= 0.0.5'
   gem.add_runtime_dependency 'appsignal', '~> 1.0'
 
-  gem.add_development_dependency "sqlite3"
+  gem.add_development_dependency 'bundler', '1.7.6'
+  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'sqlite3'
+  gem.add_development_dependency 'rubygems-tasks'
+  gem.add_development_dependency 'github_changelog_generator'
+  gem.add_development_dependency 'yard'
+  gem.add_development_dependency 'rspec', '~> 3.3'
+  gem.add_development_dependency 'factory_girl'
+  gem.add_development_dependency 'aws-sdk', '~> 1'
+  gem.add_development_dependency 'pry'
 end
