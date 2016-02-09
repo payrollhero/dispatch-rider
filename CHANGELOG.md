@@ -1,5 +1,19 @@
 # Change Log
 
+## [v1.8.4](https://github.com/payrollhero/dispatch-rider/tree/v1.8.4) (2016-02-09)
+
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.8.3...v1.8.4)
+
+**Merged pull requests:**
+
+- Fix appsignal integration [\#73](https://github.com/payrollhero/dispatch-rider/pull/73) ([vincentpaca](https://github.com/vincentpaca))
+
+- Update appsignal integration [\#72](https://github.com/payrollhero/dispatch-rider/pull/72) ([vincentpaca](https://github.com/vincentpaca))
+
+## [v1.8.3](https://github.com/payrollhero/dispatch-rider/tree/v1.8.3) (2016-01-19)
+
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.8.2...v1.8.3)
+
 ## [v1.8.2](https://github.com/payrollhero/dispatch-rider/tree/v1.8.2) (2016-01-19)
 
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.8.1...v1.8.2)
@@ -348,6 +362,8 @@
 
 - Added process naming to dispatcher. [\#23](https://github.com/payrollhero/dispatch-rider/pull/23) ([link664](https://github.com/link664))
 
+- Fail job after running error handler. [\#27](https://github.com/payrollhero/dispatch-rider/pull/27) ([link664](https://github.com/link664))
+
 ## [v0.0.5](https://github.com/payrollhero/dispatch-rider/tree/v0.0.5) (2013-08-20)
 
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/2013-06-06-13-08-PST...v0.0.5)
@@ -394,6 +410,10 @@
 
 - Fix double serialize on file system bug [\#15](https://github.com/payrollhero/dispatch-rider/pull/15) ([more-ron](https://github.com/more-ron))
 
+- Add publisher configure method [\#16](https://github.com/payrollhero/dispatch-rider/pull/16) ([more-ron](https://github.com/more-ron))
+
+-  Initial implementation of hash based configuration to satisfy issue \#10 [\#11](https://github.com/payrollhero/dispatch-rider/pull/11) ([jimbomt](https://github.com/jimbomt))
+
 ## [2013-05-28-15-13+08-00](https://github.com/payrollhero/dispatch-rider/tree/2013-05-28-15-13+08-00) (2013-05-28)
 
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/2013-05-28...2013-05-28-15-13+08-00)
@@ -408,7 +428,7 @@
 
 ## [2013-05-28](https://github.com/payrollhero/dispatch-rider/tree/2013-05-28) (2013-05-28)
 
-[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v0.0.3...2013-05-28)
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v0.0.2...2013-05-28)
 
 **Merged pull requests:**
 
@@ -416,13 +436,13 @@
 
 - Another stab at the initial implementation for issue \#10 [\#12](https://github.com/payrollhero/dispatch-rider/pull/12) ([piotrb](https://github.com/piotrb))
 
-## [v0.0.3](https://github.com/payrollhero/dispatch-rider/tree/v0.0.3) (2013-05-22)
-
-[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v0.0.2...v0.0.3)
-
 ## [v0.0.2](https://github.com/payrollhero/dispatch-rider/tree/v0.0.2) (2013-05-22)
 
-[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v0.0.1...v0.0.2)
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v0.0.3...v0.0.2)
+
+## [v0.0.3](https://github.com/payrollhero/dispatch-rider/tree/v0.0.3) (2013-05-22)
+
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v0.0.1...v0.0.3)
 
 **Merged pull requests:**
 
