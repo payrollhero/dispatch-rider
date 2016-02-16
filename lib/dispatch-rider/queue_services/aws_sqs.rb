@@ -24,20 +24,22 @@ module DispatchRider
         end
       end
 
-      def pop(&block)
-        begin
-          queue.receive_message do |raw_item|
-            obj = SqsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue)
+      def pop
+        raw_item = queue.receive_message
+        if raw_item.present?
+          obj = SqsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue)
 
-            visibility_timeout_shield(obj) do
-              raise AbortExecution, "false received from handler" unless block.call(obj)
-              obj
-            end
-
+          visibility_timeout_shield(obj) do
+            raise AbortExecution, "false received from handler" unless yield(obj)
+            obj
           end
-        rescue AbortExecution
-          # ignore, it was already handled, just need to break out if pop
+
+          with_retries(max_tries: 3) do
+            raw_item.delete
+          end
         end
+      rescue AbortExecution
+        # ignore, it was already handled, just need to break out if pop
       end
 
       def insert(item)
