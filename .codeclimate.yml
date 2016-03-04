@@ -1,0 +1,15 @@
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - ruby
+        - javascript
+  rubocop:
+    enabled: true
+ratings:
+  paths:
+  - "lib/**"
+  - Gemfile.lock
+exclude_paths:
+  - "spec/*"
