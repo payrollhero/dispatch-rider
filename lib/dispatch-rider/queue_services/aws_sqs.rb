@@ -34,7 +34,7 @@ module DispatchRider
             obj
           end
 
-          Retriable.retriable(tries: 3) { raw_item.delete }
+          raw_item.delete
         end
       rescue AbortExecution
         # ignore, it was already handled, just need to break out if pop
