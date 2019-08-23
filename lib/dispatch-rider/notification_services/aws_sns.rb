@@ -15,10 +15,6 @@ module DispatchRider
         Registrars::SnsChannel
       end
 
-      def publish_to_channel(channel, message:)
-        Retriable.retriable(tries: 10, on: AWS::Errors::MissingCredentialsError) { super }
-      end
-
       # not really happy with this, but the notification service registrar system is way too rigid to do this cleaner
       # since you only can have one notifier for the whole service, but you need to create a new one for each region
       def channel(name)
