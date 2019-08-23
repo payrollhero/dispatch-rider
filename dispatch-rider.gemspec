@@ -43,7 +43,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'activemodel', '>= 3.2.0'
   gem.add_runtime_dependency 'activerecord', '>= 3.2.0'
   gem.add_runtime_dependency 'daemons', '~> 1.2'
-  gem.add_runtime_dependency 'retries', '~> 0.0', '>= 0.0.5'
+  gem.add_runtime_dependency 'retriable', '~> 3.1', '>= 3.1.2'
   gem.add_runtime_dependency 'appsignal', '~> 1.0'
 
   gem.add_development_dependency 'bundler', '~> 1.0'

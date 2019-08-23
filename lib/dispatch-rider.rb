@@ -9,6 +9,7 @@ require "active_support/core_ext/array/conversions"
 require "active_model"
 
 require "dispatch-rider/configuration"
+require 'retriable'
 
 module DispatchRider
   class << self

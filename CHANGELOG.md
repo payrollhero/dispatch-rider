@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.8.6](https://github.com/payrollhero/dispatch-rider/tree/v1.8.6) (2019-08-27)
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.8.5...v1.8.6)
+
+**Merged pull requests:**
+
+- Replace retries with retriable [\#75](https://github.com/payrollhero/dispatch-rider/pull/75) ([ggalindezb](https://github.com/ggalindezb))
+
 ## [v1.8.5](https://github.com/payrollhero/dispatch-rider/tree/v1.8.5) (2016-02-16)
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.8.4...v1.8.5)
 
