@@ -1,4 +1,3 @@
-require 'retries'
 # This is a basic implementation of the Notification service using Amazon SNS.
 # The expected usage is as follows :
 #   notification_service = DispatchRider::NotificationServices::AwsSns.new
@@ -17,7 +16,7 @@ module DispatchRider
       end
 
       def publish_to_channel(channel, message:)
-        with_retries(max_retries: 10, rescue: AWS::Errors::MissingCredentialsError) { super }
+        Retriable.retriable(tries: 10, on: AWS::Errors::MissingCredentialsError) { super }
       end
 
       # not really happy with this, but the notification service registrar system is way too rigid to do this cleaner
