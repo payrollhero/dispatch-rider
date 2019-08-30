@@ -38,13 +38,17 @@ Gem::Specification.new do |gem|
   gem.executables = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
+  gem.required_ruby_version = '~> 2.2'
+
 
   gem.add_runtime_dependency 'activesupport', '>= 3.2.0'
   gem.add_runtime_dependency 'activemodel', '>= 3.2.0'
   gem.add_runtime_dependency 'activerecord', '>= 3.2.0'
   gem.add_runtime_dependency 'daemons', '~> 1.2'
   gem.add_runtime_dependency 'retriable', '~> 3.1', '>= 3.1.2'
-  gem.add_runtime_dependency 'appsignal', '~> 1.0'
+  # appsignal is an optional runtime dependency,
+  # I am marking it as development for those that don't need it
+  gem.add_development_dependency 'appsignal', '~> 1.0'
 
   gem.add_development_dependency 'bundler', '~> 1.0'
   gem.add_development_dependency 'rake'
