@@ -30,6 +30,7 @@ module DispatchRider
       
       #If you pass a block into pop it will wrap the deletion of the message with it's handling
       def pop(&block)
+raise 'pop'
         received = head
         if received
           block.call(received) && delete(received.item)

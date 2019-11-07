@@ -25,6 +25,7 @@ module DispatchRider
       end
 
       def pop
+raise "pop"
         raw_item = queue.receive_message
         if raw_item.present?
           obj = SqsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue)
@@ -53,6 +54,7 @@ module DispatchRider
       end
 
       def size
+raise "size"
         queue.approximate_number_of_messages
       end
 
