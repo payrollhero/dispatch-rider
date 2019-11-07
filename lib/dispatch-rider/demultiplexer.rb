@@ -18,6 +18,7 @@ module DispatchRider
     def start
       do_loop do
         begin
+          sleep 1
           handle_next_queue_item
         rescue => exception
           error_handler.call(Message.new(subject: "TopLevelError", body: {}), exception)
