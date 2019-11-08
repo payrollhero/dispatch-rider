@@ -38,7 +38,7 @@ Gem::Specification.new do |gem|
   gem.executables = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
-  gem.required_ruby_version = '~> 2.2'
+  gem.required_ruby_version = '>= 2.1.8'
 
 
   gem.add_runtime_dependency 'activesupport', '>= 3.2.0'
