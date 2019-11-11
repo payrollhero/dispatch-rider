@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.9.0](https://github.com/payrollhero/dispatch-rider/tree/v1.9.0) (2019-11-11)
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.8.6...v1.9.0)
+
+**Merged pull requests:**
+
+- Make appsignal optional [\#76](https://github.com/payrollhero/dispatch-rider/pull/76)
+- Sleep 1 second to prevent huge SQS fees [\#77](https://github.com/payrollhero/dispatch-rider/pull/77)
+
 ## [v1.8.6](https://github.com/payrollhero/dispatch-rider/tree/v1.8.6) (2019-08-27)
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.8.5...v1.8.6)
 
