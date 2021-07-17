@@ -50,7 +50,7 @@ Gem::Specification.new do |gem|
   # I am marking it as development for those that don't need it
   gem.add_development_dependency 'appsignal', '~> 1.0'
 
-  gem.add_development_dependency 'bundler', '~> 1.0'
+  gem.add_development_dependency 'bundler', '< 3.0'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'sqlite3'
   gem.add_development_dependency 'rubygems-tasks'
