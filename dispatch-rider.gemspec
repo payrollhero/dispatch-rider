@@ -50,6 +50,8 @@ Gem::Specification.new do |gem|
   # I am marking it as development for those that don't need it
   gem.add_development_dependency 'appsignal', '~> 1.0'
 
+  gem.add_development_dependency 'aws-sdk-sqs', '~> 1.30'
+  gem.add_development_dependency 'aws-sdk-sns', '~> 1.30'
   gem.add_development_dependency 'bundler', '< 3.0'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'sqlite3'
@@ -58,6 +60,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'yard'
   gem.add_development_dependency 'rspec', '~> 3.3'
   gem.add_development_dependency 'factory_girl'
-  gem.add_development_dependency 'aws-sdk', '~> 3'
   gem.add_development_dependency 'pry'
 end
