@@ -5,7 +5,7 @@ describe DispatchRider::NotificationServices::AwsSns do
 
   describe "#notifier_builder" do
     it "returns the notifier builder" do
-      expect(subject.notifier_builder).to eq(AWS::SNS)
+      expect(subject.notifier_builder).to eq(Aws::SNS::Client)
     end
   end
 

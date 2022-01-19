@@ -5,15 +5,15 @@ describe DispatchRider::QueueServices::AwsSqs do
   let(:visibility_timeout) { 100 }
 
   let(:fake_response) do
-    AWS::SQS::Client.new.stub_for(:get_queue_url).tap { |response|
-      response.data[:queue_url] = "the.queue.url"
-      response.data[:attributes] = { "VisibilityTimeout" => visibility_timeout }
-    }
+    client = Aws::SQS::Client.new(stub_responses: true)
+    response = {}
+    response[:queue_url] = "the.queue.url"
+    response[:attributes] = { "VisibilityTimeout" => visibility_timeout }
+    client.stub_responses(:get_queue_url, response)
   end
 
   before do
-    AWS.config(stub_requests: true)
-    allow_any_instance_of(AWS::SQS::Client).to receive(:client_request).and_return(fake_response)
+    allow_any_instance_of(Aws::SQS::Client).to receive(:client_request).and_return(fake_response)
   end
 
   subject(:aws_sqs_queue) do
@@ -75,10 +75,10 @@ describe DispatchRider::QueueServices::AwsSqs do
       end
 
       before :each do
-        response = AWS::SQS::Client.new.stub_for(:receive_message)
-        response.data[:messages] = [response_message]
-        allow_any_instance_of(AWS::SQS::Client::V20121105).to receive(:receive_message).and_return(response)
-        allow_any_instance_of(AWS::SQS::Queue).to receive(:verify_receive_message_checksum).and_return([])
+        client = Aws::SQS::Client.new(stub_responses: true)
+        client.stub_responses(:receive_message, {messages: [response_message]})
+
+        allow_any_instance_of(Aws::SQS::Queue).to receive(:verify_receive_message_checksum).and_return([])
       end
 
       context "when the block runs faster than the timeout" do
@@ -139,15 +139,14 @@ describe DispatchRider::QueueServices::AwsSqs do
     end
 
     before :each do
-      response = AWS::SQS::Client.new.stub_for(:receive_message)
-      response.data[:messages] = [response_message]
-      allow_any_instance_of(AWS::SQS::Client::V20121105).to receive(:receive_message).and_return(response)
-      allow_any_instance_of(AWS::SQS::Queue).to receive(:verify_receive_message_checksum).and_return([])
+      client = Aws::SQS::Client.new(stub_responses: true)
+      client.stub_responses(:receive_message, {messages: [response_message]})
+      allow_any_instance_of(Aws::SQS::Queue).to receive(:verify_receive_message_checksum).and_return([])
     end
 
     it "should set the visibility timeout when extend is called" do
-      expect_any_instance_of(AWS::SQS::ReceivedMessage).to receive(:visibility_timeout=).with(10)
-      expect_any_instance_of(AWS::SQS::ReceivedMessage).to receive(:visibility_timeout=).with(0)
+      expect_any_instance_of(Aws::SQS::ReceivedMessage).to receive(:visibility_timeout=).with(10)
+      expect_any_instance_of(Aws::SQS::ReceivedMessage).to receive(:visibility_timeout=).with(0)
       aws_sqs_queue.pop do |message|
         message.extend_timeout(10)
         expect(message.total_timeout).to eq(10)
@@ -158,7 +157,7 @@ describe DispatchRider::QueueServices::AwsSqs do
   end
 
   describe "#construct_message_from" do
-    context "when the item is directly published to AWS::SQS" do
+    context "when the item is directly published to Aws::SQS" do
       let(:sqs_message) { OpenStruct.new(body: { 'subject' => 'foo', 'body' => 'bar' }.to_json) }
 
       it "should return a message" do
@@ -168,7 +167,7 @@ describe DispatchRider::QueueServices::AwsSqs do
       end
     end
 
-    context "when the item is published through AWS::SNS" do
+    context "when the item is published through Aws::SNS" do
       let(:sqs_message) do
         message = { 'subject' => 'foo', 'body' => 'bar' }
         body = { "Type" => "Notification", "Message" => message.to_json }.to_json

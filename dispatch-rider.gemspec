@@ -28,22 +28,22 @@ Gem::Specification.new do |gem|
     "Dane Natoli",
     "Piotr Banasik",
     "Ronald Maravilla",
+    "Mathieu Jobin",
   ]
   gem.email = [
-    "piotr@payrollhero.com",
-    "rmaravilla@payrollhero.com",
+    "mathieu@payrollhero.com",
   ]
   gem.homepage = 'https://github.com/payrollhero/dispatch-rider'
   gem.files = `git ls-files`.split($/)
   gem.executables = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
-  gem.required_ruby_version = '>= 2.1.8'
+  gem.required_ruby_version = '>= 2.6.5'
 
 
-  gem.add_runtime_dependency 'activesupport', '>= 3.2.0'
-  gem.add_runtime_dependency 'activemodel', '>= 3.2.0'
-  gem.add_runtime_dependency 'activerecord', '>= 3.2.0'
+  gem.add_runtime_dependency 'activesupport', '>= 5.2.0'
+  gem.add_runtime_dependency 'activemodel', '>= 5.2.0'
+  gem.add_runtime_dependency 'activerecord', '>= 5.2.0'
   gem.add_runtime_dependency 'daemons', '~> 1.2'
   gem.add_runtime_dependency 'retriable', '~> 3.1', '>= 3.1.2'
   # appsignal is an optional runtime dependency,
@@ -58,6 +58,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'yard'
   gem.add_development_dependency 'rspec', '~> 3.3'
   gem.add_development_dependency 'factory_girl'
-  gem.add_development_dependency 'aws-sdk', '~> 1'
+  gem.add_development_dependency 'aws-sdk', '~> 3'
   gem.add_development_dependency 'pry'
 end

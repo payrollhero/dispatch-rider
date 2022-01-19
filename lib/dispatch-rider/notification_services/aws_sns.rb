@@ -6,7 +6,7 @@ module DispatchRider
   module NotificationServices
     class AwsSns < Base
       def notifier_builder
-        AWS::SNS
+        Aws::SNS::Client
       rescue NameError
         raise AdapterNotFoundError.new(self.class.name, 'aws-sdk')
       end
@@ -16,7 +16,7 @@ module DispatchRider
       end
 
       def publish_to_channel(channel, message:)
-        Retriable.retriable(tries: 10, on: AWS::Errors::MissingCredentialsError) { super }
+        Retriable.retriable(tries: 10, on: Aws::Errors::MissingCredentialsError) { super }
       end
 
       # not really happy with this, but the notification service registrar system is way too rigid to do this cleaner

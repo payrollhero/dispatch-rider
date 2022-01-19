@@ -1,5 +1,11 @@
 # Change Log
 
+## [v2.0.0]
+
+* Now require Ruby 2.6.5 at the very minimum
+* Now require Rails 5.2 at the very minimum
+* Now require Aws SDK 3.x
+
 ## [v1.9.0](https://github.com/payrollhero/dispatch-rider/tree/v1.9.0) (2019-11-11)
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.8.6...v1.9.0)
 
