@@ -3,43 +3,37 @@ require 'spec_helper'
 describe DispatchRider::QueueServices::AwsSqs do
 
   let(:visibility_timeout) { 100 }
-
-  let(:fake_response) do
-    client = Aws::SQS::Client.new(stub_responses: true)
-    response = {}
-    response[:queue_url] = "the.queue.url"
-    response[:attributes] = { "VisibilityTimeout" => visibility_timeout }
-    client.stub_responses(:get_queue_url, response)
-  end
+  let(:region) { ENV['AWS_REGION'] || 'us-east-1' }
 
   before do
-    allow_any_instance_of(Aws::SQS::Client).to receive(:client_request).and_return(fake_response)
+    allow_any_instance_of(Aws::SQS::Client).to receive(:list_queues).and_return(OpenStruct.new({queue_urls:["the.queue.url"]}))
   end
 
   subject(:aws_sqs_queue) do
-    DispatchRider::QueueServices::AwsSqs.new(:name => "normal_priority")
+    DispatchRider::QueueServices::AwsSqs.new(:name => "normal_priority",region: region)
   end
 
   describe "#assign_storage" do
+
     context "when the aws gem is installed" do
 
       context "when the name of the queue is passed in the options" do
         it "should return an instance representing the aws sqs queue" do
-          aws_sqs_queue.assign_storage(:name => 'normal_priority')
+          aws_sqs_queue.assign_storage(:name => 'normal_priority',region: region)
           expect(aws_sqs_queue.queue.url).to eq('the.queue.url')
         end
       end
 
       context "when the url of the queue is passed in the options" do
         it "should return an instance representing the aws sqs queue" do
-          aws_sqs_queue.assign_storage(:url => 'https://sqs.us-east-1.amazonaws.com/12345/QueueName')
+          aws_sqs_queue.assign_storage(:url => 'https://sqs.us-east-1.amazonaws.com/12345/QueueName',region: region)
           expect(aws_sqs_queue.queue.url).to eq('the.queue.url')
         end
       end
 
       context "when neither the name nor the url of the queue is assed in the options" do
         it "should raise an exception" do
-          expect { aws_sqs_queue.assign_storage(:foo => 'bar') }.to raise_exception(DispatchRider::RecordInvalid)
+          expect { aws_sqs_queue.assign_storage(:foo => 'bar',region: region) }.to raise_exception(DispatchRider::RecordInvalid)
         end
       end
     end
@@ -65,20 +59,18 @@ describe DispatchRider::QueueServices::AwsSqs do
       end
 
       let(:response_message) do
-        {
+        OpenStruct.new({
           message_id: "12345",
           md5_of_body: "mmmddd555",
           body: { subject: "foo", body: { bar: "baz" } }.to_json,
           receipt_handle: "HANDLE",
           attributes: response_attributes,
-        }
+          visibility_timeout: visibility_timeout
+        })
       end
 
-      before :each do
-        client = Aws::SQS::Client.new(stub_responses: true)
-        client.stub_responses(:receive_message, {messages: [response_message]})
-
-        allow_any_instance_of(Aws::SQS::Queue).to receive(:verify_receive_message_checksum).and_return([])
+      before do
+        allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: response_message }))
       end
 
       context "when the block runs faster than the timeout" do
@@ -106,7 +98,7 @@ describe DispatchRider::QueueServices::AwsSqs do
 
     context "when the sqs queue is empty" do
       before :each do
-        allow(aws_sqs_queue.queue).to receive(:receive_message).and_return(nil)
+        allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: nil }))
       end
 
       it "should not yield" do
@@ -129,24 +121,21 @@ describe DispatchRider::QueueServices::AwsSqs do
     end
 
     let(:response_message) do
-      {
+      OpenStruct.new({
         message_id: 12345,
         md5_of_body: "mmmddd555",
         body: { subject: "foo", body: { bar: "baz" } }.to_json,
         receipt_handle: "HANDLE",
         attributes: response_attributes,
-      }
+        visibility_timeout: visibility_timeout
+      })
     end
 
-    before :each do
-      client = Aws::SQS::Client.new(stub_responses: true)
-      client.stub_responses(:receive_message, {messages: [response_message]})
-      allow_any_instance_of(Aws::SQS::Queue).to receive(:verify_receive_message_checksum).and_return([])
+    before do
+      allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: response_message }))
     end
 
     it "should set the visibility timeout when extend is called" do
-      expect_any_instance_of(Aws::SQS::ReceivedMessage).to receive(:visibility_timeout=).with(10)
-      expect_any_instance_of(Aws::SQS::ReceivedMessage).to receive(:visibility_timeout=).with(0)
       aws_sqs_queue.pop do |message|
         message.extend_timeout(10)
         expect(message.total_timeout).to eq(10)

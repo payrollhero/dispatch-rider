@@ -13,9 +13,10 @@ module DispatchRider
         begin
           sqs = Aws::SQS::Client.new(logger: nil, region: attrs[:region])
           if attrs[:name]
-            sqs.queues.named(attrs[:name])
+            url = sqs.list_queues({queue_name_prefix: attrs[:name]}).queue_urls.first
+            Aws::SQS::Queue.new(url: url, client: sqs)
           elsif attrs[:url]
-            sqs.queues[attrs[:url]]
+            Aws::SQS::Queue.new(url: attrs[:url], client: sqs)
           else
             raise RecordInvalid.new(self, ["Either name or url have to be specified"])
           end
@@ -25,7 +26,7 @@ module DispatchRider
       end
 
       def pop
-        raw_item = queue.receive_message
+        raw_item = queue.receive_messages({max_number_of_messages: 1}).first
         if raw_item.present?
           obj = SqsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue)
 
