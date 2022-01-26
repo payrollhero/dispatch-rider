@@ -45,7 +45,7 @@ describe DispatchRider::Publisher do
     it "registers a notification service" do
       subject.register_notification_service(:aws_sns)
       result = subject.notification_service_registrar.fetch(:aws_sns)
-      expect(result.notifier).to respond_to(:topics)
+      expect(result.notifier).to respond_to(:list_topics)
       expect(result.channel_registrar.store).to be_empty
     end
 
