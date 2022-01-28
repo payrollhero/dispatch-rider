@@ -11,11 +11,13 @@ module DispatchRider
 
       def assign_storage(attrs)
         begin
-          sqs = Aws::SQS::Client.new(logger: nil, region: attrs[:region])
-          if attrs[:name]
+          sqs = Aws::SQS::Client.new(logger: nil)
+          if attrs[:name].present?
             url = sqs.list_queues({queue_name_prefix: attrs[:name]}).queue_urls.first
+            set_visibility_timeout(sqs,url)
             Aws::SQS::Queue.new(url: url, client: sqs)
-          elsif attrs[:url]
+          elsif attrs[:url].present?
+            set_visibility_timeout(sqs,attrs[:url])
             Aws::SQS::Queue.new(url: attrs[:url], client: sqs)
           else
             raise RecordInvalid.new(self, ["Either name or url have to be specified"])
@@ -28,7 +30,7 @@ module DispatchRider
       def pop
         raw_item = queue.receive_messages({max_number_of_messages: 1}).first
         if raw_item.present?
-          obj = SqsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue)
+          obj = SqsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue, visibility_timeout)
 
           visibility_timeout_shield(obj) do
             raise AbortExecution, "false received from handler" unless yield(obj)
@@ -57,7 +59,14 @@ module DispatchRider
         queue.approximate_number_of_messages
       end
 
+      attr_reader :visibility_timeout
+
       private
+
+      def set_visibility_timeout(client,url)
+        resp = client.get_queue_attributes(queue_url: url, attribute_names: ["VisibilityTimeout"])
+        @visibility_timeout = resp.attributes["VisibilityTimeout"]
+      end
 
       def visibility_timeout_shield(message)
         begin

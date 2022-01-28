@@ -4,9 +4,9 @@ module DispatchRider
       class SqsReceivedMessage < ReceivedMessage
         attr_reader :total_timeout, :start_time
 
-        def initialize(message, raw_item, queue)
+        def initialize(message, raw_item, queue, queue_visibility_timeout)
           @queue = queue
-          @total_timeout = raw_item.visibility_timeout
+          @total_timeout = queue_visibility_timeout.to_i
           @start_time = Time.now
           super(message, raw_item)
         end

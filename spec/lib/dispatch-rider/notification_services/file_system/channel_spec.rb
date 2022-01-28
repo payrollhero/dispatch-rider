@@ -14,12 +14,12 @@ describe DispatchRider::NotificationServices::FileSystem::Channel do
 
     it "adds a file to the path folder" do
       expect {
-        subject.publish(message)
+        subject.publish(message: message)
       }.to change { Dir["#{path}/*"].length }.by(1)
     end
 
     it "writes the message to the file" do
-      subject.publish(message)
+      subject.publish(message: message)
 
       expect(published_message).to eq(message)
     end

@@ -3,14 +3,14 @@ require 'spec_helper'
 describe DispatchRider::QueueServices::AwsSqs do
 
   let(:visibility_timeout) { 100 }
-  let(:region) { ENV['AWS_REGION'] || 'us-east-1' }
 
   before do
     allow_any_instance_of(Aws::SQS::Client).to receive(:list_queues).and_return(OpenStruct.new({queue_urls:["the.queue.url"]}))
+    allow_any_instance_of(Aws::SQS::Client).to receive(:get_queue_attributes).and_return(OpenStruct.new({attributes:{"VisibilityTimeout"=>visibility_timeout}}))
   end
 
   subject(:aws_sqs_queue) do
-    DispatchRider::QueueServices::AwsSqs.new(:name => "normal_priority",region: region)
+    DispatchRider::QueueServices::AwsSqs.new(:name => "normal_priority")
   end
 
   describe "#assign_storage" do
@@ -19,21 +19,21 @@ describe DispatchRider::QueueServices::AwsSqs do
 
       context "when the name of the queue is passed in the options" do
         it "should return an instance representing the aws sqs queue" do
-          aws_sqs_queue.assign_storage(:name => 'normal_priority',region: region)
+          aws_sqs_queue.assign_storage(:name => 'normal_priority')
           expect(aws_sqs_queue.queue.url).to eq('the.queue.url')
         end
       end
 
       context "when the url of the queue is passed in the options" do
         it "should return an instance representing the aws sqs queue" do
-          aws_sqs_queue.assign_storage(:url => 'https://sqs.us-east-1.amazonaws.com/12345/QueueName',region: region)
+          aws_sqs_queue.assign_storage(:url => 'https://sqs.us-east-1.amazonaws.com/12345/QueueName')
           expect(aws_sqs_queue.queue.url).to eq('the.queue.url')
         end
       end
 
       context "when neither the name nor the url of the queue is assed in the options" do
         it "should raise an exception" do
-          expect { aws_sqs_queue.assign_storage(:foo => 'bar',region: region) }.to raise_exception(DispatchRider::RecordInvalid)
+          expect { aws_sqs_queue.assign_storage(:foo => 'bar') }.to raise_exception(DispatchRider::RecordInvalid)
         end
       end
     end

@@ -41,7 +41,7 @@ module DispatchRider
       end
 
       def publish_to_channel(channel, message:)
-        channel.publish(serialize(message))
+        channel.publish(message: serialize(message))
       end
 
       private
