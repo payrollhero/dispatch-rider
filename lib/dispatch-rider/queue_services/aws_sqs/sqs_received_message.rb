@@ -3,14 +3,14 @@ module DispatchRider
     class AwsSqs < Base
       class SqsReceivedMessage < ReceivedMessage
         attr_reader :total_timeout, :start_time
-        
-        def initialize(message, raw_item, queue)
+
+        def initialize(message, raw_item, queue, queue_visibility_timeout)
           @queue = queue
-          @total_timeout = queue.visibility_timeout
+          @total_timeout = queue_visibility_timeout.to_i
           @start_time = Time.now
           super(message, raw_item)
         end
-        
+
         # NOTE: Setting the visibility timeout resets the timeout to NOW and makes it visibility timeout this time
         # Essentially resetting the timer on this message
         def extend_timeout(timeout)
@@ -19,7 +19,7 @@ module DispatchRider
             @total_timeout = timeout + (Time.now - start_time).to_i
           end
         end
-        
+
         # We effectively return the item to the queue by setting
         # the visibility timeout to zero.  The item
         # should become immediately visible.
@@ -38,7 +38,7 @@ module DispatchRider
         end
 
         def queue_name
-          @queue.arn.split(':').last
+          @item.queue_arn.split(':').last
         end
 
       end

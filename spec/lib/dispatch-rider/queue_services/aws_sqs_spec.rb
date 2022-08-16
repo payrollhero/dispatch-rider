@@ -4,16 +4,9 @@ describe DispatchRider::QueueServices::AwsSqs do
 
   let(:visibility_timeout) { 100 }
 
-  let(:fake_response) do
-    AWS::SQS::Client.new.stub_for(:get_queue_url).tap { |response|
-      response.data[:queue_url] = "the.queue.url"
-      response.data[:attributes] = { "VisibilityTimeout" => visibility_timeout }
-    }
-  end
-
   before do
-    AWS.config(stub_requests: true)
-    allow_any_instance_of(AWS::SQS::Client).to receive(:client_request).and_return(fake_response)
+    allow_any_instance_of(Aws::SQS::Client).to receive(:list_queues).and_return(OpenStruct.new({queue_urls:["the.queue.url"]}))
+    allow_any_instance_of(Aws::SQS::Client).to receive(:get_queue_attributes).and_return(OpenStruct.new({attributes:{"VisibilityTimeout"=>visibility_timeout}}))
   end
 
   subject(:aws_sqs_queue) do
@@ -21,6 +14,7 @@ describe DispatchRider::QueueServices::AwsSqs do
   end
 
   describe "#assign_storage" do
+
     context "when the aws gem is installed" do
 
       context "when the name of the queue is passed in the options" do
@@ -65,20 +59,18 @@ describe DispatchRider::QueueServices::AwsSqs do
       end
 
       let(:response_message) do
-        {
-          message_id: 12345,
+        OpenStruct.new({
+          message_id: "12345",
           md5_of_body: "mmmddd555",
           body: { subject: "foo", body: { bar: "baz" } }.to_json,
           receipt_handle: "HANDLE",
           attributes: response_attributes,
-        }
+          visibility_timeout: visibility_timeout
+        })
       end
 
-      before :each do
-        response = AWS::SQS::Client.new.stub_for(:receive_message)
-        response.data[:messages] = [response_message]
-        allow_any_instance_of(AWS::SQS::Client::V20121105).to receive(:receive_message).and_return(response)
-        allow_any_instance_of(AWS::SQS::Queue).to receive(:verify_receive_message_checksum).and_return([])
+      before do
+        allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: response_message }))
       end
 
       context "when the block runs faster than the timeout" do
@@ -106,7 +98,7 @@ describe DispatchRider::QueueServices::AwsSqs do
 
     context "when the sqs queue is empty" do
       before :each do
-        allow(aws_sqs_queue.queue).to receive(:receive_message).and_return(nil)
+        allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: nil }))
       end
 
       it "should not yield" do
@@ -129,25 +121,21 @@ describe DispatchRider::QueueServices::AwsSqs do
     end
 
     let(:response_message) do
-      {
+      OpenStruct.new({
         message_id: 12345,
         md5_of_body: "mmmddd555",
         body: { subject: "foo", body: { bar: "baz" } }.to_json,
         receipt_handle: "HANDLE",
         attributes: response_attributes,
-      }
+        visibility_timeout: visibility_timeout
+      })
     end
 
-    before :each do
-      response = AWS::SQS::Client.new.stub_for(:receive_message)
-      response.data[:messages] = [response_message]
-      allow_any_instance_of(AWS::SQS::Client::V20121105).to receive(:receive_message).and_return(response)
-      allow_any_instance_of(AWS::SQS::Queue).to receive(:verify_receive_message_checksum).and_return([])
+    before do
+      allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: response_message }))
     end
 
     it "should set the visibility timeout when extend is called" do
-      expect_any_instance_of(AWS::SQS::ReceivedMessage).to receive(:visibility_timeout=).with(10)
-      expect_any_instance_of(AWS::SQS::ReceivedMessage).to receive(:visibility_timeout=).with(0)
       aws_sqs_queue.pop do |message|
         message.extend_timeout(10)
         expect(message.total_timeout).to eq(10)
@@ -158,7 +146,7 @@ describe DispatchRider::QueueServices::AwsSqs do
   end
 
   describe "#construct_message_from" do
-    context "when the item is directly published to AWS::SQS" do
+    context "when the item is directly published to Aws::SQS" do
       let(:sqs_message) { OpenStruct.new(body: { 'subject' => 'foo', 'body' => 'bar' }.to_json) }
 
       it "should return a message" do
@@ -168,7 +156,7 @@ describe DispatchRider::QueueServices::AwsSqs do
       end
     end
 
-    context "when the item is published through AWS::SNS" do
+    context "when the item is published through Aws::SNS" do
       let(:sqs_message) do
         message = { 'subject' => 'foo', 'body' => 'bar' }
         body = { "Type" => "Notification", "Message" => message.to_json }.to_json

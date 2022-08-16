@@ -5,7 +5,7 @@ describe DispatchRider::NotificationServices::AwsSns do
 
   describe "#notifier_builder" do
     it "returns the notifier builder" do
-      expect(subject.notifier_builder).to eq(AWS::SNS)
+      expect(subject.notifier_builder).to eq(Aws::SNS::Client)
     end
   end
 
@@ -21,12 +21,12 @@ describe DispatchRider::NotificationServices::AwsSns do
 
     # @note: This is tested this way cause you don't really wanna post a message to the actual service.
     it "publishes the message to the channels" do
-      expect(channel).to receive(:publish).with(kind_of String) do |serialized_message|
+      expect(channel).to receive(:publish).with(kind_of Hash) do |serialized_message|
                            expected = {
                              "subject" => "test_handler",
                              "body" => { "bar" => "baz" }
                            }
-                           expect(JSON.parse(serialized_message)).to eq(expected)
+                           expect(JSON.parse(serialized_message[:message])).to eq(expected)
                          end
 
       subject.publish_to_channel(channel, message: message)

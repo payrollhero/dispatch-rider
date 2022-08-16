@@ -9,7 +9,7 @@ module DispatchRider
       end
 
       def publish(message)
-        @file_system_queue.add(message)
+        @file_system_queue.add(message[:message])
       end
     end
   end

@@ -7,8 +7,8 @@ require 'dispatch-rider'
 
 Dir['./spec/support/**/*.rb'].each { |fn| require(fn) }
 
-FactoryGirl.definition_file_paths = %w{spec/factories/}
-FactoryGirl.find_definitions
+FactoryBot.definition_file_paths = %w{spec/factories/}
+FactoryBot.find_definitions
 
 RSpec.configure do |config|
   config.raise_errors_for_deprecations!
@@ -42,7 +42,7 @@ RSpec.configure do |config|
     DispatchRider::ScheduledJob.destroy_all
   end
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 end
 
 # Airbrake dummy module

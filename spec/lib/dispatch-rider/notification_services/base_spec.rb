@@ -5,7 +5,7 @@ describe DispatchRider::NotificationServices::Base do
     channel = OpenStruct.new
     class << channel
       def publish(msg)
-        throw :published, JSON.parse(msg)["body"]["bar"]
+        throw :published, JSON.parse(msg[:message])["body"]["bar"]
       end
     end
     channel
@@ -60,8 +60,8 @@ describe DispatchRider::NotificationServices::Base do
 
     # @note: This is tested this way cause you don't really wanna post a message to the actual service.
     it "publishes the message to the channels" do
-      expect(channel).to receive(:publish).with(kind_of String) { |serialized_message|
-                           parsed_message = JSON.parse(serialized_message)
+      expect(channel).to receive(:publish).with(kind_of Hash) { |serialized_message|
+                           parsed_message = JSON.parse(serialized_message[:message])
                            expect(parsed_message).to eq(expected_message)
                          }
 
