@@ -26,7 +26,6 @@ jobs:
           - Gemfile-5-2
           - Gemfile-6-0
           - Gemfile-6-1
-          - Gemfile-6-2
           - Gemfile-7-0
         exclude:
         - gemfile: Gemfile-7-0
