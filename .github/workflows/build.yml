@@ -20,7 +20,6 @@ jobs:
           - 2.6
         awssdk:
           - 1
-          - 2
           - 3
         gemfile:
           - Gemfile-5-2
