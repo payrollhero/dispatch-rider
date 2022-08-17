@@ -1,7 +1,6 @@
 module DispatchRider
   module Handlers
     module NamedProcess
-
       def with_named_process(message)
         original_program_name = $0
         begin
@@ -11,7 +10,6 @@ module DispatchRider
           $0 = original_program_name
         end
       end
-
     end
   end
 end

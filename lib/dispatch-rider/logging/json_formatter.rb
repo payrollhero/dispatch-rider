@@ -4,11 +4,9 @@ require 'json'
 module DispatchRider
   module Logging
     class JsonFormatter
-
       def format(data)
         data.to_json
       end
-
     end
   end
 end

@@ -1,6 +1,5 @@
 module DispatchRider
   module Logging
-
   end
 end
 

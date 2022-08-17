@@ -85,6 +85,5 @@ module DispatchRider
     def logger
       DispatchRider.config.logger
     end
-
   end
 end

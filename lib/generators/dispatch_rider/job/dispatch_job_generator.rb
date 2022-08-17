@@ -1,5 +1,4 @@
 class DispatchJob < Rails::Generators::Base
-
   class Publisher < Rails::Generators::Base
     source_root File.expand_path('../templates/publisher', __FILE__)
     argument :handler_name, type: :string, required: true
@@ -56,5 +55,4 @@ class DispatchJob < Rails::Generators::Base
   hook_for :handler do |handler|
     invoke handler, [handler_name]
   end
-
 end

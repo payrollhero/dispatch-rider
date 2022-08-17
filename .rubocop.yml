@@ -1,20 +1,30 @@
+require:
+  - rubocop-rails
+  - rubocop-rake
+  - rubocop-rspec
+  - rubocop-performance
+
 inherit_from:
- - .rubocop.hound.yml
+ - .rubocop_todo.yml
+
+Rails:
+  Enabled: true
 
 AllCops:
-  TargetRubyVersion: 2.1
+  NewCops: enable
+  TargetRubyVersion: 2.7
   Exclude:
     - '*.gemspec'
     - 'Gemfile'
+    - vendor/bundle/ruby/**/*
 
-Style/EmptyLinesAroundClassBody:
-  Enabled: false
+Rake/Desc:
+  Exclude:
+    - Rakefile
 
-Style/EmptyLinesAroundModuleBody:
-  Enabled: false
-
-Style/EmptyLinesAroundMethodBody:
-  Enabled: false
+RSpec/VariableName:
+  Exclude:
+    - spec/lib/dispatch-rider/publisher/base_spec.rb
 
 Style/ClassCheck:
   Enabled: false
@@ -23,8 +33,10 @@ Style/ClassCheck:
 Style/StringLiterals:
   Enabled: false
 
-Style/FileName:
-  Enabled: false
+Naming/FileName:
+  Exclude:
+    - lib/dispatch-rider.rb
+    - spec/lib/dispatch-rider_spec.rb
 
 Style/RedundantException:
   Enabled: false
@@ -39,17 +51,17 @@ Style/CollectionMethods:
   PreferredMethods:
     detect: find
 
-# Github's PR width is 120 characters
-Metrics/LineLength:
-  Max: 120
+# Github's PR width is 145 characters
+Layout/LineLength:
+  Max: 141
   AllowURI: true
 
 # Align with the style guide, we don't prefer anything
-Style/CollectionMethods:
-  Enabled: false
+#Style/CollectionMethods:
+  #Enabled: false
 
 Metrics/AbcSize:
   Description: A calculated magnitude based on number of assignments, branches, and
     conditions.
   Enabled: true
-  Max: 30
+  Max: 22

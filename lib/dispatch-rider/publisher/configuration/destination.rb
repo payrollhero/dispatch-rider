@@ -1,6 +1,5 @@
 module DispatchRider
   class Publisher::Configuration::Destination
-
     def initialize(name, attributes={})
       @name = name
 
@@ -18,6 +17,5 @@ module DispatchRider
         self.channel == other.channel &&
         self.options == other.options
     end
-
   end
 end

@@ -1,7 +1,6 @@
 module DispatchRider
   module Logging
     class Translator
-
       class StopTranslator < BaseTranslator
         def initialize(message, reason:)
           super(message)
@@ -12,7 +11,6 @@ module DispatchRider
           message_info_fragment(@message).merge reason: @reason
         end
       end
-
     end
   end
 end

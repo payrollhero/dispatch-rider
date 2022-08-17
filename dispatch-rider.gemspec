@@ -63,4 +63,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'yard'
   gem.add_development_dependency 'rspec', '~> 3.3'
   gem.add_development_dependency 'factory_bot'
+
+  # static analysis gems
+  gem.add_development_dependency 'rubocop_challenger'
 end

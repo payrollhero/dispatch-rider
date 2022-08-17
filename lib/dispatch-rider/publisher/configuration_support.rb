@@ -1,7 +1,6 @@
 module DispatchRider
   class Publisher
     module ConfigurationSupport
-
       def configuration
         @configuration ||= Configuration.new
       end
@@ -14,7 +13,6 @@ module DispatchRider
           configuration.parse(configuration_hash)
         end
       end
-
     end
   end
 end

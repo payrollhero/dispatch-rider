@@ -3,7 +3,6 @@
 module DispatchRider
   module NotificationServices
     class FileSystem::Channel
-
       def initialize(path)
         @file_system_queue = DispatchRider::QueueServices::FileSystem::Queue.new(path)
       end

@@ -1,7 +1,6 @@
 module DispatchRider
   module Logging
     class Translator
-
       class FailTranslator < BaseTranslator
         def initialize(message, exception:)
           super(message)
@@ -12,7 +11,6 @@ module DispatchRider
           exception_info_fragment(@message, @exception)
         end
       end
-
     end
   end
 end

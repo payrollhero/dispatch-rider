@@ -1,7 +1,6 @@
 module DispatchRider
   class Publisher
     module ConfigurationReader
-
       class << self
         def load_config(configuration, publisher)
           configure_notification_services(configuration.notification_services, publisher)
@@ -21,9 +20,7 @@ module DispatchRider
             publisher.register_destination(destination.name, destination.service, destination.channel, destination.options)
           end
         end
-
       end
-
     end
   end
 end

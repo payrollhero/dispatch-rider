@@ -25,7 +25,5 @@ module DispatchRider
       end
       true # success => true (delete message)
     end
-
-
   end
 end

@@ -44,6 +44,5 @@ module DispatchRider
       @subscriber.register_queue(kind, info)
       @subscriber.setup_demultiplexer(kind, config.error_handler)
     end
-
   end
 end
