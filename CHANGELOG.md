@@ -4,7 +4,8 @@
 
 * Now require Ruby 2.6.5 at the very minimum
 * Now require Rails 5.2 at the very minimum
-* Now require Aws SDK 3.x
+* Now support both Aws SDK 1.x and 3.x
+* Security Update Rails (CVE-2022-32224): Automatically set the active-record config DispatchRider::ScheduledJob model.
 
 ## [v1.9.0](https://github.com/payrollhero/dispatch-rider/tree/v1.9.0) (2019-11-11)
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.8.6...v1.9.0)

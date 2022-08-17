@@ -18,15 +18,22 @@ jobs:
         ruby:
           - 2.7
           - 2.6
+        awssdk:
+          - 1
+          - 3
         gemfile:
           - Gemfile-5-2
           - Gemfile-6-0
           - Gemfile-6-1
+          - Gemfile-7-0
         exclude:
+        - gemfile: Gemfile-7-0
+          ruby: 2.6
         - gemfile: Gemfile-5-2
           ruby: 3.0
 
     env:
+      AWS_SDK_VER: ${{ matrix.awssdk }}
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}
       AWS_REGION: us-east1
     steps:

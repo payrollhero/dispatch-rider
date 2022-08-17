@@ -2,5 +2,5 @@ source 'https://rubygems.org'
 
 gemspec path: '..'
 
-gem 'rails', '~> 5.2.6'
+gem 'rails', '~> 7.0.3'
 gem 'aws-sdk', "~> #{ENV['AWS_SDK_VER']}"
