@@ -58,10 +58,12 @@ end
 
 if DispatchRider::ScheduledJob.respond_to? :yaml_column_permitted_classes
   DispatchRider::ScheduledJob.yaml_column_permitted_classes = [Symbol]
+elsif ActiveRecord.respond_to? :yaml_column_permitted_classes
+  ActiveRecord.yaml_column_permitted_classes = [Symbol]
 elsif DispatchRider::ScheduledJob.respond_to? :use_yaml_unsafe_load=
   DispatchRider::ScheduledJob.use_yaml_unsafe_load = true
 else
-  puts "this version of ActiveRecord does not have this option"
+  warn "this version of ActiveRecord does not have this option"
 end
 
 require_relative "scheduled_job/migration"
