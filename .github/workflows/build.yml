@@ -24,8 +24,10 @@ jobs:
         gemfile:
           - Gemfile-5-2
           - Gemfile-6-0
+          - Gemfile-6-1-before-CVE
+          - Gemfile-7-0-before-CVE
           - Gemfile-6-1
-          #- Gemfile-7-0
+          - Gemfile-7-0
         exclude:
         - gemfile: Gemfile-7-0
           ruby: 2.6
