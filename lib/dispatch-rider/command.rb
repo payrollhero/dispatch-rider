@@ -4,7 +4,6 @@ require 'optparse'
 
 module DispatchRider
   class Command
-
     def initialize(options = {})
       @app_home = Pathname.new(Dir.getwd)
       @options = {
@@ -51,6 +50,5 @@ module DispatchRider
       end
       @opts = opts.parse!(args)
     end
-
   end
 end

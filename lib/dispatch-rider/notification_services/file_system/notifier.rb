@@ -3,7 +3,6 @@
 module DispatchRider
   module NotificationServices
     class FileSystem::Notifier
-
       def initialize(options)
         # nothing to do here
       end
@@ -11,7 +10,6 @@ module DispatchRider
       def channel(path)
         FileSystem::Channel.new(path)
       end
-
     end
   end
 end

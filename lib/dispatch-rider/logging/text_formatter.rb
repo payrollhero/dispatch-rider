@@ -2,7 +2,6 @@
 module DispatchRider
   module Logging
     class TextFormatter
-
       def format(data)
         case data[:phase]
         when :complete
@@ -42,7 +41,6 @@ module DispatchRider
       def format_duration(duration)
         '%.2f' % [duration]
       end
-
     end
   end
 end

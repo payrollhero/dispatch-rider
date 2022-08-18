@@ -28,7 +28,6 @@ module DispatchRider
         def queue_name
           File.basename(File.dirname(@item.path))
         end
-
       end
     end
   end

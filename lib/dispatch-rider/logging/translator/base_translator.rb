@@ -1,7 +1,6 @@
 module DispatchRider
   module Logging
     class Translator
-
       class BaseTranslator
         def initialize(message, **)
           @message = message
@@ -38,7 +37,6 @@ module DispatchRider
           message_info_fragment(message).merge exception_details
         end
       end
-
     end
   end
 end

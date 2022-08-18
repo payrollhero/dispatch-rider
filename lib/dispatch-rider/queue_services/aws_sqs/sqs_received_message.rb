@@ -40,7 +40,6 @@ module DispatchRider
         def queue_name
           @item.queue_arn.split(':').last
         end
-
       end
     end
   end

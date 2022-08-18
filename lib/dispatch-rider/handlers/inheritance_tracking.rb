@@ -4,7 +4,6 @@
 module DispatchRider
   module Handlers
     module InheritanceTracking
-
       def inherited(subclass)
         subclasses << subclass
         super
@@ -13,7 +12,6 @@ module DispatchRider
       def subclasses
         @subclasses ||= Set.new
       end
-
     end
   end
 end

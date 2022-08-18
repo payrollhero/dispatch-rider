@@ -10,21 +10,19 @@ module DispatchRider
       class VisibilityTimeoutExceeded < RuntimeError; end
 
       def assign_storage(attrs)
-        begin
-          sqs = Aws::SQS::Client.new(logger: nil)
-          if attrs[:name].present?
-            url = sqs.list_queues({queue_name_prefix: attrs[:name]}).queue_urls.first
-            set_visibility_timeout(sqs,url)
-            Aws::SQS::Queue.new(url: url, client: sqs)
-          elsif attrs[:url].present?
-            set_visibility_timeout(sqs,attrs[:url])
-            Aws::SQS::Queue.new(url: attrs[:url], client: sqs)
-          else
-            raise RecordInvalid.new(self, ["Either name or url have to be specified"])
-          end
-        rescue NameError
-          raise AdapterNotFoundError.new(self.class.name, 'aws-sdk')
+        sqs = Aws::SQS::Client.new(logger: nil)
+        if attrs[:name].present?
+          url = sqs.list_queues({queue_name_prefix: attrs[:name]}).queue_urls.first
+          set_visibility_timeout(sqs,url)
+          Aws::SQS::Queue.new(url: url, client: sqs)
+        elsif attrs[:url].present?
+          set_visibility_timeout(sqs,attrs[:url])
+          Aws::SQS::Queue.new(url: attrs[:url], client: sqs)
+        else
+          raise RecordInvalid.new(self, ["Either name or url have to be specified"])
         end
+      rescue NameError
+        raise AdapterNotFoundError.new(self.class.name, 'aws-sdk')
       end
 
       def pop
@@ -69,15 +67,15 @@ module DispatchRider
       end
 
       def visibility_timeout_shield(message)
-        begin
-          yield
-        ensure
-          duration = Time.now - message.start_time
-          timeout = message.total_timeout
-          raise VisibilityTimeoutExceeded, "message: #{message.subject}, #{message.body.inspect} took #{duration} seconds while the timeout was #{timeout}" if duration > timeout
+        yield
+      ensure
+        duration = Time.now - message.start_time
+        timeout = message.total_timeout
+        if duration > timeout
+          message = "message: #{message.subject}, #{message.body.inspect} took #{duration} seconds while the timeout was #{timeout}"
+          raise VisibilityTimeoutExceeded, message
         end
       end
-
     end
   end
 end

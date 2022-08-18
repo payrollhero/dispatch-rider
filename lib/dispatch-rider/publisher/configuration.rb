@@ -1,6 +1,5 @@
 module DispatchRider
   class Publisher::Configuration
-
     def initialize(configuration_hash = {})
       @notification_services = []
       @destinations = []
@@ -41,7 +40,6 @@ module DispatchRider
         @destinations << Destination.new(name, options)
       end
     end
-
   end
 end
 

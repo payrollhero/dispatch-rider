@@ -2,7 +2,6 @@ module DispatchRider
   module Callbacks
     # Storage for callbacks.
     class Storage
-
       def initialize
         @callbacks = Hash.new { |storage, key| storage[key] = [] }
       end
@@ -41,7 +40,6 @@ module DispatchRider
       def for(event)
         @callbacks[event]
       end
-
     end
   end
 end

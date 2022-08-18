@@ -4,7 +4,6 @@ if defined? Appsignal
   module DispatchRider
     module Integrations
       module Appsignal
-
         def self.wrap_message(job, message)
           ::Appsignal.start
 
@@ -21,7 +20,6 @@ if defined? Appsignal
 
           ::Appsignal.stop
         end
-
       end
     end
   end

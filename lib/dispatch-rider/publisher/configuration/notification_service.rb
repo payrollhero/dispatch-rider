@@ -1,6 +1,5 @@
 module DispatchRider
   class Publisher::Configuration::NotificationService
-
     def initialize(name, options)
       @name = name
       @options = options
@@ -12,6 +11,5 @@ module DispatchRider
       self.name == other.name &&
         self.options == other.options
     end
-
   end
 end

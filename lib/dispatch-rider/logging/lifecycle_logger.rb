@@ -89,7 +89,6 @@ module DispatchRider
         when :start, :stop, :complete, :success then :info
         end
       end
-
     end
   end
 end

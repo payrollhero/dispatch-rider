@@ -7,9 +7,9 @@ handling the messages.
 
 ### Build status
 
-[![Build Status](https://travis-ci.org/payrollhero/dispatch-rider.png?branch=master)](https://travis-ci.org/payrollhero/dispatch-rider)
+[![build](https://github.com/payrollhero/dispatch-rider/actions/workflows/build.yml/badge.svg)](https://github.com/payrollhero/dispatch-rider/actions/workflows/build.yml)
+[![Coverage Status](https://coveralls.io/repos/github/payrollhero/dispatch-rider/badge.svg)](https://coveralls.io/github/payrollhero/dispatch-rider)
 [![Code Climate](https://codeclimate.com/github/payrollhero/dispatch-rider.png)](https://codeclimate.com/github/payrollhero/dispatch-rider)
-[![Dependency Status](https://gemnasium.com/payrollhero/dispatch-rider.png)](https://gemnasium.com/payrollhero/dispatch-rider)
 
 
 ## Installation

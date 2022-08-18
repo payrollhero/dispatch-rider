@@ -29,5 +29,4 @@ module IntegrationSupport
 
     subscriber.demultiplexer.start
   end
-
 end

@@ -1,6 +1,5 @@
 module DispatchRider
   module Logging
-
     # Translates a message into a loggable hash based on its result.
     class Translator
       def self.translate(message, kind, **args)
@@ -13,7 +12,6 @@ module DispatchRider
         const_get("#{kind}_translator".classify)
       end
     end
-
   end
 end
 

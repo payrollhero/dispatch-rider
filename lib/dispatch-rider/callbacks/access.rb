@@ -21,7 +21,6 @@ module DispatchRider
 
         block_with_callbacks.call
       end
-
     end
   end
 end
