@@ -3,10 +3,10 @@ require "spec_helper"
 describe DispatchRider::ScheduledJob do
   let(:message_details) {
     {
-      destinations: ["allied_forces"],
+      destinations: [:allied_forces],
       message: {
-        "subject" => "war_update",
-        "body" => { "enigma_machine" => "broken" }
+        subject: :war_update,
+        body: { enigma_machine: :broken }
       }
     }
   }
@@ -32,10 +32,10 @@ describe DispatchRider::ScheduledJob do
 
   describe ".publish_due_jobs" do
     example {
-      expect(described_class.publisher).to receive(:publish).once.with destinations: ["allied_forces"],
+      expect(described_class.publisher).to receive(:publish).once.with destinations: [:allied_forces],
                                                                        message: {
-                                                                         "subject" => "war_update",
-                                                                         "body" => { "enigma_machine" => "broken" }
+                                                                         subject: :war_update,
+                                                                         body: { enigma_machine: :broken }
                                                                        }
 
       2.times { described_class.publish_due_jobs }
@@ -45,15 +45,15 @@ describe DispatchRider::ScheduledJob do
   describe "#destinations serialization" do
     subject { described_class.find(due_job.id).destinations }
 
-    it { is_expected.to eq ["allied_forces"] }
+    it { is_expected.to eq [:allied_forces] }
   end
 
   describe "#message serialization" do
     subject { described_class.find(due_job.id).message }
 
     it {
-      is_expected.to eq "subject" => "war_update",
-                        "body" => { "enigma_machine" => "broken" }
+      is_expected.to eq subject: :war_update,
+                        body: { enigma_machine: :broken }
     }
   end
 
@@ -61,10 +61,10 @@ describe DispatchRider::ScheduledJob do
     subject(:job) { described_class.find(due_job.id) }
 
     example {
-      expect(described_class.publisher).to receive(:publish).with destinations: ["allied_forces"],
+      expect(described_class.publisher).to receive(:publish).with destinations: [:allied_forces],
                                                                   message: {
-                                                                    "subject" => "war_update",
-                                                                    "body" => { "enigma_machine" => "broken" }
+                                                                    subject: :war_update,
+                                                                    body: { enigma_machine: :broken }
                                                                   }
 
       job.publish
