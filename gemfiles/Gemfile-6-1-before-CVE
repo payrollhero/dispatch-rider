@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+gemspec path: '..'
+
+gem 'rails', '6.1.6' # without .1
+gem 'aws-sdk', "~> #{ENV['AWS_SDK_VER']}"
