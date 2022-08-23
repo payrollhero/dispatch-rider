@@ -89,7 +89,7 @@ describe DispatchRider::QueueServices::AwsSqs do
 
         it "should raise" do
           expect {
-            aws_sqs_queue.pop do |message|
+            aws_sqs_queue.pop do |_message|
               sleep(1.1)
             end
           }.to raise_exception(/message: foo,.+ took .+ seconds while the timeout was 1/)
