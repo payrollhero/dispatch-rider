@@ -15,7 +15,7 @@ describe DispatchRider::Callbacks::Storage do
           log << :aafter
         end
         subject.for(:initialize).first[actual]
-        expect(log).to eq [:abefore, :actual, :aafter]
+        expect(log).to eq %i[abefore actual aafter]
       end
     end
 
@@ -23,7 +23,7 @@ describe DispatchRider::Callbacks::Storage do
       example do
         subject.before(:initialize) { log << :before }
         subject.for(:initialize).first[actual]
-        expect(log).to eq [:before, :actual]
+        expect(log).to eq %i[before actual]
       end
     end
 
@@ -31,7 +31,7 @@ describe DispatchRider::Callbacks::Storage do
       example do
         subject.after(:initialize) { log << :after }
         subject.for(:initialize).first[actual]
-        expect(log).to eq [:actual, :after]
+        expect(log).to eq %i[actual after]
       end
     end
   end
