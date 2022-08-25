@@ -844,13 +844,6 @@ Style/PreferredHashMethods:
 Style/QuotedSymbols:
   EnforcedStyle: double_quotes
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, AllowedCompactTypes.
-# SupportedStyles: compact, exploded
-Style/RaiseArgs:
-  Exclude:
-    - 'lib/dispatch-rider/registrars/base.rb'
 
 # Offense count: 8
 # This cop supports safe autocorrection (--autocorrect).
