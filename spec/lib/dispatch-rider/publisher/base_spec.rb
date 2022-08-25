@@ -3,7 +3,7 @@ require 'spec_helper'
 describe DispatchRider::Publisher::Base do
 
   class DummyPublisher < DispatchRider::Publisher::Base
-    destinations [:sns_message_queue, :file_system_queue]
+    destinations %i[sns_message_queue file_system_queue]
     subject "Loud Cheering"
 
     def self.publish(cheer)
@@ -38,7 +38,7 @@ describe DispatchRider::Publisher::Base do
     context "in a derived class with publish implemented" do
       let(:message) do
         {
-          destinations: [:sns_message_queue, :file_system_queue],
+          destinations: %i[sns_message_queue file_system_queue],
           message: {
             subject: "Loud Cheering",
             body: {
