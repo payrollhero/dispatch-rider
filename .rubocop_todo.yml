@@ -314,12 +314,6 @@ Naming/RescuedExceptionsVariableName:
     - 'lib/dispatch-rider/demultiplexer.rb'
     - 'lib/dispatch-rider/logging/lifecycle_logger.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Performance/RedundantBlockCall:
-  Exclude:
-    - 'lib/dispatch-rider/command.rb'
-    - 'lib/dispatch-rider/queue_services/base.rb'
 
 # Offense count: 10
 RSpec/AnyInstance:
