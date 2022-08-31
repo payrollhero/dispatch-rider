@@ -89,11 +89,6 @@ Layout/LeadingCommentSpace:
     - 'lib/dispatch-rider/queue_services/received_message.rb'
     - 'spec/lib/dispatch-rider/configuration_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/MultilineBlockLayout:
-  Exclude:
-    - 'spec/factories/messages.rb'
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
