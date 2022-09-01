@@ -183,13 +183,6 @@ Layout/SpaceInsideParens:
   Exclude:
     - 'lib/dispatch-rider/handlers/base.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: space, no_space
-Layout/SpaceInsideStringInterpolation:
-  Exclude:
-    - 'lib/dispatch-rider/logging/text_formatter.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
