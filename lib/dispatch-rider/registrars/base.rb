@@ -15,7 +15,7 @@ module DispatchRider
         store[name.to_sym] = value(name, options)
         self
       rescue NameError
-        raise NotFound.new(name)
+        raise NotFound, name
       end
 
       def value(name, options = {})
@@ -31,7 +31,7 @@ module DispatchRider
         begin
           store.fetch(name.to_sym)
         rescue IndexError
-          raise NotRegistered.new(name)
+          raise NotRegistered, name
         end
       end
     end
