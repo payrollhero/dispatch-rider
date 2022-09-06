@@ -18,6 +18,9 @@ AllCops:
     - 'Gemfile'
     - vendor/bundle/ruby/**/*
 
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
 Rake/Desc:
   Exclude:
     - Rakefile
