@@ -13,7 +13,7 @@ module DispatchRider
         when :success
           "Succeeded execution of: #{message_info_fragment(data)}"
         when :stop
-          "Got stop #{data[:reason] ? '(' + data[:reason] + ')' : '' } while executing: #{message_info_fragment(data)}"
+          "Got stop #{data[:reason] ? '(' + data[:reason] + ')' : ''} while executing: #{message_info_fragment(data)}"
         when :error_handler_fail
           "Failed error handling of: #{exception_info_fragment(data)}"
         else
