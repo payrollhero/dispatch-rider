@@ -62,13 +62,13 @@ describe DispatchRider::QueueServices::AwsSqs do
 
       let(:response_message) do
         OpenStruct.new({
-                         message_id: "12345",
-                         md5_of_body: "mmmddd555",
-                         body: { subject: "foo", body: { bar: "baz" } }.to_json,
-                         receipt_handle: "HANDLE",
-                         attributes: response_attributes,
-                         visibility_timeout: visibility_timeout
-                       })
+          message_id: "12345",
+          md5_of_body: "mmmddd555",
+          body: { subject: "foo", body: { bar: "baz" } }.to_json,
+          receipt_handle: "HANDLE",
+          attributes: response_attributes,
+          visibility_timeout: visibility_timeout
+        })
       end
 
       before do
@@ -124,13 +124,13 @@ describe DispatchRider::QueueServices::AwsSqs do
 
     let(:response_message) do
       OpenStruct.new({
-                       message_id: 12345,
-                       md5_of_body: "mmmddd555",
-                       body: { subject: "foo", body: { bar: "baz" } }.to_json,
-                       receipt_handle: "HANDLE",
-                       attributes: response_attributes,
-                       visibility_timeout: visibility_timeout
-                     })
+        message_id: 12345,
+        md5_of_body: "mmmddd555",
+        body: { subject: "foo", body: { bar: "baz" } }.to_json,
+        receipt_handle: "HANDLE",
+        attributes: response_attributes,
+        visibility_timeout: visibility_timeout
+      })
     end
 
     before do
