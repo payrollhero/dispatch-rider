@@ -93,6 +93,7 @@ describe DispatchRider::Subscriber do
 
       context "when process quits" do
         let(:message_subject) { :quiter }
+
         before do
           konst = Class.new(DispatchRider::Handlers::Base) do
             def process(_options)
@@ -110,6 +111,7 @@ describe DispatchRider::Subscriber do
 
       context "when process terminates" do
         let(:message_subject) { :terminator }
+
         before do
           konst = Class.new(DispatchRider::Handlers::Base) do
             def process(_options)
@@ -126,6 +128,7 @@ describe DispatchRider::Subscriber do
 
       context "when process is interupted" do
         let(:message_subject) { :interupter }
+
         before do
           konst = Class.new(DispatchRider::Handlers::Base) do
             def process(_options)
@@ -142,6 +145,7 @@ describe DispatchRider::Subscriber do
 
       context "when process is interupted twice" do
         let(:message_subject) { :twice_interupter }
+
         before do
           allow(subject.demultiplexer).to receive(:stop) # do nothing just ignore the interuption
           allow(subject).to receive(:exit) { throw :got_forcefully_stopped }
