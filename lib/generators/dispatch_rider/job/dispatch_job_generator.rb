@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DispatchJob < Rails::Generators::Base
   class Publisher < Rails::Generators::Base
     source_root File.expand_path('../templates/publisher', __FILE__)

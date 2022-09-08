@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is the registrar for the handlers.
 module DispatchRider
   module Registrars

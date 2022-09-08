@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DispatchRider
   class Publisher::Configuration
     def initialize(configuration_hash = {})

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class takes care of the subscribing side of the messaging system.
 module DispatchRider
   class Subscriber

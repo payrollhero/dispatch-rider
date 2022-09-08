@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is abstraction around a notifier service for FileSystem based queue services
 
 module DispatchRider

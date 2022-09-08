@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Text Log Formatter
 module DispatchRider
   module Logging

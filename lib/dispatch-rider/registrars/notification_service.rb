@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This registrar handles the registration of various notification services.
 module DispatchRider
   module Registrars

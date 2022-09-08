@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # this is a basic notification service which uses a filesystem folder to handle notifications
 
 module DispatchRider

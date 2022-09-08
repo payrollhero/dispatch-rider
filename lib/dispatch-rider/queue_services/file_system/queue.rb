@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is a queue implementation for the queue service based on file systems
 module DispatchRider
   module QueueServices
