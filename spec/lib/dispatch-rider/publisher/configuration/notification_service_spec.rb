@@ -2,13 +2,12 @@ require 'spec_helper'
 
 describe DispatchRider::Publisher::Configuration::NotificationService do
 
+  subject { described_class.new("file_system", options) }
   let(:options) do
     {
       "default_folder" => "/tmp/dispatch_rider"
     }
   end
-
-  subject { described_class.new("file_system", options) }
 
   describe "#name" do
     describe '#name' do

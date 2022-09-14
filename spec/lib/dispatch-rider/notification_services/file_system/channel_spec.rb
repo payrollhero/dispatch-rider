@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe DispatchRider::NotificationServices::FileSystem::Channel do
+  subject { described_class.new(path) }
+
   let(:path) { File.expand_path("tmp/test/channel") }
   let(:published_message) { File.new(Dir["#{path}/*.ready"].first).read }
 
   before { FileUtils.mkdir_p(path) }
   after { FileUtils.rm_rf(path) }
-
-  subject { described_class.new(path) }
 
   describe "#publish" do
     let(:message) { { subject: "foo", body: "bar" }.to_json }
