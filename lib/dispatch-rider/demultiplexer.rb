@@ -17,13 +17,13 @@ module DispatchRider
 
     def start
       do_loop do
-        begin
-          sleep 1
-          handle_next_queue_item
-        rescue => exception
-          error_handler.call(Message.new(subject: "TopLevelError", body: {}), exception)
-          throw :done
-        end
+
+        sleep 1
+        handle_next_queue_item
+      rescue => exception
+        error_handler.call(Message.new(subject: "TopLevelError", body: {}), exception)
+        throw :done
+
       end
       self
     end
@@ -36,12 +36,10 @@ module DispatchRider
     private
 
     def with_current_message(message)
-      begin
-        @current_message = message
-        yield
-      ensure
-        @current_message = nil
-      end
+      @current_message = message
+      yield
+    ensure
+      @current_message = nil
     end
 
     # This needs to return true/false based on the success of the jobs!
@@ -74,12 +72,10 @@ module DispatchRider
     end
 
     def handle_message_error(message, exception)
-      begin
-        error_handler.call(message, exception)
-      rescue => error_handler_exception # the error handler crashed
-        Logging::LifecycleLogger.log_error_handler_fail message, error_handler_exception
-        raise error_handler_exception
-      end
+      error_handler.call(message, exception)
+    rescue => error_handler_exception # the error handler crashed
+      Logging::LifecycleLogger.log_error_handler_fail message, error_handler_exception
+      raise error_handler_exception
     end
 
     def logger

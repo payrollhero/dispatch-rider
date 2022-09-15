@@ -28,11 +28,9 @@ module DispatchRider
       end
 
       def fetch(name)
-        begin
-          store.fetch(name.to_sym)
-        rescue IndexError
-          raise NotRegistered, name
-        end
+        store.fetch(name.to_sym)
+      rescue IndexError
+        raise NotRegistered, name
       end
     end
   end
