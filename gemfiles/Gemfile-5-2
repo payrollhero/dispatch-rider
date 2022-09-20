@@ -3,4 +3,4 @@ source 'https://rubygems.org'
 gemspec path: '..'
 
 gem 'rails', '~> 5.2.6'
-gem 'aws-sdk', "~> #{ENV['AWS_SDK_VER']}"
+gem (ENV['AWS_SDK_VER'] == 'v1' ? 'aws-sdk-v1' : 'aws-sdk')
