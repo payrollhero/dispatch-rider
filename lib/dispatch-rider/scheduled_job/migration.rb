@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DispatchRider
   module ScheduledJob::Migration
     def create_scheduled_jobs_table

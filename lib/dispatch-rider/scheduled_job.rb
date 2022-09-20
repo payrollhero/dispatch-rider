@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "active_record"
 
 # @note: Later this could be pulled out to its own gem and included depending on what ORM the user

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if defined? Appsignal
   ::Appsignal.logger.info('Loading Dispatch Rider integration')
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The namespace that holds the registrars
 module DispatchRider
   module Registrars

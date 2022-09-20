@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # this represents a FileSystem queue channel (or basically a folder)
 
 module DispatchRider

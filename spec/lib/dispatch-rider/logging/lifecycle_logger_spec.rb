@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do

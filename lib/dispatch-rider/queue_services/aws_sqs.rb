@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This queue service is based on aws sqs.
 # To make this queue service work, one would need the aws sqs gem to be installed.
 module DispatchRider

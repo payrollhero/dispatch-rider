@@ -654,13 +654,6 @@ Style/FormatString:
   Exclude:
     - 'lib/dispatch-rider/logging/text_formatter.rb'
 
-# Offense count: 123
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, always_true, never
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/GlobalStdStream:
@@ -716,14 +709,6 @@ Style/IfUnlessModifier:
 Style/Lambda:
   Exclude:
     - 'spec/lib/dispatch-rider/logging/lifecycle_logger_spec.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: literals, strict
-Style/MutableConstant:
-  Exclude:
-    - 'lib/dispatch-rider/version.rb'
 
 # Offense count: 3
 # This cop supports safe autocorrection (--autocorrect).

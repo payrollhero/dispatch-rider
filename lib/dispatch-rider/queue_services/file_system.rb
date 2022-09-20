@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is a rudementary queue service that uses file system instead of
 # Aws::SQS or SimpleQueue. It addresses SimpleQueue's inability to be used
 # by only one application instance while avoiding the cost of setting up Aws::SQS.

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DispatchRider
   module QueueServices
     class FileSystem < Base

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DispatchRider
   module Logging
     # Translates a message into a loggable hash based on its result.

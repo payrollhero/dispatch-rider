@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This module tracks which classes inherit from the class that includes
 # the module, and provides an accessor to it.
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is a basic implementation of the Notification service using Amazon SNS.
 # The expected usage is as follows :
 #   notification_service = DispatchRider::NotificationServices::AwsSns.new

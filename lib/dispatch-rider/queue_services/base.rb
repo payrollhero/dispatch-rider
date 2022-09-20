@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is the base class that provides the template for all queue services.
 # The child classes must implement the following methods to become a concrete class :
 # assign_storage, insert, raw_head, construct_message_from, delete and size.

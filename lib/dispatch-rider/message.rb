@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class represents a message. All other objects dela with passing around instances of this class.
 # A message must have a subject and a body. The subject represents the handlers name and the body represents
 # the payload of the process method in the handler.
