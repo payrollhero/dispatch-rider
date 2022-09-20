@@ -72,7 +72,7 @@ module DispatchRider
       end
 
       def translated_message
-        translator.translate(message, kind, options)
+        translator.translate(message, kind, **options)
       end
 
       def interjected_message

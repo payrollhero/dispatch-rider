@@ -29,10 +29,6 @@ RSpec/VariableName:
   Exclude:
     - spec/lib/dispatch-rider/publisher/base_spec.rb
 
-Style/ClassCheck:
-  Enabled: false
-  # we don't care about kind_of? vs is_a?
-
 Style/StringLiterals:
   Enabled: false
 
