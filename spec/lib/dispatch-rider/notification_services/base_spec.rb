@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe DispatchRider::NotificationServices::Base do
+  subject do
+    DispatchRider::NotificationServices::Base.new(topics: {})
+  end
+
   let :channel do
     channel = OpenStruct.new
     class << channel
@@ -18,10 +22,6 @@ describe DispatchRider::NotificationServices::Base do
     allow_any_instance_of(described_class).to receive(:channel) do |name|
       subject.notifier.topics[subject.fetch(name)] if name == :foo
     end
-  end
-
-  subject do
-    DispatchRider::NotificationServices::Base.new(topics: {})
   end
 
   describe "#initialize" do
