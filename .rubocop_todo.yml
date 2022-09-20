@@ -187,12 +187,6 @@ Layout/TrailingWhitespace:
     - 'lib/dispatch-rider/queue_services/file_system.rb'
     - 'lib/dispatch-rider/queue_services/file_system/fs_received_message.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Lint/AmbiguousOperator:
-  Exclude:
-    - 'Rakefile'
-
 # Offense count: 13
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
