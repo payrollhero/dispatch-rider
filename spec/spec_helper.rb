@@ -3,6 +3,7 @@
 require 'bundler/setup'
 
 require 'simplecov'
+SimpleCov.minimum_coverage 85
 require 'coveralls'
 
 if RUBY_VERSION < "3.1"

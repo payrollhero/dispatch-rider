@@ -7,6 +7,7 @@ describe DispatchRider::NotificationServices::FileSystem::Channel do
   let(:published_message) { File.new(Dir["#{path}/*.ready"].first).read }
 
   before { FileUtils.mkdir_p(path) }
+
   after { FileUtils.rm_rf(path) }
 
   describe "#publish" do
