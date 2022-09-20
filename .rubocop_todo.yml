@@ -356,7 +356,7 @@ RSpec/EmptyLineAfterHook:
     - 'spec/lib/dispatch-rider/dispatcher_spec.rb'
     - 'spec/lib/dispatch-rider/subscriber_spec.rb'
 
-# Offense count: 12
+# Offense count: 14
 # This cop supports safe autocorrection (--autocorrect).
 RSpec/EmptyLineAfterSubject:
   Exclude:
@@ -419,20 +419,6 @@ RSpec/HookArgument:
 RSpec/ImplicitSubject:
   Exclude:
     - 'spec/lib/dispatch-rider/scheduled_job_spec.rb'
-
-# Offense count: 9
-# This cop supports safe autocorrection (--autocorrect).
-RSpec/LeadingSubject:
-  Exclude:
-    - 'spec/lib/dispatch-rider/callbacks/access_spec.rb'
-    - 'spec/lib/dispatch-rider/demultiplexer_spec.rb'
-    - 'spec/lib/dispatch-rider/notification_services/base_spec.rb'
-    - 'spec/lib/dispatch-rider/notification_services/file_system/channel_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/configuration/destination_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/configuration/notification_service_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/configuration_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/aws_sqs_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/file_system_spec.rb'
 
 # Offense count: 13
 RSpec/LeakyConstantDeclaration:
