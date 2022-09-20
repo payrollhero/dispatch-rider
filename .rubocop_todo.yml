@@ -333,13 +333,6 @@ RSpec/EmptyLineAfterExample:
   Exclude:
     - 'spec/lib/dispatch-rider/demultiplexer_spec.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowConsecutiveOneLiners.
-RSpec/EmptyLineAfterHook:
-  Exclude:
-    - 'spec/lib/dispatch-rider/dispatcher_spec.rb'
-    - 'spec/lib/dispatch-rider/subscriber_spec.rb'
 
 # Offense count: 14
 # This cop supports safe autocorrection (--autocorrect).
