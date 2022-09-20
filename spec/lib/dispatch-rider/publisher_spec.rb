@@ -135,25 +135,16 @@ describe DispatchRider::Publisher do
     describe "calls publish callback" do
       describe "calls the publish callback" do
         let(:publish_callback) { double :callback }
-        let(:expected_message) {
-          DispatchRider::Message.new(
-            subject: "bar_handler",
-            body: {
-              "bar" => "baz",
-              guid: "test-mode-not-random-guid"
-            }
-          )
-        }
 
         before { DispatchRider.config.callbacks.for(:publish) << publish_callback }
 
         after { DispatchRider.config.callbacks.for(:publish).delete publish_callback }
 
         example do
-          expect(publish_callback).to receive(:call).with any_args, # first argument is the inner job
-                                                          destinations: [:fs_foo],
-                                                          message: expected_message
-
+          expect(publish_callback).to receive(:call).with(
+            an_instance_of(Proc), # first argument is the inner job
+            { destinations: [:fs_foo],
+              message: an_instance_of(DispatchRider::Message) })
           publisher.publish destinations: [:fs_foo],
                             message: {
                               subject: "bar_handler",
