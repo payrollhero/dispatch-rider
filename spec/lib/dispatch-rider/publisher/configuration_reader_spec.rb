@@ -55,7 +55,11 @@ describe DispatchRider::Publisher::ConfigurationReader do
         end
 
         it "calls register_notification_service with :file_system and {}" do
-          expect(publisher).to receive(:register_notification_service).with("file_system", {})
+          if RUBY_VERSION > '3'
+            expect(publisher).to receive(:register_notification_service).with("file_system").once
+          else
+            expect(publisher).to receive(:register_notification_service).with("file_system", {}).once
+          end
           subject.load_config(configuration, publisher)
         end
       end
@@ -71,7 +75,11 @@ describe DispatchRider::Publisher::ConfigurationReader do
         end
 
         it "calls register_notification_service with :file_system and {}, as well as :foo, {bar: '123'}" do
-          expect(publisher).to receive(:register_notification_service).with("file_system", {}).once
+          if RUBY_VERSION > '3'
+            expect(publisher).to receive(:register_notification_service).with("file_system").once
+          else
+            expect(publisher).to receive(:register_notification_service).with("file_system", {}).once
+          end
           expect(publisher).to receive(:register_notification_service).with("foo", bar: "123").once
           subject.load_config(configuration, publisher)
         end
