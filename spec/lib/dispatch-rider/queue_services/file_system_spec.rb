@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe DispatchRider::QueueServices::FileSystem do
-  let(:queue_path) { "tmp/queue" }
-
   subject(:file_system_queue) do
     DispatchRider::QueueServices::FileSystem.new(:path => queue_path)
   end
+
+  let(:queue_path) { "tmp/queue" }
 
   before { file_system_queue.send(:queue).send(:file_paths).each { |file| File.unlink(file) } }
 
