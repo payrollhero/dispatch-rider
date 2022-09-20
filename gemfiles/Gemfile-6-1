@@ -3,4 +3,6 @@ source 'https://rubygems.org'
 gemspec path: '..'
 
 gem 'rails', '~> 6.1.4'
-gem (ENV['AWS_SDK_VER'] == 'v1' ? 'aws-sdk-v1' : 'aws-sdk')
+gem 'aws-sdk-sns'
+gem 'aws-sdk-sqs'
+gem 'aws-sdk-v1', github: 'payrollhero/aws-sdk-ruby', branch: 'v1-require-json-2.6' if ENV['AWS_SDK_VER'] == 'v1'
