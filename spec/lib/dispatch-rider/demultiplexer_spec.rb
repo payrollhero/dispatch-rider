@@ -7,6 +7,8 @@ describe DispatchRider::Demultiplexer, nodb: true do
     end
   end
 
+  subject(:demultiplexer) { DispatchRider::Demultiplexer.new(queue, dispatcher, error_handler) }
+
   let(:dispatcher) do
     dispatcher = DispatchRider::Dispatcher.new
     dispatcher.register(:test_handler)
@@ -29,8 +31,6 @@ describe DispatchRider::Demultiplexer, nodb: true do
   end
 
   let(:error_handler) { ->(_message, exception) { raise exception } }
-
-  subject(:demultiplexer) { DispatchRider::Demultiplexer.new(queue, dispatcher, error_handler) }
 
   describe "#initialize" do
     it "should assign the queue" do

@@ -1,11 +1,23 @@
 # Change Log
 
-## [v2.0.0]
+## [v2.1.0](https://github.com/payrollhero/dispatch-rider/tree/v2.1.0) (2022-09-20)
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v2.0.0...v2.1.0)
 
-* Now require Ruby 2.6.5 at the very minimum
-* Now require Rails 5.2 at the very minimum
-* Now support both Aws SDK 1.x and 3.x
+* Added support for ruby 3.0 and 3.1
+* Require ruby 2.7 at the very minimum, there is a meta-programming class with kwards between 2.6 and 3.0
+  since 2.6 is not unsupported, support is removed
+
+## [v2.0.0](https://github.com/payrollhero/dispatch-rider/tree/v2.0.0) (2022-09-20)
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.9.0...v2.0.0)
+
+* Tests now run via Github actions
+* Requires Ruby 2.6.5 at the very minimum
+* Requires Rails 5.2 at the very minimum
+* Supports both Aws SDK 1.x and 3.x
+* aws-sdk-sqs and aws-sdk-sns are marked as optional, but strongly recommended.
 * Security Update Rails (CVE-2022-32224): Automatically set the active-record config DispatchRider::ScheduledJob model.
+* Tests are validated against rails 5.2.x, 6.0.x, 6.1.x and 7.0.x
+* Started addressing some of the style issue and tech debt via rubocop-challenger automated PR
 
 ## [v1.9.0](https://github.com/payrollhero/dispatch-rider/tree/v1.9.0) (2019-11-11)
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.8.6...v1.9.0)
