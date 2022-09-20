@@ -146,6 +146,7 @@ describe DispatchRider::Publisher do
         }
 
         before { DispatchRider.config.callbacks.for(:publish) << publish_callback }
+
         after { DispatchRider.config.callbacks.for(:publish).delete publish_callback }
 
         example do
