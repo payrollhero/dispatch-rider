@@ -71,8 +71,8 @@ describe DispatchRider::Publisher::ConfigurationReader do
         end
 
         it "calls register_notification_service with :file_system and {}, as well as :foo, {bar: '123'}" do
-          expect(publisher).to receive(:register_notification_service).with("file_system", {})
-          expect(publisher).to receive(:register_notification_service).with("foo", "bar" => "123")
+          expect(publisher).to receive(:register_notification_service).with("file_system", {}).once
+          expect(publisher).to receive(:register_notification_service).with("foo", bar: "123").once
           subject.load_config(configuration, publisher)
         end
       end

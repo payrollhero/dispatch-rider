@@ -1,5 +1,10 @@
 # Change Log
 
+## [v2.1.0](https://github.com/payrollhero/dispatch-rider/tree/v2.1.0) (2022-09-20)
+[Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v2.0.0...v2.1.0)
+
+* Added support for ruby 3.0
+
 ## [v2.0.0](https://github.com/payrollhero/dispatch-rider/tree/v2.0.0) (2022-09-20)
 [Full Changelog](https://github.com/payrollhero/dispatch-rider/compare/v1.9.0...v2.0.0)
 
