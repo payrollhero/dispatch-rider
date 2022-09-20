@@ -4,6 +4,10 @@ require 'spec_helper'
 
 describe DispatchRider::QueueServices::AwsSqs do
 
+  subject(:aws_sqs_queue) do
+    DispatchRider::QueueServices::AwsSqs.new(:name => "normal_priority")
+  end
+
   let(:visibility_timeout) { 100 }
 
   before do
@@ -11,10 +15,6 @@ describe DispatchRider::QueueServices::AwsSqs do
     allow_any_instance_of(Aws::SQS::Client).to receive(:get_queue_attributes).and_return(
       OpenStruct.new({attributes:{"VisibilityTimeout"=>visibility_timeout}})
     )
-  end
-
-  subject(:aws_sqs_queue) do
-    DispatchRider::QueueServices::AwsSqs.new(:name => "normal_priority")
   end
 
   describe "#assign_storage" do

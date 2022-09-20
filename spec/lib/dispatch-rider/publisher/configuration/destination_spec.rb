@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 describe DispatchRider::Publisher::Configuration::Destination do
+  subject { described_class.new("employee", attributes) }
   let(:attributes) do
     {
       "service" => "aws_sns",
@@ -18,8 +19,6 @@ describe DispatchRider::Publisher::Configuration::Destination do
       "topic" => "employee-updates"
     }
   end
-
-  subject { described_class.new("employee", attributes) }
 
   describe "#name" do
     describe '#name' do

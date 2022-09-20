@@ -56,7 +56,7 @@ describe DispatchRider::Configuration do
   describe "#logger" do
 
     describe "default" do
-      example { expect(subject.logger).to be_kind_of(Logger) }
+      example { expect(subject.logger).to be_a(Logger) }
     end
 
     example { expect(subject).to respond_to(:logger) }

@@ -13,7 +13,7 @@ module DispatchRider
 
         def configure_notification_services(notification_services, publisher)
           notification_services.each do |service|
-            publisher.register_notification_service(service.name, service.options)
+            publisher.register_notification_service(service.name, **service.options)
           end
         end
 

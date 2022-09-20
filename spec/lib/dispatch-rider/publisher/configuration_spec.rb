@@ -4,6 +4,8 @@ require 'spec_helper'
 
 describe DispatchRider::Publisher::Configuration do
 
+  subject { described_class.new(configuration_hash) }
+
   let(:configuration_hash) do
     {
       "notification_services" => {
@@ -32,8 +34,6 @@ describe DispatchRider::Publisher::Configuration do
       }
     }
   end
-
-  subject { described_class.new(configuration_hash) }
 
   describe "#notification services" do
     let(:file_system) do
