@@ -36,7 +36,7 @@ module DispatchRider
     end
 
     def publish(message:, destinations:)
-      options = {message: build_message(message), destinations: destinations}
+      options = { message: build_message(message), destinations: destinations }
       callbacks.invoke(:publish, **options) do
         service_channel_mapper.map(options.delete(:destinations)).each do |(service, channels)|
           notification_service_registrar.fetch(service).publish(**(options.merge to: channels))
