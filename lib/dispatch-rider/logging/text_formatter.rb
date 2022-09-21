@@ -41,7 +41,7 @@ module DispatchRider
       end
 
       def format_duration(duration)
-        '%.2f' % [duration]
+        format('%.2f', duration)
       end
     end
   end
