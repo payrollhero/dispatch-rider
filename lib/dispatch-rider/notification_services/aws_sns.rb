@@ -24,7 +24,7 @@ module DispatchRider
       # not really happy with this, but the notification service registrar system is way too rigid to do this cleaner
       # since you only can have one notifier for the whole service, but you need to create a new one for each region
       def channel(name)
-        arn = self.fetch(name)
+        arn = fetch(name)
         # in v1, the Topic object was fetched from API, in v3 it's basically just an arn wrapper
         Aws::SNS::Topic.new(arn)
       end
