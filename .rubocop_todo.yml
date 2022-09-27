@@ -441,12 +441,6 @@ RSpec/NotToNot:
     - 'spec/lib/dispatch-rider/publisher/configuration_reader_spec.rb'
     - 'spec/lib/dispatch-rider/scheduled_job_spec.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-RSpec/ReceiveCounts:
-  Exclude:
-    - 'spec/lib/dispatch-rider/demultiplexer_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/configuration_reader_spec.rb'
 
 # Offense count: 2
 RSpec/RepeatedExampleGroupDescription:
