@@ -22,7 +22,7 @@ module DispatchRider
           process(raw_message.body)
         end
       rescue Exception => e
-        self.retry if self.retry_on_failure?
+        self.retry if retry_on_failure?
         raise e
       end
 
@@ -51,7 +51,7 @@ module DispatchRider
       end
       
       def retry_on_failure?
-        self.respond_to? :retry_timeout
+        respond_to? :retry_timeout
       end
     end
   end

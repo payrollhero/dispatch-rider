@@ -14,10 +14,10 @@ module DispatchRider
     attr_reader :name, :service, :channel, :options
 
     def ==(other)
-      self.name == other.name &&
-        self.service == other.service &&
-        self.channel == other.channel &&
-        self.options == other.options
+      name == other.name &&
+        service == other.service &&
+        channel == other.channel &&
+        options == other.options
     end
   end
 end

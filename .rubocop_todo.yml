@@ -767,17 +767,6 @@ Style/RedundantBegin:
     - 'spec/lib/dispatch-rider/dispatcher_spec.rb'
     - 'spec/lib/dispatch-rider/publisher_spec.rb'
 
-# Offense count: 11
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantSelf:
-  Exclude:
-    - 'lib/dispatch-rider/handlers/base.rb'
-    - 'lib/dispatch-rider/notification_services/aws_sns.rb'
-    - 'lib/dispatch-rider/notification_services/file_system.rb'
-    - 'lib/dispatch-rider/publisher/configuration/destination.rb'
-    - 'lib/dispatch-rider/publisher/configuration/notification_service.rb'
-    - 'lib/dispatch-rider/queue_services/received_message.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, AllowInnerSlashes.
