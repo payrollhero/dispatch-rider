@@ -795,13 +795,6 @@ Style/StringConcatenation:
     - 'lib/generators/dispatch_rider/job/dispatch_job_generator.rb'
     - 'spec/spec_helper.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowMethodsWithArguments, AllowedMethods, AllowedPatterns, IgnoredMethods, AllowComments.
-# AllowedMethods: respond_to, define_method
-Style/SymbolProc:
-  Exclude:
-    - 'spec/lib/dispatch-rider/queue_services/base_spec.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
