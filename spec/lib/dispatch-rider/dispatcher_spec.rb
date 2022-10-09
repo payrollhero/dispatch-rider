@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe DispatchRider::Dispatcher, :nodb => true do
@@ -40,6 +42,7 @@ describe DispatchRider::Dispatcher, :nodb => true do
         end
         subject.register('handle_something')
       end
+
       example do
         expect(dummy).to receive(:before).once
         expect(dummy).to receive(:after).once

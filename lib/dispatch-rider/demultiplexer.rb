@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The demultiplexer in the reactor pattern is implemented in this class.
 # The object needs to be initiated with a queue and a dispatcher.
 # Demultiplexer#start defines an event loop which pops items from the queue

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is the base class for the registrars.
 #  It defines the interface that other registrars inherit.
 #  This is an abstract class.

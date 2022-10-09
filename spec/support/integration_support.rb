@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module IntegrationSupport
   def setup_publisher
     publisher = DispatchRider::Publisher.new

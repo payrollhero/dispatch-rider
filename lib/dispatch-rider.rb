@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Top level namespace of the gem
 require "dispatch-rider/version"
 

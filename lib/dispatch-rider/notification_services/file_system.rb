@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # this is a basic notification service which uses a filesystem folder to handle notifications
 
 module DispatchRider
@@ -12,7 +14,7 @@ module DispatchRider
       end
 
       def channel(name)
-        notifier.channel(self.fetch(name))
+        notifier.channel(fetch(name))
       end
     end
   end

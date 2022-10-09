@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :message, class: 'DispatchRider::Message' do
     subject { 'sample_handler' }

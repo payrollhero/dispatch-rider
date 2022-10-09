@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'delegate'
 
 module DispatchRider
@@ -13,7 +15,7 @@ module DispatchRider
       end
 
       def guid
-        self.body['guid']
+        body['guid']
       end
 
       def extend_timeout(time)

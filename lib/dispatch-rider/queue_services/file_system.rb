@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is a rudementary queue service that uses file system instead of
 # Aws::SQS or SimpleQueue. It addresses SimpleQueue's inability to be used
 # by only one application instance while avoiding the cost of setting up Aws::SQS.
@@ -23,7 +25,7 @@ module DispatchRider
       def raw_head
         queue.pop
       end
-      
+
       def received_message_for(raw_item)
          FsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue)
       end
@@ -31,7 +33,7 @@ module DispatchRider
       def construct_message_from(item)
         deserialize(item.read)
       end
-      
+
       def put_back(item)
         queue.put_back(item)
       end

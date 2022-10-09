@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe DispatchRider::Subscriber do
@@ -89,6 +91,7 @@ describe DispatchRider::Subscriber do
     # kills travis sometimes so leaving it here as tested documentation
     describe "process termination", if: false do
       before { allow(subject.demultiplexer).to receive(:stop) { throw :got_stopped } }
+
       let(:message_body) { { 'foo' => 'bar' } }
 
       context "when process quits" do

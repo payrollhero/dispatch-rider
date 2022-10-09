@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This base class provides an interface that we can implement
 # to generate a wrapper around a notification service.
 # The expected usage is as follows :

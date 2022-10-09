@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file contains all the error classes for this gem.
 module DispatchRider
   # The base error class of the gem

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is a simple implementation of an in memory queue using an array.
 module DispatchRider
   module QueueServices

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class is responsible for dispatching the messages to the appropriate handler.
 # The handlers must be registered with the dispatcher.
 # Tha handlers need to be modules that implement the process method.
