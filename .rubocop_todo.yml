@@ -56,7 +56,7 @@ Layout/ExtraSpacing:
   Exclude:
     - 'spec/factories/messages.rb'
 
-# Offense count: 2
+# Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Width, AllowedPatterns, IgnoredPatterns.
 Layout/IndentationWidth:
@@ -731,17 +731,6 @@ Style/PreferredHashMethods:
 # SupportedStyles: same_as_string_literals, single_quotes, double_quotes
 Style/QuotedSymbols:
   EnforcedStyle: double_quotes
-
-# Offense count: 8
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantBegin:
-  Exclude:
-    - 'lib/dispatch-rider/callbacks/storage.rb'
-    - 'lib/dispatch-rider/demultiplexer.rb'
-    - 'lib/dispatch-rider/queue_services/file_system.rb'
-    - 'lib/dispatch-rider/registrars/base.rb'
-    - 'spec/lib/dispatch-rider/dispatcher_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher_spec.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
