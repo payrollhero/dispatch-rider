@@ -4,7 +4,7 @@ module DispatchRider
   module Handlers
     module NamedProcess
       def with_named_process(message)
-        original_program_name = $0
+        original_program_name = $PROGRAM_NAME
         begin
           $0 += " - #{message.subject} (#{message.body['guid']})"
           yield

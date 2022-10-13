@@ -749,12 +749,6 @@ Style/RescueStandardError:
     - 'lib/dispatch-rider/demultiplexer.rb'
     - 'lib/dispatch-rider/logging/lifecycle_logger.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: RequireEnglish.
-# SupportedStyles: use_perl_names, use_english_names, use_builtin_english_names
-Style/SpecialGlobalVars:
-  EnforcedStyle: use_perl_names
 
 # Offense count: 6
 # This cop supports unsafe autocorrection (--autocorrect-all).

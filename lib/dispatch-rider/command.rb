@@ -35,7 +35,7 @@ module DispatchRider
 
     def process_args(args)
       opts = OptionParser.new do |opts|
-        opts.banner = "Usage: #{File.basename($0)} [options] start|stop|restart|run"
+        opts.banner = "Usage: #{File.basename($PROGRAM_NAME)} [options] start|stop|restart|run"
         opts.on('-h', '--help', 'Show this message') do
           puts opts
           exit 1
