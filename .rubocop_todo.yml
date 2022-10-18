@@ -22,11 +22,6 @@ Layout/BlockAlignment:
   Exclude:
     - 'spec/lib/dispatch-rider/notification_services/aws_sns_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/BlockEndNewline:
-  Exclude:
-    - 'spec/factories/messages.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
