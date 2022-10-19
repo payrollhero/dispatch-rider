@@ -655,11 +655,6 @@ Style/HashSyntax:
     - 'spec/lib/dispatch-rider/queue_services/file_system_spec.rb'
     - 'spec/lib/dispatch-rider/registrars/publishing_destination_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/IfUnlessModifier:
-  Exclude:
-    - 'lib/dispatch-rider/queue_services/aws_sqs/sqs_received_message.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).

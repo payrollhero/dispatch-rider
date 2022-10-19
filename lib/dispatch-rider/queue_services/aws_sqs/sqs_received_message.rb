@@ -17,9 +17,7 @@ module DispatchRider
         # Essentially resetting the timer on this message
         def extend_timeout(timeout)
           item.visibility_timeout = timeout
-          if timeout > 0
-            @total_timeout = timeout + (Time.now - start_time).to_i
-          end
+          @total_timeout = timeout + (Time.now - start_time).to_i if timeout > 0
         end
 
         # We effectively return the item to the queue by setting
