@@ -280,20 +280,6 @@ RSpec/ContextWording:
     - 'spec/lib/dispatch-rider/publisher/base_spec.rb'
     - 'spec/lib/dispatch-rider/publisher/configuration/notification_service_spec.rb'
 
-# Offense count: 13
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: SkipBlocks, EnforcedStyle.
-# SupportedStyles: described_class, explicit
-RSpec/DescribedClass:
-  Exclude:
-    - 'spec/lib/dispatch-rider/demultiplexer_spec.rb'
-    - 'spec/lib/dispatch-rider/logging/lifecycle_logger_spec.rb'
-    - 'spec/lib/dispatch-rider/message_spec.rb'
-    - 'spec/lib/dispatch-rider/notification_services/base_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/aws_sqs_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/base_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/file_system_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/simple_spec.rb'
 
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).

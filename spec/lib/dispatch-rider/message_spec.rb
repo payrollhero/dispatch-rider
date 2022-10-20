@@ -3,12 +3,12 @@
 require 'spec_helper'
 
 describe DispatchRider::Message do
-  subject(:message) { DispatchRider::Message.new(subject: 'test', body: 'test_handler') }
+  subject(:message) { described_class.new(subject: 'test', body: 'test_handler') }
 
   describe "#initialize" do
     context "when all the required attributes are passed" do
       context "when the attributes hash has keys as strings" do
-        subject(:message) { DispatchRider::Message.new('subject' => 'test', 'body' => 'test_handler') }
+        subject(:message) { described_class.new('subject' => 'test', 'body' => 'test_handler') }
 
         it "should initiate a new message" do
           expect(message.subject).to eq('test')
@@ -26,7 +26,7 @@ describe DispatchRider::Message do
 
     context "when all the required attributes are not passed" do
       it "should raise an exception" do
-        expect { DispatchRider::Message.new({}) }.to raise_exception(DispatchRider::RecordInvalid)
+        expect { described_class.new({}) }.to raise_exception(DispatchRider::RecordInvalid)
       end
     end
   end
@@ -48,13 +48,13 @@ describe DispatchRider::Message do
   describe "#==" do
     context "when 2 messages have the same attribute values" do
       it "should return true" do
-        expect(message).to eq(DispatchRider::Message.new(subject: 'test', body: 'test_handler'))
+        expect(message).to eq(described_class.new(subject: 'test', body: 'test_handler'))
       end
     end
 
     context "when 2 messages do not have same attribute values" do
       it "should return false" do
-        expect(message).not_to eq(DispatchRider::Message.new(subject: 'random_test', body: 'test_handler'))
+        expect(message).not_to eq(described_class.new(subject: 'random_test', body: 'test_handler'))
       end
     end
   end
