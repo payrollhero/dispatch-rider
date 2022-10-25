@@ -687,11 +687,6 @@ Style/NumericLiteralPrefix:
   Exclude:
     - 'lib/generators/dispatch_rider/install/install_generator.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Strict, AllowedNumbers, AllowedPatterns.
-Style/NumericLiterals:
-  MinDigits: 6
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
