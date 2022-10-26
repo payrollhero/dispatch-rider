@@ -36,7 +36,7 @@ require 'dispatch-rider'
 
 Dir['./spec/support/**/*.rb'].each { |fn| require(fn) }
 
-FactoryBot.definition_file_paths = %w{spec/factories/}
+FactoryBot.definition_file_paths = %w[spec/factories/]
 FactoryBot.find_definitions
 
 RSpec.configure do |config|

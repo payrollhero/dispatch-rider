@@ -709,13 +709,6 @@ Style/OpenStructUse:
     - 'spec/lib/dispatch-rider/queue_services/aws_sqs_spec.rb'
     - 'spec/lib/dispatch-rider/queue_services/base_spec.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'spec/lib/dispatch-rider/logging/json_formatter_spec.rb'
-    - 'spec/spec_helper.rb'
 
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
