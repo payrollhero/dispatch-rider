@@ -189,11 +189,6 @@ Lint/EmptyBlock:
     - 'spec/lib/dispatch-rider/notification_services_spec.rb'
     - 'spec/lib/dispatch-rider/registrars_spec.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Lint/NonDeterministicRequireOrder:
-  Exclude:
-    - 'spec/spec_helper.rb'
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).

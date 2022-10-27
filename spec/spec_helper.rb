@@ -34,7 +34,7 @@ Bundler.require(:default, :development)
 
 require 'dispatch-rider'
 
-Dir['./spec/support/**/*.rb'].each { |fn| require(fn) }
+Dir['./spec/support/**/*.rb'].sort.each { |fn| require(fn) }
 
 FactoryBot.definition_file_paths = %w{spec/factories/}
 FactoryBot.find_definitions
