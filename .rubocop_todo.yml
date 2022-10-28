@@ -24,12 +24,6 @@ Layout/BlockAlignment:
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
-Layout/BlockEndNewline:
-  Exclude:
-    - 'spec/factories/messages.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
 Layout/ClosingParenthesisIndentation:
   Exclude:
     - 'spec/lib/dispatch-rider/publisher_spec.rb'
