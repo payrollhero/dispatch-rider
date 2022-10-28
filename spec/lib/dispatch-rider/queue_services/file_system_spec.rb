@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe DispatchRider::QueueServices::FileSystem do
   subject(:file_system_queue) do
-    DispatchRider::QueueServices::FileSystem.new(:path => queue_path)
+    described_class.new(:path => queue_path)
   end
 
   let(:queue_path) { "tmp/queue" }
