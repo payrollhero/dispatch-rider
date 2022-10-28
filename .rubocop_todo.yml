@@ -608,12 +608,6 @@ Style/FormatString:
   Exclude:
     - 'lib/dispatch-rider/logging/text_formatter.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/GlobalStdStream:
-  Exclude:
-    - 'lib/dispatch-rider/configuration.rb'
-
 # Offense count: 2
 # Configuration parameters: MinBodyLength, AllowConsecutiveConditionals.
 Style/GuardClause:
