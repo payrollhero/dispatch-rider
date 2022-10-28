@@ -736,14 +736,6 @@ Style/StringConcatenation:
     - 'spec/spec_helper.rb'
 
 # Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowMethodsWithArguments, AllowedMethods, AllowedPatterns, IgnoredMethods, AllowComments.
-# AllowedMethods: define_method, mail, respond_to
-Style/SymbolProc:
-  Exclude:
-    - 'spec/lib/dispatch-rider/queue_services/base_spec.rb'
-
-# Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyleForMultiline.
 # SupportedStylesForMultiline: comma, consistent_comma, no_comma

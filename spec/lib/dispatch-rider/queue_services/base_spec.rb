@@ -92,7 +92,7 @@ describe DispatchRider::QueueServices::Base do
 
     context "when a new item exists" do
       before do
-        allow(base_queue).to receive(:construct_message_from) { |item| item.message }
+        allow(base_queue).to receive(:construct_message_from, &:message)
       end
 
       let(:new_item) { OpenStruct.new(message: new_message) }
