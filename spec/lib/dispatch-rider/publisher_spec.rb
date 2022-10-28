@@ -108,12 +108,12 @@ describe DispatchRider::Publisher do
     end
 
     around do |ex|
-      begin
-        DispatchRider.config.debug = true
-        ex.call
-      ensure
-        DispatchRider.config.debug = false
-      end
+
+      DispatchRider.config.debug = true
+      ex.call
+    ensure
+      DispatchRider.config.debug = false
+
     end
 
     it "publishes the message to the notification service" do
