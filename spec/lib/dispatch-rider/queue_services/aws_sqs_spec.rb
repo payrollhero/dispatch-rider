@@ -5,7 +5,7 @@ require 'spec_helper'
 describe DispatchRider::QueueServices::AwsSqs do
 
   subject(:aws_sqs_queue) do
-    DispatchRider::QueueServices::AwsSqs.new(:name => "normal_priority")
+    described_class.new(:name => "normal_priority")
   end
 
   let(:visibility_timeout) { 100 }

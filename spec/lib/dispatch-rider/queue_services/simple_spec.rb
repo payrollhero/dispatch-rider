@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe DispatchRider::QueueServices::Simple do
   subject(:simple_queue) do
-    DispatchRider::QueueServices::Simple.new
+    described_class.new
   end
 
   describe "#assign_storage" do

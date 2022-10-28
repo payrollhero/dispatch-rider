@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe DispatchRider::NotificationServices::Base do
   subject do
-    DispatchRider::NotificationServices::Base.new(topics: {})
+    described_class.new(topics: {})
   end
 
   let :channel do
