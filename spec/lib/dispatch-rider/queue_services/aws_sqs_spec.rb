@@ -11,9 +11,9 @@ describe DispatchRider::QueueServices::AwsSqs do
   let(:visibility_timeout) { 100 }
 
   before do
-    allow_any_instance_of(Aws::SQS::Client).to receive(:list_queues).and_return(OpenStruct.new({queue_urls:["the.queue.url"]}))
+    allow_any_instance_of(Aws::SQS::Client).to receive(:list_queues).and_return(OpenStruct.new({queue_urls: ["the.queue.url"]}))
     allow_any_instance_of(Aws::SQS::Client).to receive(:get_queue_attributes).and_return(
-      OpenStruct.new({attributes:{"VisibilityTimeout"=>visibility_timeout}})
+      OpenStruct.new({attributes: {"VisibilityTimeout"=>visibility_timeout}})
     )
   end
 

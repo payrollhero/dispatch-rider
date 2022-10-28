@@ -84,12 +84,6 @@ Layout/MultilineMethodCallBraceLayout:
     - 'spec/lib/dispatch-rider/logging/lifecycle_logger_spec.rb'
     - 'spec/lib/dispatch-rider/publisher_spec.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceAfterColon:
-  Exclude:
-    - 'spec/lib/dispatch-rider/queue_services/aws_sqs_spec.rb'
-
 # Offense count: 3
 # This cop supports safe autocorrection (--autocorrect).
 Layout/SpaceAfterComma:
