@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
-  subject { DispatchRider::Logging::LifecycleLogger }
+  subject { described_class }
 
   let(:queue) { double :queue }
   let(:item) { double :item }

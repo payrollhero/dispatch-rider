@@ -9,7 +9,7 @@ describe DispatchRider::Demultiplexer, nodb: true do
     end
   end
 
-  subject(:demultiplexer) { DispatchRider::Demultiplexer.new(queue, dispatcher, error_handler) }
+  subject(:demultiplexer) { described_class.new(queue, dispatcher, error_handler) }
 
   let(:dispatcher) do
     dispatcher = DispatchRider::Dispatcher.new
