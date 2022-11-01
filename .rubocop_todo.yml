@@ -567,11 +567,6 @@ Style/ExpandPathArguments:
     - 'lib/generators/dispatch_rider/install/install_generator.rb'
     - 'lib/generators/dispatch_rider/job/dispatch_job_generator.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/FileWrite:
-  Exclude:
-    - 'lib/dispatch-rider/queue_services/file_system/queue.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
