@@ -10,7 +10,7 @@ require "active_record"
 #  gem "dispatch_rider-mongo_mapper"
 #  gem "dispatch_rider-ohm"
 module DispatchRider
-  class ScheduledJob < ActiveRecord::Base
+  class ScheduledJob < ApplicationRecord
     class << self
       def publisher
         @publisher ||= Publisher.new
