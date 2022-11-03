@@ -32,17 +32,13 @@ module DispatchRider
         deserialize(item.read)
       end
 
-      def put_back(item)
-        queue.put_back(item)
-      end
+      delegate :put_back, to: :queue
 
       def delete(item)
         queue.remove item
       end
 
-      def size
-        queue.size
-      end
+      delegate :size, to: :queue
     end
   end
 end
