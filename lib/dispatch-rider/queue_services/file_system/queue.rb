@@ -12,7 +12,7 @@ module DispatchRider
 
         def add(item)
           name_base = "#{@path}/#{Time.now.to_f}"
-          File.open("#{name_base}.inprogress", "w"){ |f| f.write(item) }
+          File.write("#{name_base}.inprogress", item)
           FileUtils.mv("#{name_base}.inprogress", "#{name_base}.ready")
         end
 
@@ -34,9 +34,7 @@ module DispatchRider
           File.unlink(item.path)
         end
 
-        def size
-          file_paths.size
-        end
+        delegate :size, to: :file_paths
 
         private
 

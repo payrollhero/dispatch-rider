@@ -4,8 +4,8 @@ require 'spec_helper'
 
 describe DispatchRider::QueueServices::Base do
   subject(:base_queue) do
-    allow_any_instance_of(DispatchRider::QueueServices::Base).to receive(:assign_storage).and_return([])
-    DispatchRider::QueueServices::Base.new
+    allow_any_instance_of(described_class).to receive(:assign_storage).and_return([])
+    described_class.new
   end
 
   describe "#initialize" do
@@ -92,7 +92,7 @@ describe DispatchRider::QueueServices::Base do
 
     context "when a new item exists" do
       before do
-        allow(base_queue).to receive(:construct_message_from) { |item| item.message }
+        allow(base_queue).to receive(:construct_message_from, &:message)
       end
 
       let(:new_item) { OpenStruct.new(message: new_message) }
