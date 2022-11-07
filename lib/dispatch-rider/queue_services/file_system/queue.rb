@@ -34,9 +34,7 @@ module DispatchRider
           File.unlink(item.path)
         end
 
-        def size
-          file_paths.size
-        end
+        delegate :size, to: :file_paths
 
         private
 

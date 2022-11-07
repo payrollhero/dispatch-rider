@@ -20,13 +20,9 @@ module DispatchRider
         deserialize(item)
       end
 
-      def delete(item)
-        queue.delete(item)
-      end
+      delegate :delete, to: :queue
 
-      def size
-        queue.size
-      end
+      delegate :size, to: :queue
     end
   end
 end
