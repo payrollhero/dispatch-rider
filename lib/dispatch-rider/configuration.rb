@@ -24,7 +24,7 @@ module DispatchRider
       @subscriber = DispatchRider::Subscriber
       @log_formatter = DispatchRider::Logging::TextFormatter.new
       @additional_info_injector = -> (data) { data }
-      @logger = Logger.new(STDERR)
+      @logger = Logger.new($stderr)
       @debug = false
 
       @callbacks.around(:dispatch_message) do |job, message|

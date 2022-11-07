@@ -52,8 +52,6 @@ module DispatchRider
       destroy # once published
     end
 
-    private
-
     delegate :publisher, to: :"self.class"
   end
 end
