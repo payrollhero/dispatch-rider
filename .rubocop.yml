@@ -64,3 +64,17 @@ Metrics/AbcSize:
     conditions.
   Enabled: true
   Max: 22
+
+# We don't want to do this
+Rails/ApplicationRecord:
+  Exclude:
+    - 'lib/dispatch-rider/scheduled_job.rb'
+
+Style/PercentLiteralDelimiters:
+  Exclude:
+    - 'spec/lib/dispatch-rider/logging/json_formatter_spec.rb'
+    - 'spec/spec_helper.rb'
+
+Style/FormatString:
+  Exclude:
+    - 'lib/dispatch-rider/logging/text_formatter.rb'
