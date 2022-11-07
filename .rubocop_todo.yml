@@ -558,12 +558,9 @@ Style/FormatString:
   Exclude:
     - 'lib/dispatch-rider/logging/text_formatter.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: MinBodyLength, AllowConsecutiveConditionals.
 Style/GuardClause:
   Exclude:
-    - 'lib/dispatch-rider/queue_services/aws_sqs/sqs_received_message.rb'
     - 'lib/dispatch-rider/queue_services/base.rb'
 
 # Offense count: 2
@@ -594,12 +591,6 @@ Style/HashSyntax:
     - 'spec/lib/dispatch-rider/queue_services/aws_sqs_spec.rb'
     - 'spec/lib/dispatch-rider/queue_services/file_system_spec.rb'
     - 'spec/lib/dispatch-rider/registrars/publishing_destination_spec.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/IfUnlessModifier:
-  Exclude:
-    - 'lib/dispatch-rider/queue_services/aws_sqs/sqs_received_message.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
