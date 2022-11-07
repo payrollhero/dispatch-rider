@@ -29,7 +29,6 @@ module DispatchRider
         raise NotImplementedError
       end
 
-      
       #If you pass a block into pop it will wrap the deletion of the message with it's handling
       def pop(&block)
         received = head
@@ -43,7 +42,7 @@ module DispatchRider
         raw_item = raw_head
         raw_item && received_message_for(raw_item)
       end
-      
+
       def received_message_for(raw_item)
          QueueServices::ReceivedMessage.new(construct_message_from(raw_item), raw_item)
       end

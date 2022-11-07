@@ -128,7 +128,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
 
         it "should call register_destination with the right parameters" do
           params = ["out1", :file_system, :foo, "path" => "tmp/test/channel"]
-          expect(publisher).to receive(:register_destination).exactly(1).times.with(*params)
+          expect(publisher).to receive(:register_destination).once.with(*params)
           subject.load_config(configuration, publisher)
         end
 

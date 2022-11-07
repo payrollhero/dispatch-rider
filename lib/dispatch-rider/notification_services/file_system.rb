@@ -14,7 +14,7 @@ module DispatchRider
       end
 
       def channel(name)
-        notifier.channel(self.fetch(name))
+        notifier.channel(fetch(name))
       end
     end
   end
