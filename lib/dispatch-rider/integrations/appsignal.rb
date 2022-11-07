@@ -15,7 +15,7 @@ if defined? Appsignal
             method: 'handle',
             attempts: message.receive_count,
             queue: message.queue_name,
-            queue_time: (Time.now.to_f - message.sent_at.to_f) * 1000,
+            queue_time: (Time.now.to_f - message.sent_at.to_f) * 1000
           ) do
             job.call
           end
