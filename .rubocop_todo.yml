@@ -478,14 +478,6 @@ Security/JSONLoad:
     - 'spec/integration/logging_spec.rb'
     - 'spec/lib/dispatch-rider/publisher_spec.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: prefer_alias, prefer_alias_method
-Style/Alias:
-  Exclude:
-    - 'lib/dispatch-rider.rb'
-    - 'lib/dispatch-rider/publisher/configuration_support.rb'
 
 # Offense count: 7
 # This cop supports unsafe autocorrection (--autocorrect-all).

@@ -6,7 +6,7 @@ module DispatchRider
       def configuration
         @configuration ||= Configuration.new
       end
-      alias_method :config, :configuration
+      alias config configuration
 
       def configure(configuration_hash = {})
         if block_given?
