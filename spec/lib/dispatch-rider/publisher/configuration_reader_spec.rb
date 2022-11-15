@@ -136,6 +136,6 @@ describe DispatchRider::Publisher::ConfigurationReader do
 
     end
 
-  end # .load_config
+  end
 
 end
