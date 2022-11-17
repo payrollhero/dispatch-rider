@@ -17,7 +17,7 @@ describe DispatchRider::NotificationServices::Base do
     channel
   end
 
-  before :each do
+  before do
     allow_any_instance_of(described_class).to receive(:notifier_builder).and_return(OpenStruct)
     channel = DispatchRider::Registrars::SnsChannel
     allow_any_instance_of(described_class).to receive(:channel_registrar_builder).and_return(channel)
@@ -37,7 +37,7 @@ describe DispatchRider::NotificationServices::Base do
   end
 
   describe "#publish" do
-    before :each do
+    before do
       subject.register(:foo, account: 123, region: "us-east-1", topic: "PlanOfAttack")
       subject.notifier.topics['arn:aws:sns:us-east-1:123:PlanOfAttack'] = channel
     end
@@ -72,7 +72,7 @@ describe DispatchRider::NotificationServices::Base do
   end
 
   describe "#channels" do
-    before :each do
+    before do
       subject.register(:foo, account: 123, region: "us-east-1", topic: "PlanOfAttack")
       subject.notifier.topics['arn:aws:sns:us-east-1:123:PlanOfAttack'] = channel
     end

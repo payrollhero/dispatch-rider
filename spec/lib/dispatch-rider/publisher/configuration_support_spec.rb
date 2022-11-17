@@ -54,7 +54,7 @@ describe DispatchRider::Publisher::ConfigurationSupport do
     end
 
     context "when configuring with a hash" do
-      before :each do
+      before do
         subject.configure(configuration_hash)
       end
 
@@ -70,7 +70,7 @@ describe DispatchRider::Publisher::ConfigurationSupport do
     end
 
     context "when configuring with a block" do
-      before :each do
+      before do
         subject.configure do |config|
           config.parse(configuration_hash)
         end

@@ -101,7 +101,7 @@ describe DispatchRider::QueueServices::AwsSqs do
     end
 
     context "when the sqs queue is empty" do
-      before :each do
+      before do
         allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: nil }))
       end
 

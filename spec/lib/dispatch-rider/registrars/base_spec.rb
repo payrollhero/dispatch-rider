@@ -34,7 +34,7 @@ describe DispatchRider::Registrars::Base do
   end
 
   describe "#unregister" do
-    before :each do
+    before do
       allow(subject).to receive(:value).and_return('bar')
       subject.register(:foo)
     end
@@ -51,7 +51,7 @@ describe DispatchRider::Registrars::Base do
 
   describe "#fetch" do
     context "when a key/value pair is registered" do
-      before :each do
+      before do
         allow(subject).to receive(:value).and_return('bar')
         subject.register(:foo)
       end

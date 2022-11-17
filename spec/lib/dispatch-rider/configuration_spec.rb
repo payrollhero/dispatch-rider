@@ -35,7 +35,7 @@ describe DispatchRider::Configuration do
   end
 
   describe "#handlers" do
-    before :each do
+    before do
       subject.handler_path = "./spec/fixtures/handlers"
     end
 

@@ -57,7 +57,7 @@ describe DispatchRider::Publisher do
   end
 
   describe "#register_channel" do
-    before :each do
+    before do
       subject.register_notification_service(:aws_sns)
     end
 
@@ -74,7 +74,7 @@ describe DispatchRider::Publisher do
   end
 
   describe "#register_destination" do
-    before :each do
+    before do
       subject.register_notification_service(:aws_sns)
     end
 
@@ -102,7 +102,7 @@ describe DispatchRider::Publisher do
       subject.notification_service_registrar.fetch(:aws_sns).notifier
     end
 
-    before :each do
+    before do
       subject.register_notification_service(:file_system)
       subject.register_destination(:fs_foo, :file_system, :foo, path: "tmp/test_queue")
     end
