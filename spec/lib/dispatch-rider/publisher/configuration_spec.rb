@@ -133,7 +133,7 @@ describe DispatchRider::Publisher::Configuration do
       )
     end
 
-    before :each do
+    before do
       subject.parse(new_configuration_hash)
     end
 

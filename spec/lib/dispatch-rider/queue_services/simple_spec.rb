@@ -23,7 +23,7 @@ describe DispatchRider::QueueServices::Simple do
   end
 
   describe "#raw_head" do
-    before :each do
+    before do
       simple_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
     end
 
@@ -43,7 +43,7 @@ describe DispatchRider::QueueServices::Simple do
   end
 
   describe "#delete" do
-    before :each do
+    before do
       simple_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
     end
 
@@ -54,7 +54,7 @@ describe DispatchRider::QueueServices::Simple do
   end
 
   describe "#size" do
-    before :each do
+    before do
       simple_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
     end
 

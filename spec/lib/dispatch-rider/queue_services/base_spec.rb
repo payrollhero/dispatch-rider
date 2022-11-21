@@ -36,7 +36,7 @@ describe DispatchRider::QueueServices::Base do
   describe "#pop" do
     subject(:simple_queue) { DispatchRider::QueueServices::Simple.new }
 
-    before :each do
+    before do
       simple_queue.queue.push(DispatchRider::Message.new(subject: "foo", body: "bar").to_json)
     end
 
@@ -63,7 +63,7 @@ describe DispatchRider::QueueServices::Base do
     end
 
     context "when the queue is empty" do
-      before :each do
+      before do
         simple_queue.queue = []
       end
 
@@ -129,12 +129,12 @@ describe DispatchRider::QueueServices::Base do
   end
 
   describe "#empty?" do
-    before :each do
+    before do
       allow(base_queue).to receive(:size) { base_queue.queue.size }
     end
 
     context "when the queue is empty" do
-      before :each do
+      before do
         base_queue.queue = []
       end
 
@@ -144,7 +144,7 @@ describe DispatchRider::QueueServices::Base do
     end
 
     context "when the queue is not empty" do
-      before :each do
+      before do
         base_queue.queue << { subject: 'foo', body: 'bar' }.to_json
       end
 

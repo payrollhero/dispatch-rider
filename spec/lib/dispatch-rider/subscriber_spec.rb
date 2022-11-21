@@ -57,7 +57,7 @@ describe DispatchRider::Subscriber do
 
   describe "#setup_demultiplexer" do
     context "when a queue is registered" do
-      before :each do
+      before do
         subject.register_queue(:simple)
         subject.register_handler(:foo_bar)
       end
@@ -71,7 +71,7 @@ describe DispatchRider::Subscriber do
   end
 
   describe "#process" do
-    before :each do
+    before do
       subject.register_queue(:simple)
       subject.register_handler(:foo_bar)
       subject.setup_demultiplexer(:simple)

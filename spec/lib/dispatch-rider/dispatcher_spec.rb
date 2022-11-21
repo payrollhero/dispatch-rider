@@ -54,7 +54,7 @@ describe DispatchRider::Dispatcher, :nodb => true do
     end
 
     context "when the handler provided in the message is present" do
-      before :each do
+      before do
         subject.register('handle_something')
       end
 
@@ -66,7 +66,7 @@ describe DispatchRider::Dispatcher, :nodb => true do
     context "when the handler returns false" do
       let(:message_subject) { "handler_that_returns_false" }
 
-      before :each do
+      before do
         subject.register('handler_that_returns_false')
       end
 
