@@ -522,14 +522,6 @@ Style/GuardClause:
   Exclude:
     - 'lib/dispatch-rider/queue_services/base.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: braces, no_braces
-Style/HashAsLastArrayItem:
-  Exclude:
-    - 'spec/lib/dispatch-rider/airbrake_error_handler_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/configuration_reader_spec.rb'
 
 # Offense count: 26
 # This cop supports safe autocorrection (--autocorrect).

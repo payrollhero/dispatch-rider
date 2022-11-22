@@ -11,10 +11,10 @@ describe DispatchRider::AirbrakeErrorHandler do
     example do
       args = [
         exception,
-        controller: "DispatchRider",
-        action: "TestMessage",
-        parameters: { subject: "TestMessage", body: "foo" },
-        cgi_data: anything
+        { controller: "DispatchRider",
+          action: "TestMessage",
+          parameters: { subject: "TestMessage", body: "foo" },
+          cgi_data: anything }
       ]
       expect(Airbrake).to receive(:notify).with(*args)
 
