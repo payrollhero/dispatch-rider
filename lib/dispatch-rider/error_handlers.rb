@@ -4,7 +4,7 @@ module DispatchRider
   # This is the default error handler for dispatch rider.
   # It simply re-raises the exception.
   module DefaultErrorHandler
-    def self.call(message, exception)
+    def self.call(_message, exception)
       raise exception
     end
   end
