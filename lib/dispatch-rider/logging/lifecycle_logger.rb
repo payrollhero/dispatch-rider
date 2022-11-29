@@ -17,7 +17,7 @@ module DispatchRider
           log_start(message)
           yield
           log_success(message)
-        rescue => exception
+        rescue StandardError => exception
           log_fail(message, exception)
           raise exception
         ensure
