@@ -28,13 +28,6 @@ Layout/ClosingParenthesisIndentation:
   Exclude:
     - 'spec/lib/dispatch-rider/publisher_spec.rb'
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLineAfterGuardClause:
-  Exclude:
-    - 'lib/dispatch-rider/message.rb'
-    - 'lib/dispatch-rider/queue_services/aws_sqs.rb'
-    - 'lib/dispatch-rider/queue_services/file_system/queue.rb'
 
 # Offense count: 53
 # This cop supports safe autocorrection (--autocorrect).
