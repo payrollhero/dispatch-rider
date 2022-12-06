@@ -160,11 +160,6 @@ Lint/EmptyBlock:
     - 'spec/lib/dispatch-rider/notification_services_spec.rb'
     - 'spec/lib/dispatch-rider/registrars_spec.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Lint/RedundantStringCoercion:
-  Exclude:
-    - 'lib/dispatch-rider/errors.rb'
 
 # Offense count: 1
 Lint/RescueException:
