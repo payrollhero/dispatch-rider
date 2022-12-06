@@ -475,12 +475,6 @@ Style/Documentation:
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
-Style/EachWithObject:
-  Exclude:
-    - 'lib/dispatch-rider/publisher.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: compact, expanded
 Style/EmptyMethod:
