@@ -34,6 +34,7 @@ module DispatchRider
 
           visibility_timeout_shield(obj) do
             raise AbortExecution, "false received from handler" unless yield(obj)
+
             obj
           end
 
