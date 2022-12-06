@@ -25,9 +25,7 @@ module DispatchRider
       process_name = "dispatch_rider.#{@options[:identifier]}"
       Daemons.run_proc(process_name, @options) do
         $0 = File.join(@options[:prefix], process_name) if @options[:prefix]
-        Dir.chdir(@app_home.to_s) do
-          block.call
-        end
+        Dir.chdir(@app_home.to_s, &block)
       end
     end
 
