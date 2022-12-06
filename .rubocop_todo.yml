@@ -449,12 +449,6 @@ Style/ClassVars:
   Exclude:
     - 'lib/dispatch-rider/publisher/base.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/CommentedKeyword:
-  Exclude:
-    - 'spec/lib/dispatch-rider/publisher/configuration_reader_spec.rb'
-
 # Offense count: 63
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
