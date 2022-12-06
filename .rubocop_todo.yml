@@ -182,19 +182,6 @@ Lint/ShadowingOuterLocalVariable:
   Exclude:
     - 'lib/dispatch-rider/command.rb'
 
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'lib/dispatch-rider/error_handlers.rb'
-    - 'lib/dispatch-rider/queue_services/simple.rb'
-    - 'lib/dispatch-rider/registrars/file_system_channel.rb'
-    - 'lib/dispatch-rider/registrars/handler.rb'
-    - 'lib/dispatch-rider/registrars/publishing_destination.rb'
-    - 'lib/dispatch-rider/registrars/sns_channel.rb'
-    - 'spec/lib/dispatch-rider/subscriber_spec.rb'
-
 # Offense count: 1
 # Configuration parameters: AllowedMethods, AllowedPatterns, IgnoredMethods.
 Metrics/CyclomaticComplexity:
@@ -461,12 +448,6 @@ Style/ClassAndModuleChildren:
 Style/ClassVars:
   Exclude:
     - 'lib/dispatch-rider/publisher/base.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/CommentedKeyword:
-  Exclude:
-    - 'spec/lib/dispatch-rider/publisher/configuration_reader_spec.rb'
 
 # Offense count: 63
 # Configuration parameters: AllowedConstants.
