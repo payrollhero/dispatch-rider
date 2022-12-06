@@ -17,6 +17,7 @@ module DispatchRider
         # Essentially resetting the timer on this message
         def extend_timeout(timeout)
           item.visibility_timeout = timeout
+        ensure
           @total_timeout = timeout + (Time.now - start_time).to_i if timeout > 0
         end
 
