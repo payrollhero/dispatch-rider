@@ -16,8 +16,9 @@ module DispatchRider
         # NOTE: Setting the visibility timeout resets the timeout to NOW and makes it visibility timeout this time
         # Essentially resetting the timer on this message
         def extend_timeout(timeout)
-          item.visibility_timeout = timeout
-        ensure
+          item.change_visibility({
+            visibility_timeout: timeout # required
+          })
           @total_timeout = timeout + (Time.now - start_time).to_i if timeout > 0
         end
 
