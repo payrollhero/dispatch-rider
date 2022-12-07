@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'aws-sdk-sqs'
 
 # This queue service is based on aws sqs.
 # To make this queue service work, one would need the aws sqs gem to be installed.
@@ -23,8 +24,6 @@ module DispatchRider
         else
           raise RecordInvalid.new(self, ["Either name or url have to be specified"])
         end
-      rescue NameError
-        raise AdapterNotFoundError.new(self.class.name, 'aws-sdk')
       end
 
       def pop
