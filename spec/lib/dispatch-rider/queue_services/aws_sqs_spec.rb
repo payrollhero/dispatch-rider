@@ -15,7 +15,6 @@ describe DispatchRider::QueueServices::AwsSqs do
     allow_any_instance_of(Aws::SQS::Client).to receive(:get_queue_attributes).and_return(
       OpenStruct.new(
         {
-          change_visibility: true,
           attributes: {"VisibilityTimeout"=>visibility_timeout}
         }
       )
@@ -135,13 +134,13 @@ describe DispatchRider::QueueServices::AwsSqs do
         md5_of_body: "mmmddd555",
         body: { subject: "foo", body: { bar: "baz" } }.to_json,
         receipt_handle: "HANDLE",
-        change_visibility: proc { |_hash| true },
         attributes: response_attributes,
         visibility_timeout: visibility_timeout
       })
     end
 
     before do
+      allow(response_message).to receive(:change_visibility)
       allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: response_message }))
     end
 
