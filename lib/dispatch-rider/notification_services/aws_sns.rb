@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'aws-sdk-sns'
 
 # This is a basic implementation of the Notification service using Amazon SNS.
