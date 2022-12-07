@@ -135,7 +135,7 @@ describe DispatchRider::QueueServices::AwsSqs do
         md5_of_body: "mmmddd555",
         body: { subject: "foo", body: { bar: "baz" } }.to_json,
         receipt_handle: "HANDLE",
-        change_visibility: true,
+        change_visibility: proc { |_hash| true },
         attributes: response_attributes,
         visibility_timeout: visibility_timeout
       })
