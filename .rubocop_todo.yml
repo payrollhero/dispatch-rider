@@ -430,19 +430,6 @@ Security/JSONLoad:
     - 'spec/integration/logging_spec.rb'
     - 'spec/lib/dispatch-rider/publisher_spec.rb'
 
-# Offense count: 7
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: nested, compact
-Style/ClassAndModuleChildren:
-  Exclude:
-    - 'lib/dispatch-rider/notification_services/file_system/channel.rb'
-    - 'lib/dispatch-rider/notification_services/file_system/notifier.rb'
-    - 'lib/dispatch-rider/publisher/base.rb'
-    - 'lib/dispatch-rider/publisher/configuration.rb'
-    - 'lib/dispatch-rider/publisher/configuration/destination.rb'
-    - 'lib/dispatch-rider/publisher/configuration/notification_service.rb'
-    - 'lib/dispatch-rider/scheduled_job/migration.rb'
 
 # Offense count: 1
 Style/ClassVars:
