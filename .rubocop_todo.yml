@@ -528,13 +528,6 @@ Style/NestedParenthesizedCalls:
     - 'spec/lib/dispatch-rider/notification_services/aws_sns_spec.rb'
     - 'spec/lib/dispatch-rider/notification_services/base_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedOctalStyle.
-# SupportedOctalStyles: zero_with_o, zero_only
-Style/NumericLiteralPrefix:
-  Exclude:
-    - 'lib/generators/dispatch_rider/install/install_generator.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
