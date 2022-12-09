@@ -29,6 +29,13 @@ RSpec/VariableName:
   Exclude:
     - spec/lib/dispatch-rider/publisher/base_spec.rb
 
+Style/CommentedKeyword:
+  Exclude:
+    - 'spec/lib/dispatch-rider/publisher/configuration_reader_spec.rb'
+
+Style/RescueStandardError:
+  EnforcedStyle: implicit
+
 Style/StringLiterals:
   Enabled: false
 

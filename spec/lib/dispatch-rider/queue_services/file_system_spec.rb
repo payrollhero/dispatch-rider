@@ -28,7 +28,7 @@ describe DispatchRider::QueueServices::FileSystem do
   end
 
   describe "#raw_head" do
-    before :each do
+    before do
       file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
     end
 
@@ -55,7 +55,7 @@ describe DispatchRider::QueueServices::FileSystem do
   end
 
   describe "#put_back" do
-    before :each do
+    before do
       file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
     end
 
@@ -68,7 +68,7 @@ describe DispatchRider::QueueServices::FileSystem do
   end
 
   describe "#delete" do
-    before :each do
+    before do
       file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
     end
 
@@ -80,7 +80,7 @@ describe DispatchRider::QueueServices::FileSystem do
   end
 
   describe "#size" do
-    before :each do
+    before do
       file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
     end
 

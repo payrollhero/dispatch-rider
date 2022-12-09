@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if defined? Appsignal
-  ::Appsignal.logger.info('Loading Dispatch Rider integration')
+  Appsignal.logger.info('Loading Dispatch Rider integration')
 
   module DispatchRider
     module Integrations

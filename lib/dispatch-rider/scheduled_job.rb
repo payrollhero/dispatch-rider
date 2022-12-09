@@ -52,7 +52,7 @@ module DispatchRider
       destroy # once published
     end
 
-    delegate :publisher, to: :"self.class"
+    delegate :publisher, to: :'self.class'
   end
 end
 

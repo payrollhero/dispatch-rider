@@ -7,7 +7,7 @@ describe DispatchRider::Runner do
   describe ".run" do
     let(:subscriber) { double(:subscriber) }
 
-    before :each do
+    before do
       DispatchRider.configure do |config|
         config.subscriber = subscriber
       end

@@ -57,7 +57,7 @@ describe DispatchRider::Subscriber do
 
   describe "#setup_demultiplexer" do
     context "when a queue is registered" do
-      before :each do
+      before do
         subject.register_queue(:simple)
         subject.register_handler(:foo_bar)
       end
@@ -71,7 +71,7 @@ describe DispatchRider::Subscriber do
   end
 
   describe "#process" do
-    before :each do
+    before do
       subject.register_queue(:simple)
       subject.register_handler(:foo_bar)
       subject.setup_demultiplexer(:simple)
@@ -154,7 +154,7 @@ describe DispatchRider::Subscriber do
           allow(subject).to receive(:exit) { throw :got_forcefully_stopped }
 
           konst = Class.new(DispatchRider::Handlers::Base) do
-            def process(options)
+            def process(_options)
               2.times { Process.kill("INT", 0) }
             end
           end

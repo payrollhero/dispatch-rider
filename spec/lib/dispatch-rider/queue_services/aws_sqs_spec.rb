@@ -13,7 +13,11 @@ describe DispatchRider::QueueServices::AwsSqs do
   before do
     allow_any_instance_of(Aws::SQS::Client).to receive(:list_queues).and_return(OpenStruct.new({queue_urls: ["the.queue.url"]}))
     allow_any_instance_of(Aws::SQS::Client).to receive(:get_queue_attributes).and_return(
-      OpenStruct.new({attributes: {"VisibilityTimeout"=>visibility_timeout}})
+      OpenStruct.new(
+        {
+          attributes: {"VisibilityTimeout"=>visibility_timeout}
+        }
+      )
     )
   end
 
@@ -101,7 +105,7 @@ describe DispatchRider::QueueServices::AwsSqs do
     end
 
     context "when the sqs queue is empty" do
-      before :each do
+      before do
         allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: nil }))
       end
 
@@ -136,6 +140,7 @@ describe DispatchRider::QueueServices::AwsSqs do
     end
 
     before do
+      allow(response_message).to receive(:change_visibility)
       allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: response_message }))
     end
 

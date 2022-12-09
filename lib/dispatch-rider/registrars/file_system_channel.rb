@@ -5,7 +5,7 @@
 module DispatchRider
   module Registrars
     class FileSystemChannel < Base
-      def value(name, options = {})
+      def value(_name, options = {})
         File.expand_path(options[:path])
       end
     end
