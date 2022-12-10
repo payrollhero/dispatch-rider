@@ -154,7 +154,7 @@ describe DispatchRider::Subscriber do
           allow(subject).to receive(:exit) { throw :got_forcefully_stopped }
 
           konst = Class.new(DispatchRider::Handlers::Base) do
-            def process(options)
+            def process(_options)
               2.times { Process.kill("INT", 0) }
             end
           end

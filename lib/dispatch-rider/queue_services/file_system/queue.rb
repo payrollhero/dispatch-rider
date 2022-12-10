@@ -19,6 +19,7 @@ module DispatchRider
         def pop
           file_path = next_item(10)
           return nil unless file_path
+
           file_path_inflight = file_path.gsub(/\.ready$/, '.inflight')
           FileUtils.mv(file_path, file_path_inflight)
           File.new(file_path_inflight)

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'aws-sdk-sns'
+
 # This is a basic implementation of the Notification service using Amazon SNS.
 # The expected usage is as follows :
 #   notification_service = DispatchRider::NotificationServices::AwsSns.new
@@ -9,8 +11,6 @@ module DispatchRider
     class AwsSns < Base
       def notifier_builder
         Aws::SNS::Client
-      rescue NameError
-        raise AdapterNotFoundError.new(self.class.name, 'aws-sdk')
       end
 
       def channel_registrar_builder

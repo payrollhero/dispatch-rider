@@ -44,14 +44,14 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'activesupport', '>= 5.2.0'
   gem.add_runtime_dependency 'activemodel', '>= 5.2.0'
   gem.add_runtime_dependency 'activerecord', '>= 5.2.0'
+  gem.add_runtime_dependency 'aws-sdk-sqs', '~> 1.30'
+  gem.add_runtime_dependency 'aws-sdk-sns', '~> 1.30'
   gem.add_runtime_dependency 'daemons', '~> 1.2'
   gem.add_runtime_dependency 'retriable', '~> 3.1', '>= 3.1.2'
   # appsignal is an optional runtime dependency,
   # I am marking it as development for those that don't need it
   gem.add_development_dependency 'appsignal', '~> 1.0'
 
-  gem.add_development_dependency 'aws-sdk-sqs', '~> 1.30'
-  gem.add_development_dependency 'aws-sdk-sns', '~> 1.30'
   gem.add_development_dependency 'bundler', '< 3.0'
   gem.add_development_dependency 'coveralls_reborn', '~> 0.25'
   gem.add_development_dependency 'simplecov-lcov'

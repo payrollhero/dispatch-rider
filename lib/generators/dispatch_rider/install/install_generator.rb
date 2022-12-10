@@ -6,7 +6,7 @@ module DispatchRider
 
     def create_scripts
       copy_file "script/dispatch_rider", "script/dispatch_rider"
-      chmod 'script/dispatch_rider', 0755
+      chmod 'script/dispatch_rider', 0o755
     end
   end
 end

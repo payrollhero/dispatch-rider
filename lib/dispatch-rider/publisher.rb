@@ -80,13 +80,12 @@ module DispatchRider
       end
 
       def services_and_channels_map(destinations)
-        destinations.reduce({}) do |result, destination|
+        destinations.each_with_object({}) do |destination, result|
           if result.has_key?(destination.service)
             result[destination.service] << destination.channel
           else
             result[destination.service] = [destination.channel]
           end
-          result
         end
       end
     end
