@@ -9,14 +9,14 @@ module DispatchRider
   # The error class for objects not being found
   class NotFound < DispatchRiderError
     def initialize(name)
-      super("#{name.to_s} could not be found")
+      super("#{name} could not be found")
     end
   end
 
   # The error class for keys not registered in a registrar
   class NotRegistered < DispatchRiderError
     def initialize(name)
-      super("#{name.to_s} has not been registered")
+      super("#{name} has not been registered")
     end
   end
 
