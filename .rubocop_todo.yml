@@ -462,12 +462,6 @@ Style/Encoding:
   Exclude:
     - 'Rakefile'
 
-# Offense count: 5
-# This cop supports safe autocorrection (--autocorrect).
-Style/ExpandPathArguments:
-  Exclude:
-    - 'lib/generators/dispatch_rider/install/install_generator.rb'
-    - 'lib/generators/dispatch_rider/job/dispatch_job_generator.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
