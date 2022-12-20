@@ -35,7 +35,7 @@ module DispatchRider
       opts = OptionParser.new do |opts|
         opts.banner = "Usage: #{File.basename($0)} [options] start|stop|restart|run"
         opts.on('-h', '--help', 'Show this message') do
-          puts opts
+          Rails.logger.debug opts
           exit 1
         end
         opts.on('-i', '--identifier=n', 'A numeric identifier for the worker.') do |n|
