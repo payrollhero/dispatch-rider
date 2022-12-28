@@ -42,13 +42,6 @@ Layout/ExtraSpacing:
   Exclude:
     - 'spec/factories/messages.rb'
 
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Width, AllowedPatterns, IgnoredPatterns.
-Layout/IndentationWidth:
-  Exclude:
-    - 'lib/dispatch-rider/queue_services/base.rb'
-    - 'lib/dispatch-rider/queue_services/file_system.rb'
 
 # Offense count: 6
 # This cop supports safe autocorrection (--autocorrect).
