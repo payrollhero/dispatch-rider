@@ -450,11 +450,6 @@ Style/EmptyMethod:
   Exclude:
     - 'spec/support/null_logger.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/Encoding:
-  Exclude:
-    - 'Rakefile'
 
 # Offense count: 5
 # This cop supports safe autocorrection (--autocorrect).
