@@ -11,4 +11,3 @@ describe DispatchRider::NotificationServices::FileSystem::Notifier do
     end
   end
 end
-
