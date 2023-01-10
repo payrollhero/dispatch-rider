@@ -9,6 +9,6 @@ FactoryBot.define do
         'guid' => DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
       }
     }
-    initialize_with {  DispatchRider::Message.new(attributes) }
+    initialize_with { DispatchRider::Message.new(attributes) }
   end
 end

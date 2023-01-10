@@ -35,12 +35,6 @@ Layout/ClosingParenthesisIndentation:
 Layout/EmptyLinesAroundBlockBody:
   Enabled: false
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowForAlignment, AllowBeforeTrailingComments, ForceEqualSignAlignment.
-Layout/ExtraSpacing:
-  Exclude:
-    - 'spec/factories/messages.rb'
 
 # Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
