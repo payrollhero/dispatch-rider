@@ -442,13 +442,6 @@ Style/ClassVars:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: compact, expanded
-Style/EmptyMethod:
-  Exclude:
-    - 'spec/support/null_logger.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).

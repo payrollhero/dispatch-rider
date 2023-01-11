@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class NullLogger
-  def ignore(*_args)
-  end
+  def ignore(*_args); end
 
   alias info ignore
   alias error ignore
