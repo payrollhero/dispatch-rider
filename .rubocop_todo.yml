@@ -14,13 +14,6 @@ Layout/AccessModifierIndentation:
   Exclude:
     - 'lib/dispatch-rider/command.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleAlignWith.
-# SupportedStylesAlignWith: either, start_of_block, start_of_line
-Layout/BlockAlignment:
-  Exclude:
-    - 'spec/lib/dispatch-rider/notification_services/aws_sns_spec.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
