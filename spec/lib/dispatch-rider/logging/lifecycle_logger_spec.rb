@@ -134,7 +134,8 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
       describe "log_got_stop" do
         it "calls logger with info" do
           expect(logger).to receive(:info).with(
-            %{Got stop (Stop reason) while executing: (123): test : {"some"=>"key"}})
+            %{Got stop (Stop reason) while executing: (123): test : {"some"=>"key"}}
+          )
           subject.log_got_stop reason, fs_message
         end
       end

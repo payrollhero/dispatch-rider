@@ -91,8 +91,7 @@ describe DispatchRider::Publisher do
                                             :foo,
                                             account: 123,
                                             region: "us-east-1",
-                                            topic: "PlanOfAttack"
-      )
+                                            topic: "PlanOfAttack")
       expect(result).to eq(subject)
     end
   end
@@ -146,7 +145,8 @@ describe DispatchRider::Publisher do
           expect(publish_callback).to receive(:call).with(
             an_instance_of(Proc), # first argument is the inner job
             { destinations: [:fs_foo],
-              message: an_instance_of(DispatchRider::Message) })
+              message: an_instance_of(DispatchRider::Message) }
+)
           publisher.publish destinations: [:fs_foo],
                             message: {
                               subject: "bar_handler",
