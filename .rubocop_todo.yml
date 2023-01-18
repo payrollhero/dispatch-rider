@@ -213,12 +213,6 @@ RSpec/ContextWording:
     - 'spec/lib/dispatch-rider/publisher/base_spec.rb'
     - 'spec/lib/dispatch-rider/publisher/configuration/notification_service_spec.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-RSpec/EmptyExampleGroup:
-  Exclude:
-    - 'spec/lib/dispatch-rider/notification_services_spec.rb'
-    - 'spec/lib/dispatch-rider/registrars_spec.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
