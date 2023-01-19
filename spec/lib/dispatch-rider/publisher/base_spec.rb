@@ -6,7 +6,7 @@ describe DispatchRider::Publisher::Base do
 
   class DummyPublisher < DispatchRider::Publisher::Base
     destinations %i[sns_message_queue file_system_queue]
-    subject "Loud Cheering"
+    subject :'Loud Cheering'
 
     def self.publish(cheer)
       new.publish(cheer)
@@ -15,7 +15,7 @@ describe DispatchRider::Publisher::Base do
 
   class DummyCustomPublisher < DispatchRider::Publisher::Base
     destinations :sqs_message_queue
-    subject "Ferocious Tigers!"
+    subject :'Ferocious Tigers!'
 
     def self.publish(body, publisher)
       new(publisher).publish(body)

@@ -336,13 +336,6 @@ RSpec/SubjectStub:
     - 'spec/lib/dispatch-rider/registrars/base_spec.rb'
     - 'spec/lib/dispatch-rider/subscriber_spec.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: symbols, strings
-RSpec/VariableDefinition:
-  Exclude:
-    - 'spec/lib/dispatch-rider/publisher/base_spec.rb'
 
 # Offense count: 21
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
