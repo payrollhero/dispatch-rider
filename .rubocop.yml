@@ -82,6 +82,24 @@ Style/PercentLiteralDelimiters:
     - 'spec/lib/dispatch-rider/logging/json_formatter_spec.rb'
     - 'spec/spec_helper.rb'
 
+RSpec/EmptyExampleGroup:
+  Exclude:
+    - 'spec/lib/dispatch-rider/notification_services_spec.rb'
+    - 'spec/lib/dispatch-rider/registrars_spec.rb'
+
+Lint/EmptyBlock:
+  Exclude:
+    - 'spec/lib/dispatch-rider/notification_services_spec.rb'
+    - 'spec/lib/dispatch-rider/registrars_spec.rb'
+
+RSpec/VariableDefinition:
+  Exclude:
+    - 'spec/lib/dispatch-rider/publisher/base_spec.rb'
+
+Style/EmptyMethod:
+  Exclude:
+    - 'spec/support/null_logger.rb'
+
 Style/FormatString:
   Exclude:
     - 'lib/dispatch-rider/logging/text_formatter.rb'
