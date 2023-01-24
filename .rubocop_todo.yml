@@ -386,13 +386,6 @@ Style/ExpandPathArguments:
     - 'lib/generators/dispatch_rider/install/install_generator.rb'
     - 'lib/generators/dispatch_rider/job/dispatch_job_generator.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: MinBodyLength, AllowConsecutiveConditionals.
-Style/GuardClause:
-  Exclude:
-    - 'lib/dispatch-rider/queue_services/base.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
