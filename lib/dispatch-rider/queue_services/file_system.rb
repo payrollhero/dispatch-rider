@@ -10,10 +10,10 @@ module DispatchRider
     require "dispatch-rider/queue_services/file_system/fs_received_message"
     class FileSystem < Base
       def assign_storage(attrs)
-          path = attrs.fetch(:path)
-          Queue.new(path)
+        path = attrs.fetch(:path)
+        Queue.new(path)
       rescue IndexError
-          raise RecordInvalid.new(self, ["Path can not be blank"])
+        raise RecordInvalid.new(self, ["Path can not be blank"])
       end
 
       def insert(item)
@@ -25,7 +25,7 @@ module DispatchRider
       end
 
       def received_message_for(raw_item)
-         FsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue)
+        FsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue)
       end
 
       def construct_message_from(item)
