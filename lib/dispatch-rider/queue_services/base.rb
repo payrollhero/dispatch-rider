@@ -44,7 +44,7 @@ module DispatchRider
       end
 
       def received_message_for(raw_item)
-         QueueServices::ReceivedMessage.new(construct_message_from(raw_item), raw_item)
+        QueueServices::ReceivedMessage.new(construct_message_from(raw_item), raw_item)
       end
 
       def raw_head

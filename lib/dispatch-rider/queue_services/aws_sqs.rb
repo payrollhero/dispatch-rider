@@ -17,10 +17,10 @@ module DispatchRider
         sqs = Aws::SQS::Client.new(logger: nil)
         if attrs[:name].present?
           url = sqs.list_queues({queue_name_prefix: attrs[:name]}).queue_urls.first
-          set_visibility_timeout(sqs,url)
+          set_visibility_timeout(sqs, url)
           Aws::SQS::Queue.new(url: url, client: sqs)
         elsif attrs[:url].present?
-          set_visibility_timeout(sqs,attrs[:url])
+          set_visibility_timeout(sqs, attrs[:url])
           Aws::SQS::Queue.new(url: attrs[:url], client: sqs)
         else
           raise RecordInvalid.new(self, ["Either name or url have to be specified"])
@@ -64,7 +64,7 @@ module DispatchRider
 
       private
 
-      def set_visibility_timeout(client,url)
+      def set_visibility_timeout(client, url)
         resp = client.get_queue_attributes(queue_url: url, attribute_names: ["VisibilityTimeout"])
         @visibility_timeout = resp.attributes["VisibilityTimeout"]
       end
