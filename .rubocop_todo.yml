@@ -27,13 +27,6 @@ Layout/ClosingParenthesisIndentation:
 Layout/EmptyLinesAroundBlockBody:
   Enabled: false
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowForAlignment, AllowBeforeTrailingComments, ForceEqualSignAlignment.
-Layout/ExtraSpacing:
-  Exclude:
-    - 'spec/factories/messages.rb'
-
 # Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Width, AllowedPatterns, IgnoredPatterns.
@@ -119,14 +112,6 @@ Layout/SpaceInsideParens:
   Exclude:
     - 'lib/dispatch-rider/handlers/base.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: final_newline, final_blank_line
-Layout/TrailingEmptyLines:
-  Exclude:
-    - 'spec/lib/dispatch-rider/notification_services/file_system/notifier_spec.rb'
-
 # Offense count: 13
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
@@ -138,13 +123,6 @@ Lint/ConstantDefinitionInBlock:
     - 'spec/lib/dispatch-rider/handlers/inheritance_tracking_spec.rb'
     - 'spec/lib/dispatch-rider/publisher/base_spec.rb'
     - 'spec/lib/dispatch-rider/registrars/handler_spec.rb'
-
-# Offense count: 2
-# Configuration parameters: AllowComments, AllowEmptyLambdas.
-Lint/EmptyBlock:
-  Exclude:
-    - 'spec/lib/dispatch-rider/notification_services_spec.rb'
-    - 'spec/lib/dispatch-rider/registrars_spec.rb'
 
 # Offense count: 1
 Lint/RescueException:
@@ -204,13 +182,6 @@ RSpec/ContextWording:
     - 'spec/lib/dispatch-rider/logging/lifecycle_logger_spec.rb'
     - 'spec/lib/dispatch-rider/publisher/base_spec.rb'
     - 'spec/lib/dispatch-rider/publisher/configuration/notification_service_spec.rb'
-
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-RSpec/EmptyExampleGroup:
-  Exclude:
-    - 'spec/lib/dispatch-rider/notification_services_spec.rb'
-    - 'spec/lib/dispatch-rider/registrars_spec.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
@@ -317,7 +288,6 @@ RSpec/RepeatedExampleGroupDescription:
 # Offense count: 4
 RSpec/StubbedMock:
   Exclude:
-    - 'spec/lib/dispatch-rider/notification_services/base_spec.rb'
     - 'spec/lib/dispatch-rider/registrars/base_spec.rb'
 
 # Offense count: 12
@@ -328,14 +298,6 @@ RSpec/SubjectStub:
     - 'spec/lib/dispatch-rider/queue_services/base_spec.rb'
     - 'spec/lib/dispatch-rider/registrars/base_spec.rb'
     - 'spec/lib/dispatch-rider/subscriber_spec.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: symbols, strings
-RSpec/VariableDefinition:
-  Exclude:
-    - 'spec/lib/dispatch-rider/publisher/base_spec.rb'
 
 # Offense count: 21
 # Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
@@ -433,14 +395,6 @@ Style/ClassVars:
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
   Enabled: false
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: compact, expanded
-Style/EmptyMethod:
-  Exclude:
-    - 'spec/support/null_logger.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
