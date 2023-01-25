@@ -209,13 +209,6 @@ RSpec/ExampleWording:
 RSpec/FilePath:
   Enabled: false
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: single_line_only, single_statement_only, disallow, require_implicit
-RSpec/ImplicitSubject:
-  Exclude:
-    - 'spec/lib/dispatch-rider/scheduled_job_spec.rb'
 
 # Offense count: 13
 RSpec/LeakyConstantDeclaration:
