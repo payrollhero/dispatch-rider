@@ -20,7 +20,7 @@ describe DispatchRider::QueueServices::FileSystem do
 
   describe "#insert" do
     it "should insert a serialized object into the queue" do
-      file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
+      file_system_queue.insert({ 'subject' => 'foo', 'body' => 'bar' }.to_json)
       result = JSON.parse(file_system_queue.queue.pop.read)
       expect(result['subject']).to eq('foo')
       expect(result['body']).to eq('bar')
@@ -29,7 +29,7 @@ describe DispatchRider::QueueServices::FileSystem do
 
   describe "#raw_head" do
     before do
-      file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
+      file_system_queue.insert({ 'subject' => 'foo', 'body' => 'bar' }.to_json)
     end
 
     it "should return the first item from the queue" do
@@ -42,7 +42,7 @@ describe DispatchRider::QueueServices::FileSystem do
   describe "#construct_message_from" do
     let(:new_file) do
       file = Tempfile.new('item')
-      file.write({'subject' => 'foo', 'body' => 'bar'}.to_json)
+      file.write({ 'subject' => 'foo', 'body' => 'bar' }.to_json)
       file.rewind
       file
     end
@@ -56,7 +56,7 @@ describe DispatchRider::QueueServices::FileSystem do
 
   describe "#put_back" do
     before do
-      file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
+      file_system_queue.insert({ 'subject' => 'foo', 'body' => 'bar' }.to_json)
     end
 
     it "should remove and re-add the item" do
@@ -69,7 +69,7 @@ describe DispatchRider::QueueServices::FileSystem do
 
   describe "#delete" do
     before do
-      file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
+      file_system_queue.insert({ 'subject' => 'foo', 'body' => 'bar' }.to_json)
     end
 
     it "should remove the item from the queue" do
@@ -81,7 +81,7 @@ describe DispatchRider::QueueServices::FileSystem do
 
   describe "#size" do
     before do
-      file_system_queue.insert({'subject' => 'foo', 'body' => 'bar'}.to_json)
+      file_system_queue.insert({ 'subject' => 'foo', 'body' => 'bar' }.to_json)
     end
 
     it "should return the size of the queue" do

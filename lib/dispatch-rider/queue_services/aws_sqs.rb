@@ -16,7 +16,7 @@ module DispatchRider
       def assign_storage(attrs)
         sqs = Aws::SQS::Client.new(logger: nil)
         if attrs[:name].present?
-          url = sqs.list_queues({queue_name_prefix: attrs[:name]}).queue_urls.first
+          url = sqs.list_queues({ queue_name_prefix: attrs[:name] }).queue_urls.first
           set_visibility_timeout(sqs, url)
           Aws::SQS::Queue.new(url: url, client: sqs)
         elsif attrs[:url].present?
@@ -28,7 +28,7 @@ module DispatchRider
       end
 
       def pop
-        raw_item = queue.receive_messages({max_number_of_messages: 1}).first
+        raw_item = queue.receive_messages({ max_number_of_messages: 1 }).first
         if raw_item.present?
           obj = SqsReceivedMessage.new(construct_message_from(raw_item), raw_item, queue, visibility_timeout)
 
