@@ -14,11 +14,6 @@ Layout/AccessModifierIndentation:
   Exclude:
     - 'lib/dispatch-rider/command.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/ClosingParenthesisIndentation:
-  Exclude:
-    - 'spec/lib/dispatch-rider/publisher_spec.rb'
 
 # Offense count: 53
 # This cop supports safe autocorrection (--autocorrect).

@@ -154,7 +154,7 @@ describe DispatchRider::Publisher do
               subject: "bar_handler",
               body: { "bar" => "baz" }
             }
-)
+          )
         end
       end
     end
