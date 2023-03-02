@@ -65,5 +65,10 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'factory_bot'
 
   # static analysis gems
+  gem.add_development_dependency 'rubocop'
+  gem.add_development_dependency 'rubocop-performance'
+  gem.add_development_dependency 'rubocop-rails'
+  gem.add_development_dependency 'rubocop-rake'
+  gem.add_development_dependency 'rubocop-rspec'
   gem.add_development_dependency 'rubocop_challenger'
 end
