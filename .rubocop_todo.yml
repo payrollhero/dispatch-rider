@@ -104,12 +104,6 @@ Lint/RescueException:
     - 'lib/dispatch-rider/handlers/base.rb'
 
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Lint/ScriptPermission:
-  Exclude:
-    - 'lib/generators/dispatch_rider/install/templates/script/dispatch_rider'
-
-# Offense count: 1
 Lint/ShadowingOuterLocalVariable:
   Exclude:
     - 'lib/dispatch-rider/command.rb'
