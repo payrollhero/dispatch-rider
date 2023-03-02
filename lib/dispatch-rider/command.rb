@@ -29,7 +29,7 @@ module DispatchRider
       end
     end
 
-  private
+    private
 
     def process_args(args)
       opts = OptionParser.new do |opts|

@@ -10,6 +10,9 @@ inherit_from:
 Rails:
   Enabled: true
 
+Style/Documentation:
+  Enabled: false
+
 AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
@@ -81,6 +84,24 @@ Style/PercentLiteralDelimiters:
   Exclude:
     - 'spec/lib/dispatch-rider/logging/json_formatter_spec.rb'
     - 'spec/spec_helper.rb'
+
+RSpec/EmptyExampleGroup:
+  Exclude:
+    - 'spec/lib/dispatch-rider/notification_services_spec.rb'
+    - 'spec/lib/dispatch-rider/registrars_spec.rb'
+
+Lint/EmptyBlock:
+  Exclude:
+    - 'spec/lib/dispatch-rider/notification_services_spec.rb'
+    - 'spec/lib/dispatch-rider/registrars_spec.rb'
+
+RSpec/VariableDefinition:
+  Exclude:
+    - 'spec/lib/dispatch-rider/publisher/base_spec.rb'
+
+Style/EmptyMethod:
+  Exclude:
+    - 'spec/support/null_logger.rb'
 
 Style/FormatString:
   Exclude:

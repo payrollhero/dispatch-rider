@@ -32,10 +32,10 @@ module DispatchRider
       #If you pass a block into pop it will wrap the deletion of the message with it's handling
       def pop
         received = head
-        if received
-          yield(received) && delete(received.item)
-          received
-        end
+        return unless received
+
+        yield(received) && delete(received.item)
+        received
       end
 
       def head
@@ -44,7 +44,7 @@ module DispatchRider
       end
 
       def received_message_for(raw_item)
-         QueueServices::ReceivedMessage.new(construct_message_from(raw_item), raw_item)
+        QueueServices::ReceivedMessage.new(construct_message_from(raw_item), raw_item)
       end
 
       def raw_head

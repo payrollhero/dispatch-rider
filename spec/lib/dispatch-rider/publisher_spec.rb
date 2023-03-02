@@ -86,12 +86,13 @@ describe DispatchRider::Publisher do
     end
 
     it "returns the publisher" do
-      result = subject.register_destination(:sns_foo,
-                                            :aws_sns,
-                                            :foo,
-                                            account: 123,
-                                            region: "us-east-1",
-                                            topic: "PlanOfAttack"
+      result = subject.register_destination(
+        :sns_foo,
+        :aws_sns,
+        :foo,
+        account: 123,
+        region: "us-east-1",
+        topic: "PlanOfAttack"
       )
       expect(result).to eq(subject)
     end
@@ -145,13 +146,15 @@ describe DispatchRider::Publisher do
         example do
           expect(publish_callback).to receive(:call).with(
             an_instance_of(Proc), # first argument is the inner job
-            { destinations: [:fs_foo],
-              message: an_instance_of(DispatchRider::Message) })
-          publisher.publish destinations: [:fs_foo],
-                            message: {
-                              subject: "bar_handler",
-                              body: { "bar" => "baz" }
-                            }
+            { destinations: [:fs_foo], message: an_instance_of(DispatchRider::Message) }
+          )
+          publisher.publish(
+            destinations: [:fs_foo],
+            message: {
+              subject: "bar_handler",
+              body: { "bar" => "baz" }
+            }
+          )
         end
       end
     end
