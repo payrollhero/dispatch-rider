@@ -11,11 +11,11 @@ describe DispatchRider::QueueServices::AwsSqs do
   let(:visibility_timeout) { 100 }
 
   before do
-    allow_any_instance_of(Aws::SQS::Client).to receive(:list_queues).and_return(OpenStruct.new({queue_urls: ["the.queue.url"]}))
+    allow_any_instance_of(Aws::SQS::Client).to receive(:list_queues).and_return(OpenStruct.new({ queue_urls: ["the.queue.url"] }))
     allow_any_instance_of(Aws::SQS::Client).to receive(:get_queue_attributes).and_return(
       OpenStruct.new(
         {
-          attributes: {"VisibilityTimeout"=>visibility_timeout}
+          attributes: { "VisibilityTimeout"=>visibility_timeout }
         }
       )
     )
@@ -78,7 +78,7 @@ describe DispatchRider::QueueServices::AwsSqs do
       end
 
       before do
-        allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: response_message }))
+        allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({ first: response_message }))
       end
 
       context "when the block runs faster than the timeout" do
@@ -106,7 +106,7 @@ describe DispatchRider::QueueServices::AwsSqs do
 
     context "when the sqs queue is empty" do
       before do
-        allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: nil }))
+        allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({ first: nil }))
       end
 
       it "should not yield" do
@@ -141,7 +141,7 @@ describe DispatchRider::QueueServices::AwsSqs do
 
     before do
       allow(response_message).to receive(:change_visibility)
-      allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({first: response_message }))
+      allow_any_instance_of(Aws::SQS::Queue).to receive(:receive_messages).and_return(OpenStruct.new({ first: response_message }))
     end
 
     it "should set the visibility timeout when extend is called" do

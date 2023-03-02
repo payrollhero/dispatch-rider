@@ -36,8 +36,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
 
         let :configuration_hash do
           {
-            notification_services: {
-            }
+            notification_services: {}
           }
         end
 
@@ -71,7 +70,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
           {
             notification_services: {
               file_system: {},
-              foo: {bar: "123"},
+              foo: { bar: "123" },
             }
           }
         end
@@ -98,8 +97,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
 
         let :configuration_hash do
           {
-            destinations: {
-            }
+            destinations: {}
           }
         end
 

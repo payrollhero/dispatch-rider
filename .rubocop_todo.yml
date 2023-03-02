@@ -78,20 +78,6 @@ Layout/SpaceInsideBlockBraces:
   Exclude:
     - 'lib/dispatch-rider/subscriber.rb'
 
-# Offense count: 41
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.
-# SupportedStyles: space, no_space, compact
-# SupportedStylesForEmptyBraces: space, no_space
-Layout/SpaceInsideHashLiteralBraces:
-  Exclude:
-    - 'lib/dispatch-rider/queue_services/aws_sqs.rb'
-    - 'spec/lib/dispatch-rider/publisher/base_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/configuration_reader_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/aws_sqs_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/file_system_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/simple_spec.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
