@@ -33,6 +33,6 @@ YARD::Rake::YardocTask.new
 task :doc => :yard
 
 desc "Updates the changelog"
-task :changelog do
+task changelog: :environment do
   sh "github_changelog_generator payrollhero/dispatch-rider"
 end
