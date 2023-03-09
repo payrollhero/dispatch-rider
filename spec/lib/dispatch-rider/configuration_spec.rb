@@ -8,7 +8,7 @@ describe DispatchRider::Configuration do
 
   describe "defaults" do
     example do
-      expect(subject.handler_path).to match_regex(/\/app\/handlers/)
+      expect(subject.handler_path).to match_regex(%r{/app/handlers})
       expect(subject.error_handler).to eq DispatchRider::DefaultErrorHandler
       expect(subject.queue_kind).to eq :file_system
       expect(subject.queue_info).to eq(path: "tmp/dispatch-rider-queue")
