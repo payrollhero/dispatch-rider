@@ -492,13 +492,6 @@ Style/NestedParenthesizedCalls:
 Style/NumericLiterals:
   MinDigits: 6
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, AllowedMethods, AllowedPatterns.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Exclude:
-    - 'lib/dispatch-rider/queue_services/aws_sqs/sqs_received_message.rb'
 
 # Offense count: 13
 Style/OpenStructUse:

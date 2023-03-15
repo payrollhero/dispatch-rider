@@ -19,7 +19,7 @@ module DispatchRider
           item.change_visibility({
             visibility_timeout: timeout # required
           })
-          @total_timeout = timeout + (Time.now - start_time).to_i if timeout > 0
+          @total_timeout = timeout + (Time.now - start_time).to_i if timeout.positive?
         end
 
         # We effectively return the item to the queue by setting
