@@ -158,13 +158,6 @@ RSpec/EmptyLineAfterExample:
   Exclude:
     - 'spec/lib/dispatch-rider/demultiplexer_spec.rb'
 
-# Offense count: 14
-# This cop supports safe autocorrection (--autocorrect).
-RSpec/EmptyLineAfterSubject:
-  Exclude:
-    - 'spec/lib/dispatch-rider/logging/translator_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/configuration/destination_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/configuration/notification_service_spec.rb'
 
 # Offense count: 21
 # Configuration parameters: CountAsOne.

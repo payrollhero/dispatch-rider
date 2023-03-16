@@ -4,6 +4,7 @@ require 'spec_helper'
 
 describe DispatchRider::Publisher::Configuration::Destination do
   subject { described_class.new("employee", attributes) }
+
   let(:attributes) do
     {
       "service" => "aws_sns",
@@ -23,6 +24,7 @@ describe DispatchRider::Publisher::Configuration::Destination do
   describe "#name" do
     describe '#name' do
       subject { super().name }
+
       it { is_expected.to eq("employee") }
     end
   end
@@ -30,6 +32,7 @@ describe DispatchRider::Publisher::Configuration::Destination do
   describe "#service" do
     describe '#service' do
       subject { super().service }
+
       it { is_expected.to eq("aws_sns") }
     end
   end
@@ -37,6 +40,7 @@ describe DispatchRider::Publisher::Configuration::Destination do
   describe "#channel" do
     describe '#channel' do
       subject { super().channel }
+
       it { is_expected.to eq("employee_updates") }
     end
   end
@@ -44,6 +48,7 @@ describe DispatchRider::Publisher::Configuration::Destination do
   describe "#options" do
     describe '#options' do
       subject { super().options }
+
       it { is_expected.to eq(options) }
     end
   end
