@@ -13,7 +13,7 @@ module DispatchRider
         end
 
         def wrap_handling(message)
-          start_time = Time.now
+          start_time = Time.zone.now
           log_start(message)
           yield
           log_success(message)
@@ -21,7 +21,7 @@ module DispatchRider
           log_fail(message, exception)
           raise exception
         ensure
-          log_complete(message, Time.now - start_time)
+          log_complete(message, Time.zone.now - start_time)
         end
 
         private
