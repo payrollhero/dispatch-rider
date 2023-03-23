@@ -4,13 +4,15 @@
 
 module DispatchRider
   module NotificationServices
-    class FileSystem::Channel
-      def initialize(path)
-        @file_system_queue = DispatchRider::QueueServices::FileSystem::Queue.new(path)
-      end
+    module FileSystem
+      class Channel
+        def initialize(path)
+          @file_system_queue = DispatchRider::QueueServices::FileSystem::Queue.new(path)
+        end
 
-      def publish(message)
-        @file_system_queue.add(message[:message])
+        def publish(message)
+          @file_system_queue.add(message[:message])
+        end
       end
     end
   end
