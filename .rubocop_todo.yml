@@ -395,17 +395,6 @@ Rails/SkipsModelValidations:
     - 'spec/lib/dispatch-rider/queue_services/file_system_spec.rb'
     - 'spec/lib/dispatch-rider/queue_services/simple_spec.rb'
 
-# Offense count: 10
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: strict, flexible
-Rails/TimeZone:
-  Exclude:
-    - 'lib/dispatch-rider/logging/lifecycle_logger.rb'
-    - 'lib/dispatch-rider/queue_services/aws_sqs.rb'
-    - 'lib/dispatch-rider/queue_services/aws_sqs/sqs_received_message.rb'
-    - 'lib/dispatch-rider/scheduled_job.rb'
-    - 'spec/lib/dispatch-rider/queue_services/aws_sqs_spec.rb'
 
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
