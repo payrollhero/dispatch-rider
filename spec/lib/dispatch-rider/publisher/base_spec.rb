@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider::Publisher::Base do
-
   class DummyPublisher < DispatchRider::Publisher::Base
     destinations %i[sns_message_queue file_system_queue]
     subject "Loud Cheering"
@@ -77,5 +76,4 @@ describe DispatchRider::Publisher::Base do
       end
     end
   end
-
 end

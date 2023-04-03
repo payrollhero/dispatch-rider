@@ -3,7 +3,6 @@
 require "spec_helper"
 
 describe DispatchRider::AirbrakeErrorHandler do
-
   describe ".call" do
     let(:message) { DispatchRider::Message.new(subject: "TestMessage", body: "foo") }
     let(:exception) { Exception.new("Something went terribly wrong") }
@@ -21,5 +20,4 @@ describe DispatchRider::AirbrakeErrorHandler do
       described_class.call(message, exception)
     end
   end
-
 end

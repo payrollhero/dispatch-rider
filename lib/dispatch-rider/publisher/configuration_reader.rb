@@ -19,7 +19,12 @@ module DispatchRider
 
         def configure_destinations(destinations, publisher)
           destinations.each do |destination|
-            publisher.register_destination(destination.name, destination.service, destination.channel, destination.options)
+            publisher.register_destination(
+              destination.name,
+              destination.service,
+              destination.channel,
+              destination.options
+            )
           end
         end
       end

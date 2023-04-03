@@ -32,13 +32,11 @@ describe DispatchRider::Dispatcher, :nodb => true do
       before do
         allow(DispatchRider.config).to receive(:callbacks) { storage }
         storage.around(:dispatch_message) do |block, message|
-
           dummy.before
           dummy.log(message)
           block.call
         ensure
           dummy.after
-
         end
         subject.register('handle_something')
       end
@@ -59,7 +57,8 @@ describe DispatchRider::Dispatcher, :nodb => true do
       end
 
       it "should process the message" do
-        expect { subject.dispatch(message) }.to throw_symbol(:something)
+        expect { subject.dispatch(message) }
+          .to throw_symbol(:something)
       end
     end
 

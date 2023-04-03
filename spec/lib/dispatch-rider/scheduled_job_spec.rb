@@ -54,8 +54,7 @@ describe DispatchRider::ScheduledJob do
     subject { described_class.find(due_job.id).message }
 
     it {
-      is_expected.to eq "subject" => "war_update",
-                        "body" => { "enigma_machine" => "broken" }
+      is_expected.to eq "subject" => "war_update", "body" => { "enigma_machine" => "broken" }
     }
   end
 

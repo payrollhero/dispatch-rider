@@ -12,7 +12,7 @@ module DispatchRider
         end
 
         def extend_timeout(timeout)
-          #file system doesn't support timeouts on items, so we ignore this.
+          # file system doesn't support timeouts on items, so we ignore this.
         end
 
         def return_to_queue

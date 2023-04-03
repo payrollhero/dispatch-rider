@@ -8,7 +8,7 @@ require "active_support/core_ext/hash/indifferent_access"
 require "active_support/inflector"
 require "active_support/json"
 # Local testing fails without this
-#require "active_support/isolated_execution_state"
+# require "active_support/isolated_execution_state"
 require "active_support/core_ext/array/conversions"
 require "active_model"
 

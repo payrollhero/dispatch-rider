@@ -17,9 +17,10 @@ module DispatchRider
       def invoke(event, *args, &block)
         stack_of_callbacks = callbacks.for(event).reverse
 
-        block_with_callbacks = stack_of_callbacks.reduce(block) { |inner_block, outer_block|
-          -> { outer_block.call(inner_block, *args) }
-        }
+        block_with_callbacks =
+          stack_of_callbacks.reduce(block) { |inner_block, outer_block|
+            -> { outer_block.call(inner_block, *args) }
+          }
 
         block_with_callbacks.call
       end
