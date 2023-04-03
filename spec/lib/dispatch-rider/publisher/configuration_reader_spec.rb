@@ -3,13 +3,11 @@
 require 'spec_helper'
 
 describe DispatchRider::Publisher::ConfigurationReader do
-
   let :publisher do
     double(:publisher)
   end
 
   describe ".load_config" do
-
     subject { described_class }
 
     it "responds to :load_config" do
@@ -29,11 +27,9 @@ describe DispatchRider::Publisher::ConfigurationReader do
     end
 
     describe "notification_services parsing" do
-
       let(:configuration) { DispatchRider::Publisher::Configuration.new(configuration_hash) }
 
       context "when notification_services has no items in it" do
-
         let :configuration_hash do
           {
             notification_services: {}
@@ -86,15 +82,12 @@ describe DispatchRider::Publisher::ConfigurationReader do
           subject.load_config(configuration, publisher)
         end
       end
-
     end
 
     describe "destinations" do
-
       let(:configuration) { DispatchRider::Publisher::Configuration.new(configuration_hash) }
 
       context "when destinations has no items in it" do
-
         let :configuration_hash do
           {
             destinations: {}
@@ -105,11 +98,9 @@ describe DispatchRider::Publisher::ConfigurationReader do
           expect(publisher).not_to receive(:register_destination)
           subject.load_config(configuration, publisher)
         end
-
       end
 
       context "when destinations has items in it" do
-
         let :configuration_hash do
           {
             destinations: {
@@ -129,11 +120,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
           expect(publisher).to receive(:register_destination).once.with(*params)
           subject.load_config(configuration, publisher)
         end
-
       end
-
     end
-
   end # .load_config
-
 end

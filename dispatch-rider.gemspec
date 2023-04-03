@@ -6,10 +6,7 @@ Gem::Specification.new do |gem|
   gem.name = "dispatch-rider"
   gem.version = DispatchRider::VERSION
 
-  gem.summary = %q{
-    Messaging system that is customizable based on which
-    queueing system we are using.
-  }
+  gem.summary = %q{ Messaging system that is customizable based on which queueing system we are using. }
   gem.description = %q{
     Messaging system based on the reactor pattern.
 
@@ -23,23 +20,14 @@ Gem::Specification.new do |gem|
     You can choose your own queueing service.
   }
   gem.license = "MIT"
-  gem.authors = [
-    "Suman Mukherjee",
-    "Dane Natoli",
-    "Piotr Banasik",
-    "Ronald Maravilla",
-    "Mathieu Jobin",
-  ]
-  gem.email = [
-    "mathieu@payrollhero.com",
-  ]
+  gem.authors = ["Suman Mukherjee", "Dane Natoli", "Piotr Banasik", "Ronald Maravilla", "Mathieu Jobin",]
+  gem.email = ["mathieu@payrollhero.com",]
   gem.homepage = 'https://github.com/payrollhero/dispatch-rider'
   gem.files = `git ls-files`.split($/)
   gem.executables = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
   gem.required_ruby_version = '>= 2.7.2'
-
 
   gem.add_runtime_dependency 'activesupport', '>= 5.2.0'
   gem.add_runtime_dependency 'activemodel', '>= 5.2.0'

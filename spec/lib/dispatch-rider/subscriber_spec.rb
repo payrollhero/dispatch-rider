@@ -15,11 +15,12 @@ describe DispatchRider::Subscriber do
   before do
     allow(DispatchRider::Handlers::Base).to receive(:subclasses) { Set.new }
 
-    konst = Class.new(DispatchRider::Handlers::Base) do
-      def process(_options)
-        throw :process_was_called
+    konst =
+      Class.new(DispatchRider::Handlers::Base) do
+        def process(_options)
+          throw :process_was_called
+        end
       end
-    end
     stub_const("FooBar", konst)
   end
 
@@ -84,7 +85,8 @@ describe DispatchRider::Subscriber do
       end
 
       it "should process the queue" do
-        expect { subject.process }.to throw_symbol(:process_was_called)
+        expect { subject.process }
+          .to throw_symbol(:process_was_called)
       end
     end
 
@@ -98,52 +100,64 @@ describe DispatchRider::Subscriber do
         let(:message_subject) { :quiter }
 
         before do
-          konst = Class.new(DispatchRider::Handlers::Base) do
-            def process(_options)
-              Process.kill("QUIT", 0)
+          konst =
+            Class.new(DispatchRider::Handlers::Base) do
+              def process(_options)
+                Process.kill("QUIT", 0)
+              end
             end
-          end
           stub_const("Quiter", konst)
 
           subject.register_handler(:quiter)
           subject.queue_service_registrar.fetch(:simple).push(message)
         end
 
-        example { expect { subject.process }.to throw_symbol(:got_stopped) }
+        example {
+          expect { subject.process }
+            .to throw_symbol(:got_stopped)
+        }
       end
 
       context "when process terminates" do
         let(:message_subject) { :terminator }
 
         before do
-          konst = Class.new(DispatchRider::Handlers::Base) do
-            def process(_options)
-              Process.kill("TERM", 0)
+          konst =
+            Class.new(DispatchRider::Handlers::Base) do
+              def process(_options)
+                Process.kill("TERM", 0)
+              end
             end
-          end
           stub_const("Terminator", konst)
           subject.register_handler(:terminator)
           subject.queue_service_registrar.fetch(:simple).push(message)
         end
 
-        example { expect { subject.process }.to throw_symbol(:got_stopped) }
+        example {
+          expect { subject.process }
+            .to throw_symbol(:got_stopped)
+        }
       end
 
       context "when process is interupted" do
         let(:message_subject) { :interupter }
 
         before do
-          konst = Class.new(DispatchRider::Handlers::Base) do
-            def process(_options)
-              Process.kill("INT", 0)
+          konst =
+            Class.new(DispatchRider::Handlers::Base) do
+              def process(_options)
+                Process.kill("INT", 0)
+              end
             end
-          end
           stub_const("Interupter", konst)
           subject.register_handler(:interupter)
           subject.queue_service_registrar.fetch(:simple).push(message)
         end
 
-        example { expect { subject.process }.to throw_symbol(:got_stopped) }
+        example {
+          expect { subject.process }
+            .to throw_symbol(:got_stopped)
+        }
       end
 
       context "when process is interupted twice" do
@@ -153,19 +167,22 @@ describe DispatchRider::Subscriber do
           allow(subject.demultiplexer).to receive(:stop) # do nothing just ignore the interuption
           allow(subject).to receive(:exit) { throw :got_forcefully_stopped }
 
-          konst = Class.new(DispatchRider::Handlers::Base) do
-            def process(_options)
-              2.times { Process.kill("INT", 0) }
+          konst =
+            Class.new(DispatchRider::Handlers::Base) do
+              def process(_options)
+                2.times { Process.kill("INT", 0) }
+              end
             end
-          end
           stub_const("TwiceInterupter", konst)
           subject.register_handler(:twice_interupter)
           subject.queue_service_registrar.fetch(:simple).push(message)
         end
 
-        example { expect { subject.process }.to throw_symbol(:got_forcefully_stopped) }
+        example {
+          expect { subject.process }
+            .to throw_symbol(:got_forcefully_stopped)
+        }
       end
     end
   end
-
 end

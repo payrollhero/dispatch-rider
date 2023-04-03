@@ -26,7 +26,8 @@ describe DispatchRider::Message do
 
     context "when all the required attributes are not passed" do
       it "should raise an exception" do
-        expect { described_class.new({}) }.to raise_exception(DispatchRider::RecordInvalid)
+        expect { described_class.new({}) }
+          .to raise_exception(DispatchRider::RecordInvalid)
       end
     end
   end

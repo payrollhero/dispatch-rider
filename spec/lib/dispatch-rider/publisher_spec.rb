@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider::Publisher do
-
   subject(:publisher) { described_class.new }
 
   describe "#initialize" do
@@ -109,19 +108,18 @@ describe DispatchRider::Publisher do
     end
 
     around do |ex|
-
       DispatchRider.config.debug = true
       ex.call
     ensure
       DispatchRider.config.debug = false
-
     end
 
     it "publishes the message to the notification service" do
       existing = Dir['tmp/test_queue/*']
       expect {
         subject.publish(:destinations => [:fs_foo], message: { subject: "bar_handler", body: { "bar" => "baz" } })
-      }.to change { Dir['tmp/test_queue/*'].length }.by(1)
+      }.to change { Dir['tmp/test_queue/*'].length }
+        .by(1)
       new_job = Dir['tmp/test_queue/*'] - existing
       data = JSON.load(File.read(new_job.first))
 
@@ -148,13 +146,7 @@ describe DispatchRider::Publisher do
             an_instance_of(Proc), # first argument is the inner job
             { destinations: [:fs_foo], message: an_instance_of(DispatchRider::Message) }
           )
-          publisher.publish(
-            destinations: [:fs_foo],
-            message: {
-              subject: "bar_handler",
-              body: { "bar" => "baz" }
-            }
-          )
+          publisher.publish(destinations: [:fs_foo], message: { subject: "bar_handler", body: { "bar" => "baz" } })
         end
       end
     end

@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider::QueueServices::AwsSqs do
-
   subject(:aws_sqs_queue) do
     described_class.new(:name => "normal_priority")
   end
@@ -15,16 +14,14 @@ describe DispatchRider::QueueServices::AwsSqs do
     allow_any_instance_of(Aws::SQS::Client).to receive(:get_queue_attributes).and_return(
       OpenStruct.new(
         {
-          attributes: { "VisibilityTimeout"=>visibility_timeout }
+          attributes: { "VisibilityTimeout" => visibility_timeout }
         }
       )
     )
   end
 
   describe "#assign_storage" do
-
     context "when the aws gem is installed" do
-
       context "when the name of the queue is passed in the options" do
         it "should return an instance representing the aws sqs queue" do
           aws_sqs_queue.assign_storage(:name => 'normal_priority')
@@ -41,7 +38,8 @@ describe DispatchRider::QueueServices::AwsSqs do
 
       context "when neither the name nor the url of the queue is assed in the options" do
         it "should raise an exception" do
-          expect { aws_sqs_queue.assign_storage(:foo => 'bar') }.to raise_exception(DispatchRider::RecordInvalid)
+          expect { aws_sqs_queue.assign_storage(:foo => 'bar') }
+            .to raise_exception(DispatchRider::RecordInvalid)
         end
       end
     end
@@ -67,14 +65,16 @@ describe DispatchRider::QueueServices::AwsSqs do
       end
 
       let(:response_message) do
-        OpenStruct.new({
-          message_id: "12345",
-          md5_of_body: "mmmddd555",
-          body: { subject: "foo", body: { bar: "baz" } }.to_json,
-          receipt_handle: "HANDLE",
-          attributes: response_attributes,
-          visibility_timeout: visibility_timeout
-        })
+        OpenStruct.new(
+          {
+            message_id: "12345",
+            md5_of_body: "mmmddd555",
+            body: { subject: "foo", body: { bar: "baz" } }.to_json,
+            receipt_handle: "HANDLE",
+            attributes: response_attributes,
+            visibility_timeout: visibility_timeout
+          }
+        )
       end
 
       before do
@@ -101,7 +101,6 @@ describe DispatchRider::QueueServices::AwsSqs do
           }.to raise_exception(/message: foo,.+ took .+ seconds while the timeout was 1/)
         end
       end
-
     end
 
     context "when the sqs queue is empty" do
@@ -115,7 +114,6 @@ describe DispatchRider::QueueServices::AwsSqs do
         }.not_to yield_control
       end
     end
-
   end
 
   describe "received message methods" do
@@ -129,14 +127,16 @@ describe DispatchRider::QueueServices::AwsSqs do
     end
 
     let(:response_message) do
-      OpenStruct.new({
-        message_id: 12345,
-        md5_of_body: "mmmddd555",
-        body: { subject: "foo", body: { bar: "baz" } }.to_json,
-        receipt_handle: "HANDLE",
-        attributes: response_attributes,
-        visibility_timeout: visibility_timeout
-      })
+      OpenStruct.new(
+        {
+          message_id: 12345,
+          md5_of_body: "mmmddd555",
+          body: { subject: "foo", body: { bar: "baz" } }.to_json,
+          receipt_handle: "HANDLE",
+          attributes: response_attributes,
+          visibility_timeout: visibility_timeout
+        }
+      )
     end
 
     before do
