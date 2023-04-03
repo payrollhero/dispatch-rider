@@ -10,7 +10,10 @@ module DispatchRider
 
     include Callbacks::Support
 
-    attr_reader :service_channel_mapper, :notification_service_registrar, :publishing_destination_registrar, :sns_channel_registrar
+    attr_reader :service_channel_mapper,
+                :notification_service_registrar,
+                :publishing_destination_registrar,
+                :sns_channel_registrar
 
     def initialize(configuration = self.class.configuration)
       @notification_service_registrar = DispatchRider::Registrars::NotificationService.new

@@ -27,11 +27,9 @@ if defined? Appsignal
   end
 
   DispatchRider.configure do |config|
-
     config.around(:dispatch_message) do |job, message|
       DispatchRider::Integrations::Appsignal.wrap_message(job, message)
     end
-
   end
 
 end

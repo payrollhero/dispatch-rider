@@ -23,7 +23,7 @@ module DispatchRider
       @callbacks = Callbacks::Storage.new
       @subscriber = DispatchRider::Subscriber
       @log_formatter = DispatchRider::Logging::TextFormatter.new
-      @additional_info_injector = -> (data) { data }
+      @additional_info_injector = ->(data) { data }
       @logger = Logger.new($stderr)
       @debug = false
 
@@ -41,10 +41,11 @@ module DispatchRider
     end
 
     def handlers
-      @handlers ||= begin
-        load_handler_files
-        DispatchRider::Handlers::Base.subclasses.map { |klass| klass.name.underscore.to_sym }
-      end
+      @handlers ||=
+        begin
+          load_handler_files
+          DispatchRider::Handlers::Base.subclasses.map { |klass| klass.name.underscore.to_sym }
+        end
     end
 
     private

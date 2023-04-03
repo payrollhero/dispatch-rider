@@ -10,8 +10,7 @@ module DispatchRider
     attr_reader :name, :options
 
     def ==(other)
-      name == other.name &&
-        options == other.options
+      name == other.name && options == other.options
     end
   end
 end
