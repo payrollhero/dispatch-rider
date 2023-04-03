@@ -21,7 +21,7 @@ module DispatchRider
     end
 
     def register_handlers(*names)
-      names.each {|name| register_handler(name)}
+      names.each { |name| register_handler(name) }
       self
     end
 
