@@ -8,13 +8,7 @@ module DispatchRider
       parse(configuration_hash)
     end
 
-    def notification_services
-      @notification_services
-    end
-
-    def destinations
-      @destinations
-    end
+    attr_reader :notification_services, :destinations
 
     def parse(configuration_hash)
       clear
