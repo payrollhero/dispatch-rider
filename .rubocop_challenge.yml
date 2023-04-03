@@ -1,0 +1,5 @@
+---
+Ignore:
+- Style/ClassAndModuleChildren
+- Style/StringLiterals
+
