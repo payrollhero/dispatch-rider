@@ -17,9 +17,9 @@ module DispatchRider
           log_start(message)
           yield
           log_success(message)
-        rescue => exception
-          log_fail(message, exception)
-          raise exception
+        rescue => e
+          log_fail(message, e)
+          raise e
         ensure
           log_complete(message, Time.now - start_time)
         end
