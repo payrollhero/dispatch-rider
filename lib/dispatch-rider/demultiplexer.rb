@@ -22,8 +22,8 @@ module DispatchRider
 
         sleep 1
         handle_next_queue_item
-      rescue => exception
-        error_handler.call(Message.new(subject: "TopLevelError", body: {}), exception)
+      rescue => e
+        error_handler.call(Message.new(subject: "TopLevelError", body: {}), e)
         throw :done
 
       end
@@ -49,8 +49,8 @@ module DispatchRider
       with_current_message(message) do
         dispatcher.dispatch(message)
       end
-    rescue => exception
-      handle_message_error message, exception
+    rescue => e
+      handle_message_error message, e
       false
     end
 
@@ -75,9 +75,9 @@ module DispatchRider
 
     def handle_message_error(message, exception)
       error_handler.call(message, exception)
-    rescue => error_handler_exception # the error handler crashed
-      Logging::LifecycleLogger.log_error_handler_fail message, error_handler_exception
-      raise error_handler_exception
+    rescue => e # the error handler crashed
+      Logging::LifecycleLogger.log_error_handler_fail message, e
+      raise e
     end
 
     def logger
