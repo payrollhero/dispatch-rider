@@ -17,6 +17,7 @@ describe DispatchRider::Logging::Translator do
       subject(:result) do
         described_class.translate(fs_message, kind)
       end
+
       let(:kind) { :start }
       let(:expected_hash) do
         {
@@ -38,6 +39,7 @@ describe DispatchRider::Logging::Translator do
       subject(:result) do
         described_class.translate(fs_message, kind)
       end
+
       let(:kind) { :success }
       let(:expected_hash) do
         {
@@ -59,6 +61,7 @@ describe DispatchRider::Logging::Translator do
       subject(:result) do
         described_class.translate(fs_message, kind, exception: exception)
       end
+
       let(:kind) { :fail }
       let(:exception) do
         ArgumentError.new("Foo is not bar")
@@ -88,6 +91,7 @@ describe DispatchRider::Logging::Translator do
       subject(:result) do
         described_class.translate(fs_message, kind, duration: duration)
       end
+
       let(:kind) { :complete }
       let(:duration) { 5 }
       let(:expected_hash) do
@@ -111,6 +115,7 @@ describe DispatchRider::Logging::Translator do
       subject(:result) do
         described_class.translate(fs_message, kind, exception: exception)
       end
+
       let(:kind) { :error_handler_fail }
       let(:exception) do
         ArgumentError.new("Foo is not bar")
@@ -140,6 +145,7 @@ describe DispatchRider::Logging::Translator do
       subject(:result) do
         described_class.translate(fs_message, kind, reason: reason)
       end
+
       let(:kind) { :stop }
       let(:reason) { "Got TERM" }
       let(:expected_hash) do
