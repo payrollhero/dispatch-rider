@@ -365,13 +365,6 @@ Rails/Output:
   Exclude:
     - 'lib/dispatch-rider/command.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Include.
-# Include: **/Rakefile, **/*.rake
-Rails/RakeEnvironment:
-  Exclude:
-    - 'Rakefile'
 
 # Offense count: 13
 # Configuration parameters: ForbiddenMethods, AllowedMethods.
