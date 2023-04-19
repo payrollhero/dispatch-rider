@@ -11,7 +11,7 @@ module DispatchRider
         end
 
         def extract
-          parsed_message.has_key?("Message") ? parsed_message["Message"] : parsed_message.to_json
+          parsed_message.key?("Message") ? parsed_message["Message"] : parsed_message.to_json
         end
       end
     end
