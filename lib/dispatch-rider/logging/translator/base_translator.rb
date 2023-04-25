@@ -30,12 +30,7 @@ module DispatchRider
         end
 
         def exception_info_fragment(message, exception)
-          exception_details = {
-            exception: {
-              class: exception.class.to_s,
-              message: exception.message,
-            }
-          }
+          exception_details = { exception: { class: exception.class.to_s, message: exception.message, } }
           message_info_fragment(message).merge exception_details
         end
       end

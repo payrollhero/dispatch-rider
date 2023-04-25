@@ -2,7 +2,7 @@
 
 module DispatchRider
   class Publisher::Configuration::Destination
-    def initialize(name, attributes={})
+    def initialize(name, attributes = {})
       @name = name
 
       attributes = attributes.with_indifferent_access
@@ -14,10 +14,7 @@ module DispatchRider
     attr_reader :name, :service, :channel, :options
 
     def ==(other)
-      name == other.name &&
-        service == other.service &&
-        channel == other.channel &&
-        options == other.options
+      name == other.name && service == other.service && channel == other.channel && options == other.options
     end
   end
 end

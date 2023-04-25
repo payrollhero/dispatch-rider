@@ -3,7 +3,6 @@
 require "spec_helper"
 
 describe DispatchRider::DefaultErrorHandler do
-
   describe ".call" do
     let(:exception) { Exception.new("Something went terribly wrong") }
 
@@ -13,5 +12,4 @@ describe DispatchRider::DefaultErrorHandler do
       }.to raise_exception exception
     end
   end
-
 end

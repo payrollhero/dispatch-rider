@@ -13,7 +13,13 @@ module DispatchRider
   # sending the mesage and environment details.
   module AirbrakeErrorHandler
     def self.call(message, exception)
-      Airbrake.notify(exception, controller: "DispatchRider", action: message.subject, parameters: message.attributes, cgi_data: ENV.to_hash)
+      Airbrake.notify(
+        exception,
+        controller: "DispatchRider",
+        action: message.subject,
+        parameters: message.attributes,
+        cgi_data: ENV.to_hash
+      )
     end
   end
 end

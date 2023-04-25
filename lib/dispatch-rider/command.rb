@@ -32,22 +32,23 @@ module DispatchRider
     private
 
     def process_args(args)
-      opts = OptionParser.new do |opts|
-        opts.banner = "Usage: #{File.basename($0)} [options] start|stop|restart|run"
-        opts.on('-h', '--help', 'Show this message') do
-          puts opts
-          exit 1
+      opts =
+        OptionParser.new do |opts|
+          opts.banner = "Usage: #{File.basename($0)} [options] start|stop|restart|run"
+          opts.on('-h', '--help', 'Show this message') do
+            puts opts
+            exit 1
+          end
+          opts.on('-i', '--identifier=n', 'A numeric identifier for the worker.') do |n|
+            @options[:identifier] = n
+          end
+          opts.on('-m', '--monitor', 'Start monitor process.') do
+            @options[:monitor] = true
+          end
+          opts.on('-p', '--prefix NAME', "String to be prefixed to worker process names") do |prefix|
+            @options[:prefix] = prefix
+          end
         end
-        opts.on('-i', '--identifier=n', 'A numeric identifier for the worker.') do |n|
-          @options[:identifier] = n
-        end
-        opts.on('-m', '--monitor', 'Start monitor process.') do
-          @options[:monitor] = true
-        end
-        opts.on('-p', '--prefix NAME', "String to be prefixed to worker process names") do |prefix|
-          @options[:prefix] = prefix
-        end
-      end
       @opts = opts.parse!(args)
     end
   end
