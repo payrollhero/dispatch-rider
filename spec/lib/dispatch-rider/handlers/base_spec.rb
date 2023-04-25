@@ -53,7 +53,7 @@ describe DispatchRider::Handlers::Base do
       example do
         expect {
           handler.do_process(message)
-        }.to_not raise_exception
+        }.not_to raise_exception
       end
 
       example do
