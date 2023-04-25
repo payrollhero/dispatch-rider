@@ -21,7 +21,7 @@ describe DispatchRider::ScheduledJob do
       subject(:due_jobs) { described_class.due }
 
       it { expect(due_jobs).to include due_job }
-      it { expect(due_jobs).to_not include later_job }
+      it { expect(due_jobs).not_to include later_job }
     end
 
     describe "due tomorrow" do

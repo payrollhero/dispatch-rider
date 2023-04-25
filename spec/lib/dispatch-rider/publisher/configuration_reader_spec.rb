@@ -25,7 +25,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
     it "deals with an empty configuration hash" do
       expect {
         subject.load_config(DispatchRider::Publisher::Configuration.new, publisher)
-      }.to_not raise_exception
+      }.not_to raise_exception
     end
 
     describe "notification_services parsing" do
