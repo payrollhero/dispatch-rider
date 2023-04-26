@@ -349,13 +349,6 @@ Rails/Exit:
     - 'lib/dispatch-rider/command.rb'
     - 'lib/dispatch-rider/subscriber.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Include.
-# Include: app/**/*.rb, config/**/*.rb, db/**/*.rb, lib/**/*.rb
-Rails/Output:
-  Exclude:
-    - 'lib/dispatch-rider/command.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
