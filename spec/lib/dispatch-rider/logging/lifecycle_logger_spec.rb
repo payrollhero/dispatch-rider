@@ -28,7 +28,7 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
 
     context 'when additional_info_injector is customized' do
       let(:additional_info_injector) do
-        -> (message) do
+        lambda do |message|
           message[:employee_id] = 47
           message[:account_id] = 42
           message
