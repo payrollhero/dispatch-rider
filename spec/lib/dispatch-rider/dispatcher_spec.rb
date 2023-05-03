@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe DispatchRider::Dispatcher, :nodb => true do
+describe DispatchRider::Dispatcher, nodb: true do
   class HandleSomething < DispatchRider::Handlers::Base
     def process(params)
       throw :something if params[:do_throw_something]

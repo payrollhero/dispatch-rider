@@ -34,7 +34,7 @@ module DispatchRider
       end
     end
 
-    delegate :before, :after, :around, :to => :callbacks
+    delegate :before, :after, :around, to: :callbacks
 
     def default_retry_timeout=(val)
       DispatchRider::Handlers::Base.set_default_retry(val)

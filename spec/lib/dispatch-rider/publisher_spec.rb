@@ -120,7 +120,7 @@ describe DispatchRider::Publisher do
     it "publishes the message to the notification service" do
       existing = Dir['tmp/test_queue/*']
       expect {
-        subject.publish(:destinations => [:fs_foo], message: { subject: "bar_handler", body: { "bar" => "baz" } })
+        subject.publish(destinations: [:fs_foo], message: { subject: "bar_handler", body: { "bar" => "baz" } })
       }.to change { Dir['tmp/test_queue/*'].length }.by(1)
       new_job = Dir['tmp/test_queue/*'] - existing
       data = JSON.load(File.read(new_job.first))

@@ -9,13 +9,13 @@ module DispatchRider
     def initialize(options = {})
       @app_home = Pathname.new(Dir.getwd)
       @options = {
-        :log_output => true,
-        :dir_mode => :normal,
-        :log_dir => (@app_home + "log").to_s,
-        :dir => (@app_home + "log").to_s,
-        :multiple => false,
-        :monitor => false,
-        :identifier => 0,
+        log_output: true,
+        dir_mode: :normal,
+        log_dir: (@app_home + "log").to_s,
+        dir: (@app_home + "log").to_s,
+        multiple: false,
+        monitor: false,
+        identifier: 0,
       }.merge(options)
     end
 

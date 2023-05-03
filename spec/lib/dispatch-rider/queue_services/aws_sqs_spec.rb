@@ -5,7 +5,7 @@ require 'spec_helper'
 describe DispatchRider::QueueServices::AwsSqs do
 
   subject(:aws_sqs_queue) do
-    described_class.new(:name => "normal_priority")
+    described_class.new(name: "normal_priority")
   end
 
   let(:visibility_timeout) { 100 }
@@ -27,21 +27,21 @@ describe DispatchRider::QueueServices::AwsSqs do
 
       context "when the name of the queue is passed in the options" do
         it "should return an instance representing the aws sqs queue" do
-          aws_sqs_queue.assign_storage(:name => 'normal_priority')
+          aws_sqs_queue.assign_storage(name: 'normal_priority')
           expect(aws_sqs_queue.queue.url).to eq('the.queue.url')
         end
       end
 
       context "when the url of the queue is passed in the options" do
         it "should return an instance representing the aws sqs queue" do
-          aws_sqs_queue.assign_storage(:url => 'https://sqs.us-east-1.amazonaws.com/12345/QueueName')
+          aws_sqs_queue.assign_storage(url: 'https://sqs.us-east-1.amazonaws.com/12345/QueueName')
           expect(aws_sqs_queue.queue.url).to eq('the.queue.url')
         end
       end
 
       context "when neither the name nor the url of the queue is assed in the options" do
         it "should raise an exception" do
-          expect { aws_sqs_queue.assign_storage(:foo => 'bar') }.to raise_exception(DispatchRider::RecordInvalid)
+          expect { aws_sqs_queue.assign_storage(foo: 'bar') }.to raise_exception(DispatchRider::RecordInvalid)
         end
       end
     end
