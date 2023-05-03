@@ -422,25 +422,6 @@ Style/ExpandPathArguments:
     - 'lib/generators/dispatch_rider/install/install_generator.rb'
     - 'lib/generators/dispatch_rider/job/dispatch_job_generator.rb'
 
-# Offense count: 26
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
-# SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
-# SupportedShorthandSyntax: always, never, either, consistent
-Style/HashSyntax:
-  Exclude:
-    - 'Rakefile'
-    - 'lib/dispatch-rider/command.rb'
-    - 'lib/dispatch-rider/configuration.rb'
-    - 'lib/dispatch-rider/message.rb'
-    - 'lib/dispatch-rider/publisher.rb'
-    - 'lib/dispatch-rider/registrars/publishing_destination.rb'
-    - 'spec/lib/dispatch-rider/dispatcher_spec.rb'
-    - 'spec/lib/dispatch-rider/notification_services/file_system_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/aws_sqs_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/file_system_spec.rb'
-    - 'spec/lib/dispatch-rider/registrars/publishing_destination_spec.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).

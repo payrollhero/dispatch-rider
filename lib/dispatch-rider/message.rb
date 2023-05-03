@@ -10,7 +10,7 @@ module DispatchRider
 
     attr_accessor :subject, :body
 
-    validates :subject, :presence => true
+    validates :subject, presence: true
 
     def initialize(options)
       attrs = options.symbolize_keys

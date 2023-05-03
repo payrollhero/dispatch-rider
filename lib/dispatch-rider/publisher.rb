@@ -27,7 +27,7 @@ module DispatchRider
 
     def register_destination(name, service, channel, options = {})
       register_channel(service, channel, options)
-      publishing_destination_registrar.register(name, :service => service, :channel => channel)
+      publishing_destination_registrar.register(name, service: service, channel: channel)
       self
     end
 
