@@ -7,7 +7,7 @@ module DispatchRider
       extend InheritanceTracking
 
       class << self
-        def set_default_retry( amount )
+        def set_default_retry(amount)
           define_method(:retry_timeout) do
             amount
           end
