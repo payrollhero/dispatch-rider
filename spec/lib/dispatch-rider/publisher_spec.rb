@@ -123,7 +123,7 @@ describe DispatchRider::Publisher do
         subject.publish(:destinations => [:fs_foo], message: { subject: "bar_handler", body: { "bar" => "baz" } })
       }.to change { Dir['tmp/test_queue/*'].length }.by(1)
       new_job = Dir['tmp/test_queue/*'] - existing
-      data = JSON.load(File.read(new_job.first))
+      data = JSON.parse(File.read(new_job.first))
 
       expected_message = {
         "subject" => "bar_handler",
