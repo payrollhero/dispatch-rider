@@ -2,12 +2,12 @@
 
 class DispatchJob < Rails::Generators::Base
   class Publisher < Rails::Generators::Base
-    source_root File.expand_path('../templates/publisher', __FILE__)
+    source_root File.expand_path('templates/publisher', __dir__)
     argument :handler_name, type: :string, required: true
     argument :publisher_name, type: :string, required: true
 
     class Rspec < Rails::Generators::Base
-      source_root File.expand_path('../templates/publisher', __FILE__)
+      source_root File.expand_path('templates/publisher', __dir__)
       argument :handler_name, type: :string, required: true
       argument :publisher_name, type: :string, required: true
 
@@ -24,11 +24,11 @@ class DispatchJob < Rails::Generators::Base
   end
 
   class Handler < Rails::Generators::Base
-    source_root File.expand_path('../templates/handler', __FILE__)
+    source_root File.expand_path('templates/handler', __dir__)
     argument :handler_name, type: :string, required: true
 
     class Rspec < Rails::Generators::Base
-      source_root File.expand_path('../templates/handler', __FILE__)
+      source_root File.expand_path('templates/handler', __dir__)
       argument :handler_name, type: :string, required: true
 
       def generate_handler_spec

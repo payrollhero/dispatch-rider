@@ -415,12 +415,6 @@ Style/ClassVars:
   Exclude:
     - 'lib/dispatch-rider/publisher/base.rb'
 
-# Offense count: 5
-# This cop supports safe autocorrection (--autocorrect).
-Style/ExpandPathArguments:
-  Exclude:
-    - 'lib/generators/dispatch_rider/install/install_generator.rb'
-    - 'lib/generators/dispatch_rider/job/dispatch_job_generator.rb'
 
 # Offense count: 26
 # This cop supports safe autocorrection (--autocorrect).
