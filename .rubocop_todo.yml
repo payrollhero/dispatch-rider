@@ -6,31 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 53
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, no_empty_lines
-Layout/EmptyLinesAroundBlockBody:
-  Exclude:
-    - 'lib/dispatch-rider/callbacks/storage.rb'
-    - 'lib/dispatch-rider/demultiplexer.rb'
-    - 'lib/dispatch-rider/integrations/appsignal.rb'
-    - 'spec/lib/dispatch-rider/airbrake_error_handler_spec.rb'
-    - 'spec/lib/dispatch-rider/configuration_spec.rb'
-    - 'spec/lib/dispatch-rider/default_error_handler_spec.rb'
-    - 'spec/lib/dispatch-rider/demultiplexer_spec.rb'
-    - 'spec/lib/dispatch-rider/dispatcher_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/base_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/configuration/notification_service_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/configuration_reader_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/configuration_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher/configuration_support_spec.rb'
-    - 'spec/lib/dispatch-rider/publisher_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/aws_sqs_spec.rb'
-    - 'spec/lib/dispatch-rider/queue_services/received_message_spec.rb'
-    - 'spec/lib/dispatch-rider/runner_spec.rb'
-    - 'spec/lib/dispatch-rider/subscriber_spec.rb'
-    - 'spec/lib/dispatch-rider_spec.rb'
 
 # Offense count: 6
 # This cop supports safe autocorrection (--autocorrect).

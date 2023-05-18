@@ -23,11 +23,9 @@ module DispatchRider
       # @param [Proc] &block
       def after(event, block_param = nil, &block)
         around(event) do |job, *args|
-
           job.call
         ensure
           (block_param || block).call(*args)
-
         end
       end
 
