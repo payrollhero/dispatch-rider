@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider::Publisher::Configuration do
-
   subject { described_class.new(configuration_hash) }
 
   let(:configuration_hash) do
@@ -147,5 +146,4 @@ describe DispatchRider::Publisher::Configuration do
       expect(subject.destinations).to match_array([destination])
     end
   end
-
 end

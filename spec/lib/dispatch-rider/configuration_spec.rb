@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider::Configuration do
-
   subject { described_class.new }
 
   describe "defaults" do
@@ -54,7 +53,6 @@ describe DispatchRider::Configuration do
   end
 
   describe "#logger" do
-
     describe "default" do
       example { expect(subject.logger).to be_a(Logger) }
     end
@@ -72,5 +70,4 @@ describe DispatchRider::Configuration do
       expect(subject.logger).to eq new_logger
     end
   end
-
 end

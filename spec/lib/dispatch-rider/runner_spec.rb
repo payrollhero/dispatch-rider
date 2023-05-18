@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider::Runner do
-
   describe ".run" do
     let(:subscriber) { double(:subscriber) }
 
@@ -27,5 +26,4 @@ describe DispatchRider::Runner do
       described_class.run
     end
   end
-
 end

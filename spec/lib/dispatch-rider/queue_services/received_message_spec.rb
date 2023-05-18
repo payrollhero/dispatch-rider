@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider::QueueServices::ReceivedMessage do
-
   subject { described_class.new("test_message", double(:item)) }
 
   describe "#extend_timeout" do
@@ -21,5 +20,4 @@ describe DispatchRider::QueueServices::ReceivedMessage do
       }.to raise_error NotImplementedError
     end
   end
-
 end

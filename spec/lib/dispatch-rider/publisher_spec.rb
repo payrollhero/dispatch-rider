@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider::Publisher do
-
   subject(:publisher) { described_class.new }
 
   describe "#initialize" do
@@ -109,12 +108,10 @@ describe DispatchRider::Publisher do
     end
 
     around do |ex|
-
       DispatchRider.config.debug = true
       ex.call
     ensure
       DispatchRider.config.debug = false
-
     end
 
     it "publishes the message to the notification service" do

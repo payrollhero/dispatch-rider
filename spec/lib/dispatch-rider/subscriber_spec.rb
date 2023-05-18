@@ -167,5 +167,4 @@ describe DispatchRider::Subscriber do
       end
     end
   end
-
 end

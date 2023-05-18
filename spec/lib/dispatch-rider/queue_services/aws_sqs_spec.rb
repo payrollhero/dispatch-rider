@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider::QueueServices::AwsSqs do
-
   subject(:aws_sqs_queue) do
     described_class.new(:name => "normal_priority")
   end
@@ -22,9 +21,7 @@ describe DispatchRider::QueueServices::AwsSqs do
   end
 
   describe "#assign_storage" do
-
     context "when the aws gem is installed" do
-
       context "when the name of the queue is passed in the options" do
         it "should return an instance representing the aws sqs queue" do
           aws_sqs_queue.assign_storage(:name => 'normal_priority')
@@ -101,7 +98,6 @@ describe DispatchRider::QueueServices::AwsSqs do
           }.to raise_exception(/message: foo,.+ took .+ seconds while the timeout was 1/)
         end
       end
-
     end
 
     context "when the sqs queue is empty" do
@@ -115,7 +111,6 @@ describe DispatchRider::QueueServices::AwsSqs do
         }.not_to yield_control
       end
     end
-
   end
 
   describe "received message methods" do

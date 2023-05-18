@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider::Publisher::Configuration::NotificationService do
-
   subject { described_class.new("file_system", options) }
 
   let(:options) do
@@ -59,5 +58,4 @@ describe DispatchRider::Publisher::Configuration::NotificationService do
       it { is_expected.not_to eq other }
     end
   end
-
 end
