@@ -214,13 +214,6 @@ RSpec/FilePath:
     - 'spec/lib/dispatch-rider/subscriber_spec.rb'
     - 'spec/lib/dispatch-rider_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: single_line_only, single_statement_only, disallow, require_implicit
-RSpec/ImplicitSubject:
-  Exclude:
-    - 'spec/lib/dispatch-rider/scheduled_job_spec.rb'
 
 # Offense count: 3
 # Configuration parameters: Max.
