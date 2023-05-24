@@ -73,7 +73,7 @@ describe "Logging" do
       # last one is a bit harder since it has a relative 'duration' value
       entry = mock_logger.log[2]
       expect(entry[:level]).to eq(:info)
-      payload = JSON.load(entry[:message])
+      payload = JSON.parse(entry[:message])
       expect(payload['duration']).to be_a(Numeric)
       payload.delete 'duration'
       expect(payload).to eq(expected3)
@@ -120,7 +120,7 @@ describe "Logging" do
       # last one is a bit harder since it has a relative 'duration' value
       entry = mock_logger.log[2]
       expect(entry[:level]).to eq(:info)
-      payload = JSON.load(entry[:message])
+      payload = JSON.parse(entry[:message])
       expect(payload['duration']).to be_a(Numeric)
       payload.delete 'duration'
       expect(payload).to eq(expected3)
