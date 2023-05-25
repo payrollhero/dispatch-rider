@@ -481,14 +481,6 @@ Style/OpenStructUse:
     - 'spec/lib/dispatch-rider/queue_services/aws_sqs_spec.rb'
     - 'spec/lib/dispatch-rider/queue_services/base_spec.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: short, verbose
-Style/PreferredHashMethods:
-  Exclude:
-    - 'lib/dispatch-rider/publisher.rb'
-    - 'lib/dispatch-rider/queue_services/aws_sqs/message_body_extractor.rb'
 
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).

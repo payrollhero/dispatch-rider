@@ -81,7 +81,7 @@ module DispatchRider
 
       def services_and_channels_map(destinations)
         destinations.each_with_object({}) do |destination, result|
-          if result.has_key?(destination.service)
+          if result.key?(destination.service)
             result[destination.service] << destination.channel
           else
             result[destination.service] = [destination.channel]
