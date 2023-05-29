@@ -3,7 +3,7 @@
 Dispatch rider is a pub/sub kind of library that allows you to publish a
 message to a notification system (like Amazon SNS) and then you
 can subscribe to the channels that you subscribed to and start
-handling the messages.
+handling the messages. Essentially making it a multi-service background job system.
 
 ### Build status
 
