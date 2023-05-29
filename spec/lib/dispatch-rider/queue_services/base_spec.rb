@@ -68,10 +68,11 @@ describe DispatchRider::QueueServices::Base do
       end
 
       it "should return nil" do
-        result = simple_queue.pop do |msg|
-          msg.body = { bar: "baz" }
-          true
-        end
+        result =
+          simple_queue.pop do |msg|
+            msg.body = { bar: "baz" }
+            true
+          end
         expect(result).to be_nil
       end
     end
@@ -108,7 +109,8 @@ describe DispatchRider::QueueServices::Base do
 
   describe "#raw_head" do
     it "should raise an exception" do
-      expect { base_queue.raw_head }.to raise_exception(NotImplementedError)
+      expect { base_queue.raw_head }
+        .to raise_exception(NotImplementedError)
     end
   end
 
@@ -156,7 +158,8 @@ describe DispatchRider::QueueServices::Base do
 
   describe "#size" do
     it "should raise an exception" do
-      expect { base_queue.size }.to raise_exception(NotImplementedError)
+      expect { base_queue.size }
+        .to raise_exception(NotImplementedError)
     end
   end
 end

@@ -37,13 +37,10 @@ module DispatchRider
     serialize :destinations
     serialize :message
 
-    validates :scheduled_at,
-              :destinations,
-              :message,
-              presence: true
+    validates :scheduled_at, :destinations, :message, presence: true
 
-    scope :due, -> (time = Time.now) { where "scheduled_at <= ?", time }
-    scope :claimed_by, -> (claim_id) { where(claim_id: claim_id).where "claim_expires_at > ?", Time.now }
+    scope :due, ->(time = Time.now) { where "scheduled_at <= ?", time }
+    scope :claimed_by, ->(claim_id) { where(claim_id: claim_id).where "claim_expires_at > ?", Time.now }
     scope :unclaimed, -> { where "claim_expires_at IS NULL OR claim_expires_at <= ?", Time.now }
 
     def publish

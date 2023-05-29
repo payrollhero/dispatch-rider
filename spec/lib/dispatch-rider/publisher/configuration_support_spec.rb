@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider::Publisher::ConfigurationSupport do
-
   subject { Object.new.extend(described_class) }
 
   describe ".configuration" do
@@ -87,5 +86,4 @@ describe DispatchRider::Publisher::ConfigurationSupport do
       end
     end
   end
-
 end

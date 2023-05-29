@@ -25,9 +25,10 @@ describe DispatchRider::Demultiplexer, nodb: true do
 
   let(:demultiplexer_thread) do
     demultiplexer
-    thread = Thread.new do
-      demultiplexer.start
-    end
+    thread =
+      Thread.new do
+        demultiplexer.start
+      end
     thread[:demultiplexer] = demultiplexer
     thread
   end
@@ -51,7 +52,6 @@ describe DispatchRider::Demultiplexer, nodb: true do
     end
 
     context "when the queue is not empty" do
-
       before do
         queue.push message
       end
@@ -115,5 +115,4 @@ describe DispatchRider::Demultiplexer, nodb: true do
       expect(demultiplexer_thread).not_to be_alive # looper should close the loop
     end
   end
-
 end

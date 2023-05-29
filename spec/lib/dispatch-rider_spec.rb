@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider do
-
   describe ".configuration" do
     example do
       expect(described_class.configuration).to be_a(DispatchRider::Configuration)
@@ -25,5 +24,4 @@ describe DispatchRider do
       expect(described_class.config.queue_kind).to eq(:test_queue)
     end
   end
-
 end

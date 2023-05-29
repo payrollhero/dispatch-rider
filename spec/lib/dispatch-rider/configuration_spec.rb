@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe DispatchRider::Configuration do
-
   subject { described_class.new }
 
   describe "defaults" do
@@ -48,13 +47,12 @@ describe DispatchRider::Configuration do
     it "sets the default timeout" do
       subject.default_retry_timeout = 60
       expect(TestHandler.instance_methods).to include(:retry_timeout)
-      #Need to do this so that all the other tests don't have this as default!
+      # Need to do this so that all the other tests don't have this as default!
       DispatchRider::Handlers::Base.send(:remove_method, :retry_timeout)
     end
   end
 
   describe "#logger" do
-
     describe "default" do
       example { expect(subject.logger).to be_a(Logger) }
     end
@@ -72,5 +70,4 @@ describe DispatchRider::Configuration do
       expect(subject.logger).to eq new_logger
     end
   end
-
 end
