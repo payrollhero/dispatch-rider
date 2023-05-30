@@ -70,7 +70,7 @@ describe DispatchRider::Publisher::ConfigurationReader do
           {
             notification_services: {
               file_system: {},
-              foo: { bar: "123" },
+              foo: { bar: "123" }
             }
           }
         end

@@ -48,7 +48,7 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
             body: { some: 'key' },
             exception: { class: 'StandardError', message: 'something failed' },
             employee_id: 47,
-            account_id: 42,
+            account_id: 42
           }.deep_stringify_keys.to_json
         end
 
@@ -67,7 +67,7 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
             body: { some: 'key' },
             reason: reason,
             employee_id: 47,
-            account_id: 42,
+            account_id: 42
           }.deep_stringify_keys.to_json
         end
 
@@ -85,7 +85,7 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
             subject: 'test',
             body: { some: 'key' },
             employee_id: 47,
-            account_id: 42,
+            account_id: 42
           }.deep_stringify_keys.to_json
         end
 
@@ -96,7 +96,7 @@ describe DispatchRider::Logging::LifecycleLogger, aggregrate_failures: true do
             subject: 'test',
             body: { some: 'key' },
             employee_id: 47,
-            account_id: 42,
+            account_id: 42
           }.deep_stringify_keys.to_json
         end
 

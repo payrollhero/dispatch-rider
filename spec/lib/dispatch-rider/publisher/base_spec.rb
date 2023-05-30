@@ -44,7 +44,7 @@ describe DispatchRider::Publisher::Base do
           message: {
             subject: "Loud Cheering",
             body: {
-              "bla" => "WOOOOOOOO!",
+              "bla" => "WOOOOOOOO!"
             }
           }
         }
@@ -63,8 +63,8 @@ describe DispatchRider::Publisher::Base do
           message: {
             subject: "Ferocious Tigers!",
             body: {
-              "bla" => "RAAAAAWWWWW!",
-            },
+              "bla" => "RAAAAAWWWWW!"
+            }
           }
         }
       end
