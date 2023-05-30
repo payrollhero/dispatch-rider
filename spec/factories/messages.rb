@@ -6,7 +6,7 @@ FactoryBot.define do
     body {
       {
         'key' => 'value',
-        'guid' => DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
+        'guid' => DispatchRider::Debug::PUBLISHER_MESSAGE_GUID
       }
     }
     initialize_with { DispatchRider::Message.new(attributes) }

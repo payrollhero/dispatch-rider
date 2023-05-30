@@ -25,8 +25,8 @@ describe DispatchRider::Logging::Translator do
           subject: 'sample_handler',
           guid: DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
           body: {
-            'key' => 'value',
-          },
+            'key' => 'value'
+          }
         }
       end
 
@@ -47,8 +47,8 @@ describe DispatchRider::Logging::Translator do
           subject: 'sample_handler',
           guid: DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
           body: {
-            'key' => 'value',
-          },
+            'key' => 'value'
+          }
         }
       end
 
@@ -73,11 +73,11 @@ describe DispatchRider::Logging::Translator do
           subject: 'sample_handler',
           guid: DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
           body: {
-            'key' => 'value',
+            'key' => 'value'
           },
           exception: {
             class: 'ArgumentError',
-            message: 'Foo is not bar',
+            message: 'Foo is not bar'
           }
         }
       end
@@ -100,9 +100,9 @@ describe DispatchRider::Logging::Translator do
           subject: 'sample_handler',
           guid: DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
           body: {
-            'key' => 'value',
+            'key' => 'value'
           },
-          duration: 5,
+          duration: 5
         }
       end
 
@@ -127,11 +127,11 @@ describe DispatchRider::Logging::Translator do
           subject: 'sample_handler',
           guid: DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
           body: {
-            'key' => 'value',
+            'key' => 'value'
           },
           exception: {
             class: 'ArgumentError',
-            message: 'Foo is not bar',
+            message: 'Foo is not bar'
           }
         }
       end
@@ -154,9 +154,9 @@ describe DispatchRider::Logging::Translator do
           subject: 'sample_handler',
           guid: DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
           body: {
-            'key' => 'value',
+            'key' => 'value'
           },
-          reason: 'Got TERM',
+          reason: 'Got TERM'
         }
       end
 

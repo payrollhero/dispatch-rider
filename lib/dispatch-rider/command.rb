@@ -15,7 +15,7 @@ module DispatchRider
         :dir => (@app_home + "log").to_s,
         :multiple => false,
         :monitor => false,
-        :identifier => 0,
+        :identifier => 0
       }.merge(options)
     end
 

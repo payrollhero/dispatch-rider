@@ -62,7 +62,7 @@ describe DispatchRider::QueueServices::AwsSqs do
           "SenderId" => "123456789012",
           "SentTimestamp" => Time.now.to_i.to_s,
           "ApproximateReceivedCount" => "12",
-          "ApproximateFirstReceiveTimestamp" => (Time.now + 12).to_i.to_s,
+          "ApproximateFirstReceiveTimestamp" => (Time.now + 12).to_i.to_s
         }
       end
 
@@ -124,7 +124,7 @@ describe DispatchRider::QueueServices::AwsSqs do
         "SenderId" => "123456789012",
         "SentTimestamp" => Time.now.to_i.to_s,
         "ApproximateReceivedCount" => "12",
-        "ApproximateFirstReceiveTimestamp" => (Time.now + 12).to_i.to_s,
+        "ApproximateFirstReceiveTimestamp" => (Time.now + 12).to_i.to_s
       }
     end
 

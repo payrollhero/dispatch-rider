@@ -11,7 +11,7 @@ describe DispatchRider::Logging::TextFormatter do
         phase: phase,
         guid: '123',
         body: { foo: :bar },
-        subject: 'sample_handler',
+        subject: 'sample_handler'
       }
     end
 

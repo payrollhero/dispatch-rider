@@ -18,7 +18,7 @@ module DispatchRider
           {
             guid: message.guid.to_s,
             subject: message.subject,
-            body: message_info_arguments(message),
+            body: message_info_arguments(message)
           }
         end
 
@@ -33,7 +33,7 @@ module DispatchRider
           exception_details = {
             exception: {
               class: exception.class.to_s,
-              message: exception.message,
+              message: exception.message
             }
           }
           message_info_fragment(message).merge exception_details

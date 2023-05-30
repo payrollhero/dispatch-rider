@@ -29,7 +29,7 @@ describe DispatchRider::Publisher::ConfigurationSupport do
             service: :file_system,
             channel: :foo,
             options: {
-              path: "tmp/test/channel",
+              path: "tmp/test/channel"
             }
           }
         }

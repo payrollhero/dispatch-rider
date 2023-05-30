@@ -48,21 +48,21 @@ describe "Logging" do
         'phase' => 'start',
         'guid' => 'test-mode-not-random-guid',
         'subject' => 'sample_handler',
-        'body' => {},
+        'body' => {}
       }
 
       expected2 = {
         'phase' => 'success',
         'guid' => 'test-mode-not-random-guid',
         'subject' => 'sample_handler',
-        'body' => {},
+        'body' => {}
       }
 
       expected3 = {
         'phase' => 'complete',
         'guid' => 'test-mode-not-random-guid',
         'subject' => 'sample_handler',
-        'body' => {},
+        'body' => {}
       }
 
       expect(mock_logger.log.count).to eq(3)
@@ -91,7 +91,7 @@ describe "Logging" do
         'phase' => 'start',
         'guid' => 'test-mode-not-random-guid',
         'subject' => 'crashing_handler',
-        'body' => {},
+        'body' => {}
       }
 
       expected2 = {
@@ -101,15 +101,15 @@ describe "Logging" do
         'body' => {},
         'exception' => {
           'class' => 'RuntimeError',
-          'message' => 'I crashed!',
-        },
+          'message' => 'I crashed!'
+        }
       }
 
       expected3 = {
         'phase' => 'complete',
         'guid' => 'test-mode-not-random-guid',
         'subject' => 'crashing_handler',
-        'body' => {},
+        'body' => {}
       }
 
       expect(mock_logger.log.count).to eq(3)

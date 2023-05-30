@@ -129,8 +129,8 @@ describe DispatchRider::Publisher do
         "subject" => "bar_handler",
         "body" => {
           "guid" => DispatchRider::Debug::PUBLISHER_MESSAGE_GUID,
-          "bar" => "baz",
-        },
+          "bar" => "baz"
+        }
       }
       expect(data).to eq(expected_message)
     end
