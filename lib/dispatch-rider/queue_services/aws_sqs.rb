@@ -72,7 +72,7 @@ module DispatchRider
       def visibility_timeout_shield(message)
         yield
       ensure
-        duration = Time.now - message.start_time
+        duration = Time.zone.now - message.start_time
         timeout = message.total_timeout
         if duration > timeout
           message = "message: #{message.subject}, #{message.body.inspect} took #{duration} seconds while the timeout was #{timeout}"

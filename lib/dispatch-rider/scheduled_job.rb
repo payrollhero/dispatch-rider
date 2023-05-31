@@ -42,9 +42,9 @@ module DispatchRider
               :message,
               presence: true
 
-    scope :due, -> (time = Time.now) { where "scheduled_at <= ?", time }
-    scope :claimed_by, -> (claim_id) { where(claim_id: claim_id).where "claim_expires_at > ?", Time.now }
-    scope :unclaimed, -> { where "claim_expires_at IS NULL OR claim_expires_at <= ?", Time.now }
+    scope :due, -> (time = Time.zone.now) { where "scheduled_at <= ?", time }
+    scope :claimed_by, -> (claim_id) { where(claim_id: claim_id).where "claim_expires_at > ?", Time.zone.now }
+    scope :unclaimed, -> { where "claim_expires_at IS NULL OR claim_expires_at <= ?", Time.zone.now }
 
     def publish
       publisher.publish(destinations: destinations, message: message)
