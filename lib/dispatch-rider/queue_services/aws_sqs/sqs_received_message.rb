@@ -9,7 +9,7 @@ module DispatchRider
         def initialize(message, raw_item, queue, queue_visibility_timeout)
           @queue = queue
           @total_timeout = queue_visibility_timeout.to_i
-          @start_time = Time.now
+          @start_time = Time.zone.now
           super(message, raw_item)
         end
 
@@ -19,7 +19,7 @@ module DispatchRider
           item.change_visibility({
             visibility_timeout: timeout # required
           })
-          @total_timeout = timeout + (Time.now - start_time).to_i if timeout > 0
+          @total_timeout = timeout + (Time.zone.now - start_time).to_i if timeout > 0
         end
 
         # We effectively return the item to the queue by setting
