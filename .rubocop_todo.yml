@@ -459,11 +459,6 @@ Style/NestedParenthesizedCalls:
     - 'spec/lib/dispatch-rider/notification_services/aws_sns_spec.rb'
     - 'spec/lib/dispatch-rider/notification_services/base_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Strict, AllowedNumbers, AllowedPatterns.
-Style/NumericLiterals:
-  MinDigits: 6
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
