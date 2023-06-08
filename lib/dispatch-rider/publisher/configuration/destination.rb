@@ -2,7 +2,7 @@
 
 module DispatchRider
   class Publisher::Configuration::Destination
-    def initialize(name, attributes={})
+    def initialize(name, attributes = {})
       @name = name
 
       attributes = attributes.with_indifferent_access

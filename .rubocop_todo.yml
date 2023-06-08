@@ -43,13 +43,6 @@ Layout/LeadingCommentSpace:
     - 'lib/dispatch-rider/queue_services/received_message.rb'
     - 'spec/lib/dispatch-rider/configuration_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: space, no_space
-Layout/SpaceAroundEqualsInParameterDefault:
-  Exclude:
-    - 'lib/dispatch-rider/publisher/configuration/destination.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
